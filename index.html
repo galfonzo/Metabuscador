@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TuneMyTrip - Viajes Temáticos Únicos</title>
+  <style>
+    :root {
+      --violeta: #6a0dad;
+      --verde: #2ecc71;
+      --azul: #2980b9;
+      --fondo: #f5f7fa;
+      --texto-principal: #2c3e50;
+      --texto-secundario: #34495e;
+      --blanco: #fff;
+      --cta-bg: var(--verde);
+      --cta-hover: #27ae60;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--fondo);
+      color: var(--texto-principal);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 720px;
+      margin: 50px auto;
+      background: var(--blanco);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(106, 13, 173, 0.2);
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: var(--violeta);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    p.lead {
+      font-size: 1.25rem;
+      color: var(--texto-secundario);
+      text-align: center;
+      margin-bottom: 30px;
+      font-style: italic;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+    input[type="email"] {
+      padding: 15px;
+      font-size: 1rem;
+      border: 2px solid var(--azul);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input[type="email"]:focus {
+      border-color: var(--verde);
+    }
+    button {
+      background-color: var(--cta-bg);
+      color: var(--blanco);
+      font-size: 1.2rem;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: var(--cta-hover);
+    }
+    ul.benefits {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 20px;
+    }
+    ul.benefits li {
+      background: var(--violeta);
+      color: var(--blanco);
+      padding: 18px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(106, 13, 173, 0.3);
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    ul.benefits li:hover {
+      background-color: var(--verde);
+      box-shadow: 0 6px 15px rgba(46, 204, 113, 0.5);
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+    .category {
+      background: var(--azul);
+      color: var(--blanco);
+      padding: 18px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(41, 128, 185, 0.4);
+      user-select: none;
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+    .category:hover {
+      background-color: var(--verde);
+      box-shadow: 0 8px 20px rgba(46, 204, 113, 0.6);
+    }
+    .testimonial {
+      font-style: italic;
+      color: var(--texto-secundario);
+      border-left: 5px solid var(--azul);
+      padding-left: 20px;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      user-select: none;
+    }
+    .footer-cta {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .footer-cta h2 {
+      font-size: 1.8rem;
+      color: var(--violeta);
+      margin-bottom: 20px;
+    }
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(41, 128, 185, 0.2);
+      margin-bottom: 50px;
+    }
+    .iframe-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TuneMyTrip</h1>
+    <p class="lead">Para llevarte a descubrir nuevas emociones</p>
+
+    <!-- FORMULARIO MAILCHIMP: reemplaza action y campos según tu cuenta -->
+    <form action="https://YOUR_MAILCHIMP_URL" method="post" target="_blank" novalidate>
+      <input type="email" name="EMAIL" placeholder="Ingresa tu correo electrónico" required />
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_xxxxxxxx_xxxxxxxx" tabindex="-1" value="" />
+      </div>
+      <button type="submit">Descubre viajes temáticos</button>
+    </form>
+
+    <ul class="benefits">
+      <li>🎯 Viajes personalizados según tus pasiones</li>
+      <li>🌍 Acceso a destinos exclusivos y experiencias auténticas</li>
+      <li>🔔 Alertas y ofertas especiales para cada temática</li>
+    </ul>
+
+    <div class="categories">
+      <div class="category">Aventura</div>
+      <div class="category">Gastronomía</div>
+      <div class="category">Cultura</div>
+      <div class="category">Luna de miel</div>
+      <div class="category">Arquitectura</div>
+      <div class="category">Hermosas playas</div>
+      <div class="category">Viaje con niños</div>
+    </div>
+
+    <div class="testimonial">
+      "Para llevarte a descubrir nuevas emociones"
+    </div>
+
+    <div class="footer-cta">
+      <h2>¿Listo para descubrir viajes que realmente te apasionen?</h2>
+      <button onclick="window.scrollTo({top: document.querySelector('.iframe-container').offsetTop, behavior: 'smooth'})">Empieza tu aventura temática</button>
+    </div>
+
+    <h3 style="color: var(--violeta); text-align: center; margin-bottom: 20px;">Busca vuelos hacia tu destino temático</h3>
+    <div class="iframe-container">
+      <!-- Widget Skyscanner con parámetros básicos -->
+      <iframe src="https://www.skyscanner.net/widget/flight-search?origin=anywhere&destination=anywhere&departureDate=anytime&returnDate=anytime&adults=1&children=0&infants=0&currency=USD&locale=es-ES" allowfullscreen></iframe>
+    </div>
+  </div>
+</body>
+</html>
