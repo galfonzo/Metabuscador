@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TuneMyTrip - Viajes Temáticos Únicos</title>
+  <style>
+    :root {
+      --violeta: #6a0dad;
+      --verde: #2ecc71;
+      --azul: #2980b9;
+      --fondo: #f5f7fa;
+      --texto-principal: #2c3e50;
+      --texto-secundario: #34495e;
+      --blanco: #fff;
+      --cta-bg: var(--verde);
+      --cta-hover: #27ae60;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--fondo);
+      color: var(--texto-principal);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--blanco);
+      padding: 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(106, 13, 173, 0.16);
+      overflow: hidden;
+    }
+    /* Hero Section */
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      padding: 70px 30px 60px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(0deg, rgba(106,13,173,0.45) 0%, rgba(41,128,185,0.25) 100%);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      color: #fff;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.16);
+    }
+    .hero p {
+      font-size: 1.5rem;
+      color: #f5f7fa;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    }
+    /* Formulario */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 35px;
+      margin-top: 15px;
+    }
+    input[type="email"] {
+      padding: 15px;
+      font-size: 1rem;
+      border: 2px solid var(--azul);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      width: 320px;
+      max-width: 90vw;
+    }
+    input[type="email"]:focus {
+      border-color: var(--verde);
+    }
+    button {
+      background-color: var(--cta-bg);
+      color: var(--blanco);
+      font-size: 1.2rem;
+      padding: 15px 32px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+    button:hover {
+      background-color: var(--cta-hover);
+      transform: translateY(-2px) scale(1.04);
+    }
+    /* Beneficios */
+    ul.benefits {
+      list-style: none;
+      padding: 0 24px;
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 20px;
+    }
+    ul.benefits li {
+      background: var(--violeta);
+      color: var(--blanco);
+      padding: 18px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(106, 13, 173, 0.18);
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.08rem;
+      min-height: 80px;
+    }
+    ul.benefits li img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #fff;
+    }
+    ul.benefits li:hover {
+      background-color: var(--verde);
+      box-shadow: 0 6px 15px rgba(46, 204, 113, 0.18);
+    }
+    /* Categorías */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 18px;
+      margin-bottom: 40px;
+      padding: 0 24px;
+    }
+    .category {
+      background: var(--azul);
+      color: var(--blanco);
+      padding: 14px 12px 12px 12px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(41, 128, 185, 0.14);
+      user-select: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 210px;
+      position: relative;
+      overflow: hidden;
+    }
+    .category img {
+      width: 100%;
+      max-width: 170px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 12px rgba(41,128,185,0.10);
+      background: #eee;
+    }
+    .category:hover {
+      background-color: var(--verde);
+      box-shadow: 0 8px 20px rgba(46, 204, 113, 0.18);
+    }
+    /* Testimonio */
+    .testimonial {
+      font-style: italic;
+      color: var(--texto-secundario);
+      border-left: 5px solid var(--azul);
+      padding-left: 20px;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      user-select: none;
+      background: #f0f4fa;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(41,128,185,0.08);
+    }
+    /* CTA final */
+    .footer-cta {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 0 24px;
+    }
+    .footer-cta h2 {
+      font-size: 1.8rem;
+      color: var(--violeta);
+      margin-bottom: 20px;
+    }
+    /* Widget vuelos */
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(41, 128, 185, 0.12);
+      margin-bottom: 50px;
+      background: #eaf6ff;
+    }
+    .iframe-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 12px;
+    }
+    @media (max-width: 700px) {
+      .container { max-width: 99vw; border-radius: 0; }
+      .hero { padding: 36px 8px 28px 8px; }
+      ul.benefits, .categories, .footer-cta { padding: 0 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-content">
+        <h1>TuneMyTrip</h1>
+        <p>Para llevarte a descubrir nuevas emociones</p>
+        <!-- FORMULARIO MAILCHIMP: reemplaza action y campos según tu cuenta -->
+        <form action="https://YOUR_MAILCHIMP_URL" method="post" target="_blank" novalidate>
+          <input type="email" name="EMAIL" placeholder="Ingresa tu correo electrónico" required />
+          <div style="position: absolute; left: -5000px;" aria-hidden="true">
+            <input type="text" name="b_xxxxxxxx_xxxxxxxx" tabindex="-1" value="" />
+          </div>
+          <button type="submit">Descubre viajes temáticos</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Beneficios con imágenes -->
+    <ul class="benefits">
+      <li>
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=80&q=80" alt="Personalización">
+        Viajes personalizados según tus pasiones
+      </li>
+      <li>
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=80&q=80" alt="Destinos exclusivos">
+        Acceso a destinos exclusivos y experiencias auténticas
+      </li>
+      <li>
+        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=80&q=80" alt="Alertas y ofertas">
+        Alertas y ofertas especiales para cada temática
+      </li>
+    </ul>
+
+    <!-- Categorías visuales -->
+    <div class="categories">
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" alt="Aventura">
+        Aventura
+      </div>
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80" alt="Gastronomía">
+        Gastronomía
+      </div>
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=400&q=80" alt="Cultura">
+        Cultura
+      </div>
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80" alt="Luna de miel">
+        Luna de miel
+      </div>
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Arquitectura">
+        Arquitectura
+      </div>
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Playas">
+        Hermosas playas
+      </div>
+      <div class="category">
+        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80" alt="Viaje con niños">
+        Viaje con niños
+      </div>
+    </div>
+
+    <!-- Testimonio visual -->
+    <div class="testimonial">
+      <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=40&q=80" alt="testimonio" style="float:left; margin-right:14px; border-radius:50%; width:40px; height:40px;">
+      "TuneMyTrip me ayudó a encontrar el viaje perfecto, ¡fue una experiencia inolvidable!"
+      <div style="clear:both;"></div>
+    </div>
+
+    <!-- CTA final -->
+    <div class="footer-cta">
+      <h2>¿Listo para descubrir viajes que realmente te apasionen?</h2>
+      <button onclick="window.scrollTo({top: document.querySelector('.iframe-container').offsetTop, behavior: 'smooth'})">Empieza tu aventura temática</button>
+    </div>
+
+    <!-- Widget de vuelos -->
+    <h3 style="color: var(--violeta); text-align: center; margin-bottom: 20px;">Busca vuelos hacia tu destino temático</h3>
+    <div class="iframe-container">
+      <iframe src="https://www.skyscanner.net/widget/flight-search?origin=anywhere&destination=anywhere&departureDate=anytime&returnDate=anytime&adults=1&children=0&infants=0&currency=USD&locale=es-ES" allowfullscreen></iframe>
+    </div>
+  </div>
+</body>
+</html>
