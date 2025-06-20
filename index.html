@@ -77,7 +77,8 @@
       color: #fff;
     }
     form input[type="text"],
-    form input[type="date"] {
+    form input[type="date"],
+    form input[type="number"] {
       width: 100%;
       padding: 10px 12px;
       border: 1.5px solid #ccc;
@@ -88,7 +89,8 @@
       transition: border-color 0.3s;
     }
     form input[type="text"]:focus,
-    form input[type="date"]:focus {
+    form input[type="date"]:focus,
+    form input[type="number"]:focus {
       border-color: #0077cc;
       outline: none;
     }
@@ -151,8 +153,18 @@
       stroke-width: 2;
     }
     /* Cotización seguro */
+    #insurance-quote-section {
+      max-width: 650px;
+      margin: 40px auto;
+      background: rgba(0,0,0,0.7);
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      display: none; /* Oculto por defecto */
+    }
     #insurance-quote-section input[type="text"],
-    #insurance-quote-section input[type="number"] {
+    #insurance-quote-section input[type="number"],
+    #insurance-quote-section input[type="date"] {
       width: 100%;
       padding: 10px 12px;
       margin-bottom: 10px;
@@ -184,6 +196,10 @@
     #insurance-quote-section button[type="submit"]:hover {
       background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
       box-shadow: 0 6px 12px rgba(0,95,163,0.6);
+    }
+    /* Limitar ancho campo edad */
+    #insured-age {
+      max-width: 80px;
     }
     @media (max-width: 700px) {
       form > div.row {
@@ -273,17 +289,25 @@
   </form>
 
   <!-- Cotización de Seguro de Viaje -->
-  <div id="insurance-quote-section" style="max-width:650px; margin:40px auto; background:rgba(0,0,0,0.7); padding:25px 30px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.2);">
+  <div id="insurance-quote-section" aria-live="polite" aria-atomic="true">
     <h2 style="color:#00c6ff;">Cotiza tu seguro de viaje</h2>
     <form id="insurance-quote-form">
       <label for="insured-name">Nombre completo</label>
       <input type="text" id="insured-name" name="insured-name" required>
       <label for="insured-age">Edad</label>
-      <input type="number" id="insured-age" name="insured-age" min="0" required>
+      <input type="number" id="insured-age" name="insured-age" min="0" max="120" maxlength="3" required>
       <label for="insured-country">País de destino</label>
       <input type="text" id="insured-country" name="insured-country" required>
-      <label for="insured-dates">Fechas del viaje</label>
-      <input type="text" id="insured-dates" name="insured-dates" placeholder="ej: 2025-07-01 a 2025-07-15" required>
+      <div class="row">
+        <div>
+          <label for="insured-start-date">Fecha inicio</label>
+          <input type="date" id="insured-start-date" name="insured-start-date" required>
+        </div>
+        <div>
+          <label for="insured-end-date">Fecha fin</label>
+          <input type="date" id="insured-end-date" name="insured-end-date" required>
+        </div>
+      </div>
       <button type="submit">Solicitar cotización</button>
     </form>
     <div id="insurance-quote-result" style="margin-top:18px;"></div>
@@ -296,6 +320,15 @@
   <div id="hotel-results" aria-live="polite" aria-atomic="true"></div>
 
   <script>
+    // Controlar visibilidad de la sección de cotización según checkbox
+    const travelInsuranceCheckbox = document.getElementById('travelInsurance');
+    const insuranceSection = document.getElementById('insurance-quote-section');
+    travelInsuranceCheckbox.addEventListener('change', () => {
+      insuranceSection.style.display = travelInsuranceCheckbox.checked ? 'block' : 'none';
+    });
+    // Inicial oculto
+    insuranceSection.style.display = travelInsuranceCheckbox.checked ? 'block' : 'none';
+
     // Buscador de viajes
     document.getElementById('search-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -313,7 +346,6 @@
         return;
       }
 
-      // Llamada a backend para vuelos (ajusta URL y lógica según tu backend)
       let flights = [];
       try {
         const res = await fetch('http://localhost:3000/flights/search', {
@@ -334,7 +366,6 @@
         flights = [];
       }
 
-      // Si no hay backend o falla, resultados simulados
       if (flights.length === 0) {
         flights = [
           {
@@ -356,7 +387,6 @@
         ];
       }
 
-      // Hoteles simulados
       const hotels = [
         {
           hotelName: "Hotel Sofitel",
@@ -376,7 +406,6 @@
         }
       ];
 
-      // Mostrar vuelos
       const flightDiv = document.getElementById('flight-results');
       flightDiv.innerHTML = flights.map(f => `
         <div class="result-item">
@@ -387,7 +416,6 @@
         </div>
       `).join('');
 
-      // Mostrar hoteles
       const hotelDiv = document.getElementById('hotel-results');
       hotelDiv.innerHTML = hotels.map(h => `
         <div class="result-item">
@@ -411,22 +439,26 @@
       const name = document.getElementById('insured-name').value.trim();
       const age = parseInt(document.getElementById('insured-age').value, 10);
       const country = document.getElementById('insured-country').value.trim();
-      const dates = document.getElementById('insured-dates').value.trim();
+      const startDate = document.getElementById('insured-start-date').value;
+      const endDate = document.getElementById('insured-end-date').value;
 
-      // Simulación de cálculo de cotización
+      if (endDate <= startDate) {
+        alert('La fecha de fin debe ser posterior a la fecha de inicio.');
+        return;
+      }
+
       let quote = 0;
       if (age < 18) quote = 30;
       else if (age < 40) quote = 50;
       else if (age < 65) quote = 70;
       else quote = 120;
 
-      // Mostrar resultado en la página
       const resultDiv = document.getElementById('insurance-quote-result');
       resultDiv.innerHTML = `
         <div style="background:#003f5c;padding:15px;border-radius:8px;">
           <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br>
           <span>Destino: ${country}</span><br>
-          <span>Fechas: ${dates}</span><br>
+          <span>Fechas: ${startDate} a ${endDate}</span><br>
           <span>Edad: ${age} años</span><br>
           <span style="font-size:1.1em;">Precio estimado: <strong style="color:#fff;">$${quote} USD</strong></span>
         </div>
