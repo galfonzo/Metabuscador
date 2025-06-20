@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -127,7 +126,7 @@
       padding: 20px 25px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      display: none; /* Oculto inicialmente */
+      display: none;
     }
     .result-item {
       border-bottom: 1px solid #444;
@@ -139,7 +138,6 @@
     .result-item strong {
       color: #00c6ff;
     }
-    /* SVG texto */
     .tm-text {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       font-weight: 700;
@@ -154,7 +152,6 @@
       stroke: #00c6ff;
       stroke-width: 2;
     }
-    /* Cotización seguro */
     #insurance-quote-section {
       max-width: 650px;
       margin: 40px auto;
@@ -162,7 +159,7 @@
       padding: 25px 30px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      display: none; /* Oculto por defecto */
+      display: none;
     }
     #insurance-quote-section input[type="text"],
     #insurance-quote-section input[type="number"],
@@ -199,9 +196,65 @@
       background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
       box-shadow: 0 6px 12px rgba(0,95,163,0.6);
     }
-    /* Limitar ancho campo edad */
     #insured-age {
       max-width: 80px;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      color: #222;
+      border-radius: 12px;
+      max-width: 400px;
+      padding: 30px 25px 20px 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      text-align: center;
+      position: relative;
+    }
+    .modal-content h3 {
+      color: #0077cc;
+      margin-bottom: 18px;
+    }
+    .airport-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 15px 0;
+    }
+    .airport-list li {
+      margin: 8px 0;
+    }
+    .airport-btn {
+      background: linear-gradient(90deg, #00c6ff 60%, #0077cc 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 2px 0;
+      transition: background 0.2s;
+    }
+    .airport-btn:hover {
+      background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
+    }
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 15px;
+      font-size: 1.3em;
+      color: #0077cc;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
     @media (max-width: 700px) {
       form > div.row {
@@ -215,13 +268,16 @@
         max-width: 350px;
         width: 90%;
       }
+      .modal-content {
+        max-width: 90vw;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Logotipo corregido -->
   <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip" style="text-align:center; margin:30px 0;">
-    <svg width="290" height="60" viewBox="0 0 290 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+    <svg width="260" height="60" viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
       <title>TuneMyTrip Logotipo</title>
       <desc>Logotipo con texto TuneMyTrip y brújula estilizada</desc>
       <style>
@@ -247,29 +303,40 @@
     </svg>
   </div>
 
+  <!-- Modal para selección de aeropuerto -->
+  <div id="modal-airports" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button class="modal-close" id="close-modal-airports" aria-label="Cerrar ventana">&times;</button>
+      <h3 id="modal-title">Selecciona un destino</h3>
+      <ul class="airport-list" id="airport-list">
+        <!-- Opciones generadas dinámicamente -->
+      </ul>
+    </div>
+  </div>
+
   <!-- Botones categorías -->
   <div class="button-group" role="navigation" aria-label="Categorías de viajes">
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Arquitectura">
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Arquitectura" data-theme="arquitectura">
       <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Obra arquitectónica famosa" />
       <span>Arquitectura</span>
     </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Playas">
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Playas" data-theme="playas">
       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Playa paradisíaca" />
       <span>Playas</span>
     </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Montañas">
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Montañas" data-theme="montanas">
       <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=400&q=80" alt="Montañas nevadas" />
       <span>Montañas</span>
     </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Cultura">
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Cultura" data-theme="cultura">
       <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Evento cultural" />
       <span>Cultura</span>
     </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Deporte">
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Deporte" data-theme="deporte">
       <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Evento deportivo" />
       <span>Deporte</span>
     </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Tours completos">
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Tours completos" data-theme="tours">
       <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Tour completo" />
       <span>Tours completos</span>
     </div>
@@ -338,13 +405,81 @@
   <div id="hotel-results" aria-live="polite" aria-atomic="true" style="display:none;"></div>
 
   <script>
+    // Temáticos: simulación de aeropuertos por categoría
+    const thematicAirports = {
+      arquitectura: [
+        { name: "Barcelona (BCN) - España", code: "BCN" },
+        { name: "Dubái (DXB) - Emiratos Árabes", code: "DXB" },
+        { name: "París (CDG) - Francia", code: "CDG" }
+      ],
+      playas: [
+        { name: "Cancún (CUN) - México", code: "CUN" },
+        { name: "Miami (MIA) - EE.UU.", code: "MIA" },
+        { name: "Phuket (HKT) - Tailandia", code: "HKT" }
+      ],
+      montanas: [
+        { name: "Denver (DEN) - EE.UU.", code: "DEN" },
+        { name: "Santiago (SCL) - Chile", code: "SCL" },
+        { name: "Zúrich (ZRH) - Suiza", code: "ZRH" }
+      ],
+      cultura: [
+        { name: "Roma (FCO) - Italia", code: "FCO" },
+        { name: "Kyoto (KIX) - Japón", code: "KIX" },
+        { name: "Estambul (IST) - Turquía", code: "IST" }
+      ],
+      deporte: [
+        { name: "Londres (LHR) - Reino Unido", code: "LHR" },
+        { name: "Melbourne (MEL) - Australia", code: "MEL" },
+        { name: "Madrid (MAD) - España", code: "MAD" }
+      ],
+      tours: [
+        { name: "El Cairo (CAI) - Egipto", code: "CAI" },
+        { name: "Nueva Delhi (DEL) - India", code: "DEL" },
+        { name: "Pekín (PEK) - China", code: "PEK" }
+      ]
+    };
+
+    // Modal lógica
+    const modal = document.getElementById('modal-airports');
+    const airportList = document.getElementById('airport-list');
+    const closeModalBtn = document.getElementById('close-modal-airports');
+    const destinationInput = document.getElementById('destination');
+
+    document.querySelectorAll('.btn-feature').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const theme = btn.getAttribute('data-theme');
+        const airports = thematicAirports[theme] || [];
+        airportList.innerHTML = airports.map(a =>
+          `<li><button class="airport-btn" data-code="${a.code}">${a.name}</button></li>`
+        ).join('');
+        modal.style.display = "flex";
+      });
+    });
+
+    airportList.addEventListener('click', function(e) {
+      if (e.target.classList.contains('airport-btn')) {
+        const code = e.target.getAttribute('data-code');
+        destinationInput.value = code;
+        modal.style.display = "none";
+      }
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
     // Controlar visibilidad de la sección de cotización según checkbox
     const travelInsuranceCheckbox = document.getElementById('travelInsurance');
     const insuranceSection = document.getElementById('insurance-quote-section');
     travelInsuranceCheckbox.addEventListener('change', () => {
       insuranceSection.style.display = travelInsuranceCheckbox.checked ? 'block' : 'none';
     });
-    // Inicial oculto
     insuranceSection.style.display = travelInsuranceCheckbox.checked ? 'block' : 'none';
 
     // Buscador de viajes
