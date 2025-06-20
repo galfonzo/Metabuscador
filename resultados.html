@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resultados de Viajes - TuneMyTrip</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      backdrop-filter: brightness(0.6);
+      padding: 40px 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #00c6ff;
+      text-shadow: 0 0 10px rgba(0,198,255,0.8);
+    }
+    #results-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      padding: 25px 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.9);
+    }
+    .result-section {
+      margin-bottom: 30px;
+    }
+    .result-item {
+      border-bottom: 1px solid #444;
+      padding: 12px 0;
+      font-size: 1.1rem;
+    }
+    .result-item:last-child {
+      border-bottom: none;
+    }
+    .result-item strong {
+      color: #00c6ff;
+    }
+    button#back-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0077cc;
+      background: #e0f7ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,119,204,0.5);
+      transition: background 0.3s;
+    }
+    button#back-btn:hover {
+      background: #b3e5fc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resultados de tu búsqueda</h1>
+  <div id="results-container">
+    <div class="result-section" id="flights-section">
+      <h2>Resultados de vuelos</h2>
+      <div id="flight-results"></div>
+    </div>
+    <div class="result-section" id="hotels-section">
+      <h2>Resultados de hoteles</h2>
+      <div id="hotel-results"></div>
+    </div>
+    <button id="back-btn">Volver a la búsqueda</button>
+  </div>
+
+  <script>
+    const data = JSON.parse(sessionStorage.getItem('searchData'));
+    if (!data) {
+      alert('No se encontraron datos de búsqueda. Volviendo a la página principal.');
+      window.location.href = 'index.html';
+    }
+
+    async function fetchResults() {
+      let flights = [];
+      try {
+        const res = await fetch('http://localhost:3000/flights/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            origin: data.origin,
+            destination: data.destination,
+            departureDate: data.checkInDate,
+            returnDate: data.checkOutDate
+          })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          flights = json.flights || [];
+        }
+      } catch {
+        flights = [];
+      }
+      if (flights.length === 0) {
+        flights = [
+          {
+            airline: "Air France",
+            origin: data.origin,
+            destination: data.destination,
+            departure: data.checkInDate + "T08:00:00",
+            arrival: data.checkInDate + "T12:00:00",
+            price: 420
+          },
+          {
+            airline: "Delta Airlines",
+            origin: data.origin,
+            destination: data.destination,
+            departure: data.checkInDate + "T10:30:00",
+            arrival: data.checkInDate + "T14:50:00",
+            price: 390
+          }
+        ];
+      }
+
+      const hotels = [
+        {
+          hotelName: "Hotel Sofitel",
+          destination: data.destination,
+          checkIn: data.checkInDate,
+          checkOut: data.checkOutDate,
+          pricePerNight: 120,
+          rating: 4.5
+        },
+        {
+          hotelName: "Hilton",
+          destination: data.destination,
+          checkIn: data.checkInDate,
+          checkOut: data.checkOutDate,
+          pricePerNight: 95,
+          rating: 4.0
+        }
+      ];
+
+      const flightDiv = document.getElementById('flight-results');
+      flightDiv.innerHTML = flights.map(f => `
+        <div class="result-item">
+          <strong>${f.airline}</strong> - ${f.origin} → ${f.destination}<br/>
+          Salida: ${new Date(f.departure).toLocaleString()}<br/>
+          Llegada: ${new Date(f.arrival).toLocaleString()}<br/>
+          Precio: $${f.price}
+        </div>
+      `).join('');
+
+      const hotelDiv = document.getElementById('hotel-results');
+      hotelDiv.innerHTML = hotels.map(h => `
+        <div class="result-item">
+          <strong>${h.hotelName}</strong><br/>
+          Destino: ${h.destination}<br/>
+          Check-in: ${h.checkIn}<br/>
+          Check-out: ${h.checkOut}<br/>
+          Precio por noche: $${h.pricePerNight}<br/>
+          Rating: ${h.rating} ★
+        </div>
+      `).join('');
+    }
+
+    fetchResults();
+
+    document.getElementById('back-btn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
