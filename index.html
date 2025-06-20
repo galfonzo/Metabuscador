@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>TuneMyTrip</title>
+  <title>Buscador de Viajes Mejorado - TuneMyTrip</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,10 +12,9 @@
       color: #fff;
       min-height: 100vh;
     }
-    h1, h2 {
+    .logo-container {
       text-align: center;
-      color: #f2f2f2;
-      text-shadow: 0 2px 8px #000a;
+      margin: 30px 0;
     }
     .button-group {
       display: flex;
@@ -136,17 +135,86 @@
     .result-item strong {
       color: #00c6ff;
     }
+    /* SVG texto */
+    .tm-text {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      fill: #0077cc;
+    }
+    .tm-accent {
+      fill: #00c6ff;
+    }
+    .tm-icon {
+      fill: #0077cc;
+      stroke: #00c6ff;
+      stroke-width: 2;
+    }
+    /* Cotización seguro */
+    #insurance-quote-section input[type="text"],
+    #insurance-quote-section input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1.5px solid #ccc;
+      font-size: 1rem;
+      background: #f8f8f8;
+      color: #222;
+      transition: border-color 0.3s;
+    }
+    #insurance-quote-section input:focus {
+      border-color: #00c6ff;
+      outline: none;
+    }
+    #insurance-quote-section button[type="submit"] {
+      background: linear-gradient(90deg,#0077cc 60%,#00c6ff 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,119,204,0.4);
+      margin-top: 10px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    #insurance-quote-section button[type="submit"]:hover {
+      background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
+      box-shadow: 0 6px 12px rgba(0,95,163,0.6);
+    }
     @media (max-width: 700px) {
       form > div.row {
         flex-direction: column;
+      }
+      .button-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn-feature {
+        max-width: 350px;
+        width: 90%;
       }
     }
   </style>
 </head>
 <body>
-  <h1>TuneMyTrip</h1>
+  <!-- Logotipo -->
+  <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
+    <svg width="220" height="60" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+      <title>TuneMyTrip Logotipo</title>
+      <desc>Logotipo con texto TuneMyTrip y brújula estilizada</desc>
+      <circle class="tm-icon" cx="30" cy="30" r="25" />
+      <polygon class="tm-accent" points="30,10 35,30 30,50 25,30" />
+      <circle cx="30" cy="30" r="5" fill="#0077cc" />
+      <text x="70" y="42" class="tm-text">Tune<tspan class="tm-accent">My</tspan>Trip</text>
+    </svg>
+  </div>
 
-  <div class="button-group">
+  <!-- Botones categorías -->
+  <div class="button-group" role="navigation" aria-label="Categorías de viajes">
     <div class="btn-feature" tabindex="0" role="button" aria-label="Arquitectura">
       <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Obra arquitectónica famosa" />
       <span>Arquitectura</span>
@@ -167,9 +235,14 @@
       <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Evento deportivo" />
       <span>Deporte</span>
     </div>
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Tours completos">
+      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Tour completo" />
+      <span>Tours completos</span>
+    </div>
   </div>
 
-  <form id="search-form">
+  <!-- Formulario principal -->
+  <form id="search-form" aria-label="Formulario de búsqueda de viajes">
     <div class="row">
       <div>
         <label for="origin">Origen (ej: MAD)</label>
@@ -199,13 +272,31 @@
     <button type="submit" class="btn-submit">Buscar viajes</button>
   </form>
 
+  <!-- Cotización de Seguro de Viaje -->
+  <div id="insurance-quote-section" style="max-width:650px; margin:40px auto; background:rgba(0,0,0,0.7); padding:25px 30px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.2);">
+    <h2 style="color:#00c6ff;">Cotiza tu seguro de viaje</h2>
+    <form id="insurance-quote-form">
+      <label for="insured-name">Nombre completo</label>
+      <input type="text" id="insured-name" name="insured-name" required>
+      <label for="insured-age">Edad</label>
+      <input type="number" id="insured-age" name="insured-age" min="0" required>
+      <label for="insured-country">País de destino</label>
+      <input type="text" id="insured-country" name="insured-country" required>
+      <label for="insured-dates">Fechas del viaje</label>
+      <input type="text" id="insured-dates" name="insured-dates" placeholder="ej: 2025-07-01 a 2025-07-15" required>
+      <button type="submit">Solicitar cotización</button>
+    </form>
+    <div id="insurance-quote-result" style="margin-top:18px;"></div>
+  </div>
+
   <h2>Resultados de vuelos</h2>
-  <div id="flight-results"></div>
+  <div id="flight-results" aria-live="polite" aria-atomic="true"></div>
 
   <h2>Resultados de hoteles</h2>
-  <div id="hotel-results"></div>
+  <div id="hotel-results" aria-live="polite" aria-atomic="true"></div>
 
   <script>
+    // Buscador de viajes
     document.getElementById('search-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -222,8 +313,7 @@
         return;
       }
 
-      // Aquí deberías hacer la llamada real a tu backend para vuelos
-      // Ejemplo de llamada a backend (ajusta URL y lógica según tu implementación)
+      // Llamada a backend para vuelos (ajusta URL y lógica según tu backend)
       let flights = [];
       try {
         const res = await fetch('http://localhost:3000/flights/search', {
@@ -244,7 +334,7 @@
         flights = [];
       }
 
-      // Si no hay backend o falla, mostramos resultados simulados
+      // Si no hay backend o falla, resultados simulados
       if (flights.length === 0) {
         flights = [
           {
@@ -313,6 +403,37 @@
       if(data.travelInsurance) {
         alert("Has seleccionado contratar seguro de viaje. Nuestro equipo te contactará para más detalles.");
       }
+    });
+
+    // Cotización de seguro de viaje
+    document.getElementById('insurance-quote-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('insured-name').value.trim();
+      const age = parseInt(document.getElementById('insured-age').value, 10);
+      const country = document.getElementById('insured-country').value.trim();
+      const dates = document.getElementById('insured-dates').value.trim();
+
+      // Simulación de cálculo de cotización
+      let quote = 0;
+      if (age < 18) quote = 30;
+      else if (age < 40) quote = 50;
+      else if (age < 65) quote = 70;
+      else quote = 120;
+
+      // Mostrar resultado en la página
+      const resultDiv = document.getElementById('insurance-quote-result');
+      resultDiv.innerHTML = `
+        <div style="background:#003f5c;padding:15px;border-radius:8px;">
+          <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br>
+          <span>Destino: ${country}</span><br>
+          <span>Fechas: ${dates}</span><br>
+          <span>Edad: ${age} años</span><br>
+          <span style="font-size:1.1em;">Precio estimado: <strong style="color:#fff;">$${quote} USD</strong></span>
+        </div>
+        <div style="margin-top:10px;">
+          <button onclick="alert('¡Solicitud enviada! Un asesor te contactará pronto.')" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px 22px;border:none;border-radius:7px;cursor:pointer;">Solicitar este seguro</button>
+        </div>
+      `;
     });
   </script>
 </body>
