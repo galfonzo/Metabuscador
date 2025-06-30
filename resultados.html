@@ -167,7 +167,11 @@
     fetchResults();
 
     document.getElementById('back-btn').addEventListener('click', () => {
-      window.location.href = 'index.html';
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
     });
   </script>
 </body>
