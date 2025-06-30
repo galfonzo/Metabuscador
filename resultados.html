@@ -75,99 +75,102 @@
   </div>
 
   <script>
-    const data = JSON.parse(sessionStorage.getItem('searchData'));
-    if (!data) {
-      alert('No se encontraron datos de búsqueda. Volviendo a la página principal.');
-      window.location.href = 'index.html';
-    }
-
-    async function fetchResults() {
-      let flights = [];
-      try {
-        const res = await fetch('http://localhost:3000/flights/search', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            origin: data.origin,
-            destination: data.destination,
-            departureDate: data.checkInDate,
-            returnDate: data.checkOutDate
-          })
-        });
-        if (res.ok) {
-          const json = await res.json();
-          flights = json.flights || [];
-        }
-      } catch {
-        flights = [];
+    window.addEventListener('DOMContentLoaded', () => {
+      const data = JSON.parse(sessionStorage.getItem('searchData'));
+      if (!data) {
+        alert('No se encontraron datos de búsqueda. Volviendo a la página principal.');
+        window.location.href = 'index.html';
+        return; // Detener ejecución para evitar bucles
       }
-      if (flights.length === 0) {
-        flights = [
+
+      async function fetchResults() {
+        let flights = [];
+        try {
+          const res = await fetch('http://localhost:3000/flights/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              origin: data.origin,
+              destination: data.destination,
+              departureDate: data.checkInDate,
+              returnDate: data.checkOutDate
+            })
+          });
+          if (res.ok) {
+            const json = await res.json();
+            flights = json.flights || [];
+          }
+        } catch {
+          flights = [];
+        }
+        if (flights.length === 0) {
+          flights = [
+            {
+              airline: "Air France",
+              origin: data.origin,
+              destination: data.destination,
+              departure: data.checkInDate + "T08:00:00",
+              arrival: data.checkInDate + "T12:00:00",
+              price: 420
+            },
+            {
+              airline: "Delta Airlines",
+              origin: data.origin,
+              destination: data.destination,
+              departure: data.checkInDate + "T10:30:00",
+              arrival: data.checkInDate + "T14:50:00",
+              price: 390
+            }
+          ];
+        }
+
+        const hotels = [
           {
-            airline: "Air France",
-            origin: data.origin,
+            hotelName: "Hotel Sofitel",
             destination: data.destination,
-            departure: data.checkInDate + "T08:00:00",
-            arrival: data.checkInDate + "T12:00:00",
-            price: 420
+            checkIn: data.checkInDate,
+            checkOut: data.checkOutDate,
+            pricePerNight: 120,
+            rating: 4.5
           },
           {
-            airline: "Delta Airlines",
-            origin: data.origin,
+            hotelName: "Hilton",
             destination: data.destination,
-            departure: data.checkInDate + "T10:30:00",
-            arrival: data.checkInDate + "T14:50:00",
-            price: 390
+            checkIn: data.checkInDate,
+            checkOut: data.checkOutDate,
+            pricePerNight: 95,
+            rating: 4.0
           }
         ];
+
+        const flightDiv = document.getElementById('flight-results');
+        flightDiv.innerHTML = flights.map(f => `
+          <div class="result-item">
+            <strong>${f.airline}</strong> - ${f.origin} → ${f.destination}<br/>
+            Salida: ${new Date(f.departure).toLocaleString()}<br/>
+            Llegada: ${new Date(f.arrival).toLocaleString()}<br/>
+            Precio: $${f.price}
+          </div>
+        `).join('');
+
+        const hotelDiv = document.getElementById('hotel-results');
+        hotelDiv.innerHTML = hotels.map(h => `
+          <div class="result-item">
+            <strong>${h.hotelName}</strong><br/>
+            Destino: ${h.destination}<br/>
+            Check-in: ${h.checkIn}<br/>
+            Check-out: ${h.checkOut}<br/>
+            Precio por noche: $${h.pricePerNight}<br/>
+            Rating: ${h.rating} ★
+          </div>
+        `).join('');
       }
 
-      const hotels = [
-        {
-          hotelName: "Hotel Sofitel",
-          destination: data.destination,
-          checkIn: data.checkInDate,
-          checkOut: data.checkOutDate,
-          pricePerNight: 120,
-          rating: 4.5
-        },
-        {
-          hotelName: "Hilton",
-          destination: data.destination,
-          checkIn: data.checkInDate,
-          checkOut: data.checkOutDate,
-          pricePerNight: 95,
-          rating: 4.0
-        }
-      ];
+      fetchResults();
 
-      const flightDiv = document.getElementById('flight-results');
-      flightDiv.innerHTML = flights.map(f => `
-        <div class="result-item">
-          <strong>${f.airline}</strong> - ${f.origin} → ${f.destination}<br/>
-          Salida: ${new Date(f.departure).toLocaleString()}<br/>
-          Llegada: ${new Date(f.arrival).toLocaleString()}<br/>
-          Precio: $${f.price}
-        </div>
-      `).join('');
-
-      const hotelDiv = document.getElementById('hotel-results');
-      hotelDiv.innerHTML = hotels.map(h => `
-        <div class="result-item">
-          <strong>${h.hotelName}</strong><br/>
-          Destino: ${h.destination}<br/>
-          Check-in: ${h.checkIn}<br/>
-          Check-out: ${h.checkOut}<br/>
-          Precio por noche: $${h.pricePerNight}<br/>
-          Rating: ${h.rating} ★
-        </div>
-      `).join('');
-    }
-
-    fetchResults();
-
-    document.getElementById('back-btn').addEventListener('click', () => {
-      window.location.href = 'index.html';
+      document.getElementById('back-btn').addEventListener('click', () => {
+        window.location.href = 'index.html';
+      });
     });
   </script>
 </body>
