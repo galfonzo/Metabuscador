@@ -71,7 +71,7 @@
       <h2>Resultados de hoteles</h2>
       <div id="hotel-results"></div>
     </div>
-    <button id="back-btn">Volver a la búsqueda</button>
+    <button id="back-btn" type="button">Volver a la búsqueda</button>
   </div>
 
   <script>
@@ -167,11 +167,7 @@
     fetchResults();
 
     document.getElementById('back-btn').addEventListener('click', () => {
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        window.location.href = 'index.html';
-      }
+      window.location.href = 'index.html';
     });
   </script>
 </body>
