@@ -4,17 +4,21 @@
   <meta charset="UTF-8" />
   <title>TuneMyTrip - Buscador de viajes</title>
   <style>
+    /* Estilos para fondo y contenido */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
       background-size: cover;
       color: #fff;
       min-height: 100vh;
       padding: 20px;
       position: relative;
     }
-    /* Capa oscura para mejorar contraste */
+    /* Capa oscura para contraste */
     body::before {
       content: "";
       position: fixed;
@@ -22,6 +26,8 @@
       background: rgba(0,0,0,0.45);
       z-index: -1;
     }
+
+    /* Contenedores y texto */
     .logo-container {
       text-align: center;
       margin: 30px 0;
@@ -69,6 +75,7 @@
       padding: 25px 30px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      color: #fff;
     }
     form#search-form > div.row {
       display: flex;
@@ -254,15 +261,13 @@
 </head>
 <body>
   <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
-    <!-- Aquí inserta tu SVG de logotipo original -->
-    <!-- Ejemplo: -->
+    <!-- Inserta aquí tu SVG o imagen de logo -->
     <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <!-- Contenido SVG -->
     </svg>
   </div>
 
   <div class="button-group" role="navigation" aria-label="Categorías de viajes">
-    <!-- Aquí tus botones de categorías originales -->
     <button class="btn-feature" type="button">
       <img src="ruta/a/imagen-vuelo.jpg" alt="Icono de vuelos" />
       Vuelos
@@ -337,7 +342,7 @@
   </div>
 
   <script>
-    // Código JavaScript original para manejar formularios, modales, etc.
+    // Manejo del formulario de búsqueda
     document.getElementById('search-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const origin = document.getElementById('origin').value;
@@ -353,7 +358,7 @@
       window.location.href = 'resultados.html';
     });
 
-    // Aquí iría tu código para abrir/cerrar modales y demás funcionalidades
+    // Aquí puedes agregar código para abrir/cerrar modales y otras funcionalidades
   </script>
 </body>
 </html>
