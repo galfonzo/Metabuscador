@@ -254,26 +254,106 @@
 </head>
 <body>
   <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
-    <!-- SVG del logotipo aquí -->
-    <!-- ... (mantén tu SVG original) ... -->
+    <!-- Aquí inserta tu SVG de logotipo original -->
+    <!-- Ejemplo: -->
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Contenido SVG -->
+    </svg>
   </div>
 
   <div class="button-group" role="navigation" aria-label="Categorías de viajes">
-    <!-- ... (botones de categorías, igual que en tu código original) ... -->
+    <!-- Aquí tus botones de categorías originales -->
+    <button class="btn-feature" type="button">
+      <img src="ruta/a/imagen-vuelo.jpg" alt="Icono de vuelos" />
+      Vuelos
+    </button>
+    <button class="btn-feature" type="button">
+      <img src="ruta/a/imagen-hotel.jpg" alt="Icono de hoteles" />
+      Hoteles
+    </button>
+    <button class="btn-feature" type="button">
+      <img src="ruta/a/imagen-alquiler.jpg" alt="Icono de alquiler de autos" />
+      Alquiler de autos
+    </button>
+    <button class="btn-feature" type="button">
+      <img src="ruta/a/imagen-seguro.jpg" alt="Icono de seguro de viaje" />
+      Seguro de viaje
+    </button>
   </div>
 
   <form id="search-form" aria-label="Formulario de búsqueda de viajes">
-    <!-- ... (campos del formulario igual que en tu código original) ... -->
+    <div class="row">
+      <div>
+        <label for="origin">Origen:</label>
+        <input type="text" id="origin" name="origin" required placeholder="Ciudad de origen" />
+      </div>
+      <div>
+        <label for="destination">Destino:</label>
+        <input type="text" id="destination" name="destination" required placeholder="Ciudad destino" />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="checkInDate">Fecha de ida:</label>
+        <input type="date" id="checkInDate" name="checkInDate" required />
+      </div>
+      <div>
+        <label for="checkOutDate">Fecha de vuelta:</label>
+        <input type="date" id="checkOutDate" name="checkOutDate" required />
+      </div>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="directFlights" name="directFlights" />
+      <label for="directFlights">Solo vuelos directos</label>
+    </div>
+    <button type="submit" class="btn-submit">Buscar viajes</button>
   </form>
 
   <!-- Modal selección de aeropuerto -->
-  <!-- ... (modal de aeropuertos igual que en tu código original) ... -->
+  <div id="airport-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="airport-modal-title" aria-describedby="airport-modal-desc">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Cerrar">&times;</button>
+      <h2 id="airport-modal-title">Selecciona un aeropuerto</h2>
+      <ul class="airport-list" id="airport-list">
+        <!-- Lista dinámica de aeropuertos -->
+      </ul>
+    </div>
+  </div>
 
   <!-- Modal cotización seguro -->
-  <!-- ... (modal de seguro igual que en tu código original) ... -->
+  <div id="insurance-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" aria-describedby="insurance-modal-desc">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Cerrar">&times;</button>
+      <h3 id="insurance-modal-title">Cotiza tu seguro de viaje</h3>
+      <form id="insurance-form">
+        <label for="age">Edad:</label>
+        <input type="number" id="age" name="age" min="0" max="120" required />
+        <label for="duration">Duración del viaje (días):</label>
+        <input type="number" id="duration" name="duration" min="1" required />
+        <button type="submit">Calcular</button>
+      </form>
+      <div id="insurance-quote-result" aria-live="polite"></div>
+    </div>
+  </div>
 
   <script>
-    // ... (todo tu código JavaScript original aquí) ...
+    // Código JavaScript original para manejar formularios, modales, etc.
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const origin = document.getElementById('origin').value;
+      const destination = document.getElementById('destination').value;
+      const checkInDate = document.getElementById('checkInDate').value;
+      const checkOutDate = document.getElementById('checkOutDate').value;
+      const directFlights = document.getElementById('directFlights').checked;
+
+      sessionStorage.setItem('searchData', JSON.stringify({
+        origin, destination, checkInDate, checkOutDate, directFlights
+      }));
+
+      window.location.href = 'resultados.html';
+    });
+
+    // Aquí iría tu código para abrir/cerrar modales y demás funcionalidades
   </script>
 </body>
 </html>
