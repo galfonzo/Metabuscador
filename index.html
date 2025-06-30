@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>TuneMyTrip - Buscador de viajes</title>
   <style>
-    /* Estilos para fondo y contenido */
+    /* Fondo y capa oscura para contraste */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,7 +18,6 @@
       padding: 20px;
       position: relative;
     }
-    /* Capa oscura para contraste */
     body::before {
       content: "";
       position: fixed;
@@ -27,17 +26,21 @@
       z-index: -1;
     }
 
-    /* Contenedores y texto */
-    .logo-container {
+    /* Título principal */
+    h1 {
       text-align: center;
-      margin: 30px 0;
+      color: #00c6ff;
+      text-shadow: 0 0 10px rgba(0,198,255,0.8);
+      margin-bottom: 40px;
     }
+
+    /* Botones con imágenes */
     .button-group {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 22px;
-      margin: 40px auto 25px auto;
+      margin: 0 auto 40px auto;
       max-width: 1100px;
     }
     .btn-feature {
@@ -55,6 +58,9 @@
       color: #0077cc;
       font-weight: 700;
       font-size: 1.08rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .btn-feature:hover {
       transform: translateY(-6px) scale(1.04);
@@ -67,7 +73,16 @@
       object-fit: cover;
       display: block;
       border-bottom: 1px solid #eee;
+      border-radius: 16px 16px 0 0;
+      user-select: none;
+      pointer-events: none;
     }
+    .btn-feature span {
+      padding: 10px 0;
+      width: 100%;
+    }
+
+    /* Formulario de búsqueda */
     form#search-form {
       max-width: 650px;
       margin: 0 auto 40px auto;
@@ -131,6 +146,7 @@
       background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
       box-shadow: 0 6px 12px rgba(0,95,163,0.6);
     }
+
     /* Modal estilos */
     .modal {
       display: none;
@@ -260,29 +276,24 @@
   </style>
 </head>
 <body>
-  <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
-    <!-- Inserta aquí tu SVG o imagen de logo -->
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Contenido SVG -->
-    </svg>
-  </div>
+  <h1>TuneMyTrip - Busca tus viajes</h1>
 
   <div class="button-group" role="navigation" aria-label="Categorías de viajes">
-    <button class="btn-feature" type="button">
-      <img src="ruta/a/imagen-vuelo.jpg" alt="Icono de vuelos" />
-      Vuelos
+    <button class="btn-feature" type="button" aria-label="Vuelos">
+      <img src="https://cdn-icons-png.flaticon.com/512/69/69524.png" alt="Icono de vuelos" />
+      <span>Vuelos</span>
     </button>
-    <button class="btn-feature" type="button">
-      <img src="ruta/a/imagen-hotel.jpg" alt="Icono de hoteles" />
-      Hoteles
+    <button class="btn-feature" type="button" aria-label="Hoteles">
+      <img src="https://cdn-icons-png.flaticon.com/512/139/139899.png" alt="Icono de hoteles" />
+      <span>Hoteles</span>
     </button>
-    <button class="btn-feature" type="button">
-      <img src="ruta/a/imagen-alquiler.jpg" alt="Icono de alquiler de autos" />
-      Alquiler de autos
+    <button class="btn-feature" type="button" aria-label="Alquiler de autos">
+      <img src="https://cdn-icons-png.flaticon.com/512/743/743922.png" alt="Icono de alquiler de autos" />
+      <span>Alquiler de autos</span>
     </button>
-    <button class="btn-feature" type="button">
-      <img src="ruta/a/imagen-seguro.jpg" alt="Icono de seguro de viaje" />
-      Seguro de viaje
+    <button class="btn-feature" type="button" aria-label="Seguro de viaje">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Icono de seguro de viaje" />
+      <span>Seguro de viaje</span>
     </button>
   </div>
 
@@ -314,17 +325,6 @@
     <button type="submit" class="btn-submit">Buscar viajes</button>
   </form>
 
-  <!-- Modal selección de aeropuerto -->
-  <div id="airport-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="airport-modal-title" aria-describedby="airport-modal-desc">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Cerrar">&times;</button>
-      <h2 id="airport-modal-title">Selecciona un aeropuerto</h2>
-      <ul class="airport-list" id="airport-list">
-        <!-- Lista dinámica de aeropuertos -->
-      </ul>
-    </div>
-  </div>
-
   <!-- Modal cotización seguro -->
   <div id="insurance-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" aria-describedby="insurance-modal-desc">
     <div class="modal-content">
@@ -342,7 +342,7 @@
   </div>
 
   <script>
-    // Manejo del formulario de búsqueda
+    // Formulario búsqueda
     document.getElementById('search-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const origin = document.getElementById('origin').value;
@@ -358,7 +358,46 @@
       window.location.href = 'resultados.html';
     });
 
-    // Aquí puedes agregar código para abrir/cerrar modales y otras funcionalidades
+    // Modal seguro viaje
+    const insuranceModal = document.getElementById('insurance-modal');
+    const insuranceForm = document.getElementById('insurance-form');
+    const insuranceResult = document.getElementById('insurance-quote-result');
+    const modalCloseButtons = document.querySelectorAll('.modal-close');
+
+    // Abrir modal seguro al hacer click en botón seguro de viaje
+    document.querySelectorAll('.btn-feature')[3].addEventListener('click', () => {
+      insuranceModal.style.display = 'flex';
+      insuranceResult.textContent = '';
+      insuranceForm.reset();
+    });
+
+    // Cerrar modales
+    modalCloseButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.modal').style.display = 'none';
+      });
+    });
+
+    // Cotización seguro (ejemplo simple)
+    insuranceForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const age = parseInt(document.getElementById('age').value, 10);
+      const duration = parseInt(document.getElementById('duration').value, 10);
+      if (isNaN(age) || isNaN(duration) || age <= 0 || duration <= 0) {
+        insuranceResult.textContent = 'Por favor, ingresa valores válidos.';
+        return;
+      }
+      // Ejemplo simple: precio base + recargos
+      let price = 20 + (age * 0.5) + (duration * 2);
+      insuranceResult.textContent = `El precio estimado de tu seguro es $${price.toFixed(2)} USD.`;
+    });
+
+    // Cerrar modal al hacer click fuera del contenido
+    window.addEventListener('click', e => {
+      if (e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
