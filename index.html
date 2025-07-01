@@ -338,7 +338,7 @@
     </div>
   </div>
 
-  <!-- Modal cotizaciÃ³n seguro -->
+  <!-- Modal cotización seguro -->
   <div id="insurance-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title">
     <div class="modal-content">
       <button class="modal-close" id="close-insurance-modal" aria-label="Cerrar ventana">&times;</button>
@@ -360,7 +360,7 @@
             <input type="date" id="insured-end-date" name="insured-end-date" required />
           </div>
         </div>
-        <button type="submit">Solicitar cotizaciÃ³n</button>
+        <button type="submit">Solicitar cotización</button>
       </form>
       <div id="insurance-quote-result"></div>
     </div>
@@ -523,7 +523,7 @@
       window.location.href = 'resultados.html';
     });
 
-    // Formulario cotizaciÃ³n seguro
+    // Formulario cotización seguro
     document.getElementById('insurance-quote-form').addEventListener('submit', e => {
       e.preventDefault();
       const name = document.getElementById('insured-name').value.trim();
@@ -551,7 +551,7 @@
       const resultDiv = document.getElementById('insurance-quote-result');
       resultDiv.innerHTML = `
         <div>
-          <strong style="color:#00c6ff;font-size:1.2em;">CotizaciÃ³n para ${name}:</strong><br>
+          <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br>
           Destino: ${country}<br>
           Fechas: ${startDate} a ${endDate}<br>
           Edad: ${age} aÃ±os<br>
