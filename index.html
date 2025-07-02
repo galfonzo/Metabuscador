@@ -21,16 +21,18 @@
     .button-group {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap; /* Evita que los botones se vayan a otra línea */
       gap: 22px;
       margin: 40px auto 25px auto;
       max-width: 1100px;
+      overflow-x: auto; /* Permite scroll horizontal si no caben */
+      -webkit-overflow-scrolling: touch; /* Suaviza scroll en móviles */
     }
-    /* Botones de categorías reducidos un 15% */
+    /* Botones de categorías reducidos un 15% y ajustados para caber en una línea */
     .btn-feature {
-      flex: 1 1 180px;
-      max-width: 161.5px; /* 190px * 0.85 */
-      min-width: 127.5px; /* 150px * 0.85 */
+      flex: 0 0 auto;
+      max-width: 140px; /* Ajustado para que quepan */
+      min-width: 120px;
       background: rgba(255,255,255,0.9);
       border-radius: 16px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.12);
@@ -237,6 +239,10 @@
     @media (max-width: 700px) {
       form#search-form > div.row {
         flex-direction: column;
+      }
+      .button-group {
+        flex-wrap: wrap; /* Permitir que en pantallas pequeñas los botones se envuelvan */
+        overflow-x: visible;
       }
       .button-group {
         flex-direction: column;
