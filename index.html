@@ -205,7 +205,9 @@
       border: none;
       cursor: pointer;
     }
+    /* Ocultar el div de resultados de cotización por defecto */
     #insurance-quote-result {
+      display: none;
       margin-top: 15px;
       background: #003f5c;
       color: #fff;
@@ -483,12 +485,18 @@
     closeInsuranceModalBtn.addEventListener('click', () => {
       insuranceModal.style.display = 'none';
       travelInsuranceCheckbox.checked = false;
+      const resultDiv = document.getElementById('insurance-quote-result');
+      resultDiv.innerHTML = '';
+      resultDiv.style.display = 'none';
     });
 
     window.addEventListener('click', e => {
       if (e.target === insuranceModal) {
         insuranceModal.style.display = 'none';
         travelInsuranceCheckbox.checked = false;
+        const resultDiv = document.getElementById('insurance-quote-result');
+        resultDiv.innerHTML = '';
+        resultDiv.style.display = 'none';
       }
     });
 
@@ -575,6 +583,7 @@
           <button onclick="alert('¡Solicitud enviada! Un asesor te contactará pronto.')" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px 22px;border:none;border-radius:7px;cursor:pointer;">Solicitar este seguro</button>
         </div>
       `;
+      resultDiv.style.display = 'block'; // Mostrar el div cuando hay resultado
     });
   </script>
 </body>
