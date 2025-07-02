@@ -28,10 +28,9 @@
       overflow-x: auto; /* Permite scroll horizontal si no caben */
       -webkit-overflow-scrolling: touch; /* Suaviza scroll en móviles */
     }
-    /* Botones de categorías reducidos un 15% y ajustados para caber en una línea */
     .btn-feature {
       flex: 0 0 auto;
-      max-width: 140px; /* Ajustado para que quepan */
+      max-width: 140px;
       min-width: 120px;
       background: rgba(255,255,255,0.9);
       border-radius: 16px;
@@ -43,7 +42,7 @@
       border: 2px solid transparent;
       color: #0077cc;
       font-weight: 700;
-      font-size: 0.918rem; /* 1.08rem * 0.85 */
+      font-size: 0.918rem;
     }
     .btn-feature:hover {
       transform: translateY(-6px) scale(1.04);
@@ -52,29 +51,28 @@
     }
     .btn-feature img {
       width: 100%;
-      height: 93.5px; /* 110px * 0.85 */
+      height: 93.5px;
       object-fit: cover;
       display: block;
       border-bottom: 1px solid #eee;
     }
-    /* FORMULARIO PRINCIPAL - reducción total ~30% */
     form#search-form {
-      max-width: 470.6px; /* 650px * 0.85 * 0.85 */
+      max-width: 470.6px;
       margin: 0 auto 40px auto;
       background: rgba(0,0,0,0.7);
-      padding: 18.1px 21.7px; /* 25px * 0.85 * 0.85 y 30px * 0.85 * 0.85 */
+      padding: 18.1px 21.7px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      font-size: 0.7225rem; /* 1rem * 0.85 * 0.85 */
+      font-size: 0.7225rem;
     }
     form#search-form > div.row {
       display: flex;
-      gap: 14.45px; /* 20px * 0.85 * 0.85 */
-      margin-bottom: 10.8px; /* 15px * 0.85 * 0.85 */
+      gap: 14.45px;
+      margin-bottom: 10.8px;
     }
     form#search-form label {
       display: block;
-      margin-bottom: 4.25px; /* 6px * 0.85 * 0.85 */
+      margin-bottom: 4.25px;
       font-weight: 600;
       color: #fff;
       font-size: 0.7225rem;
@@ -83,7 +81,7 @@
     form#search-form input[type="date"],
     form#search-form input[type="number"] {
       width: 100%;
-      padding: 7.2px 8.7px; /* 10px * 0.85 * 0.85 y 12px * 0.85 * 0.85 */
+      padding: 7.2px 8.7px;
       border: 1.5px solid #ccc;
       border-radius: 6px;
       font-size: 0.7225rem;
@@ -110,8 +108,8 @@
       background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
       color: white;
       font-weight: 700;
-      font-size: 0.795rem; /* 1.1rem * 0.85 * 0.85 */
-      padding: 8.7px; /* 12px * 0.85 * 0.85 */
+      font-size: 0.795rem;
+      padding: 8.7px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -123,7 +121,6 @@
       background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
       box-shadow: 0 6px 12px rgba(0,95,163,0.6);
     }
-    /* Modal estilos */
     .modal {
       display: none;
       position: fixed;
@@ -138,24 +135,24 @@
       color: #222;
       border-radius: 12px;
       max-width: 450px;
-      padding: 25.5px 21.25px 17px 21.25px; /* 30px 25px 20px 25px * 0.85 * 0.85 */
+      padding: 25.5px 21.25px 17px 21.25px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
       text-align: left;
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
-      font-size: 0.7225rem; /* 0.85rem * 0.85 */
+      font-size: 0.7225rem;
     }
     .modal-content h2, .modal-content h3 {
       color: #0077cc;
       margin-top: 0;
       margin-bottom: 15px;
       text-align: center;
-      font-size: 1.445rem; /* 1.7rem * 0.85 */
+      font-size: 1.445rem;
     }
     .modal-content label {
       display: block;
-      margin: 7.2px 0 3.6px 0; /* 8.5px y 4.25px * 0.85 */
+      margin: 7.2px 0 3.6px 0;
       font-weight: 600;
       font-size: 0.7225rem;
     }
@@ -163,7 +160,7 @@
     .modal-content input[type="number"],
     .modal-content input[type="date"] {
       width: 100%;
-      padding: 6.1px 7.2px; /* 6.8px y 8.5px * 0.85 */
+      padding: 6.1px 7.2px;
       border: 1.5px solid #ccc;
       border-radius: 6px;
       font-size: 0.7225rem;
@@ -182,8 +179,8 @@
       background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
       color: white;
       font-weight: 700;
-      font-size: 0.795rem; /* 0.935rem * 0.85 */
-      padding: 7.4px; /* 8.7px * 0.85 */
+      font-size: 0.795rem;
+      padding: 7.4px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -205,7 +202,7 @@
       border: none;
       cursor: pointer;
     }
-    /* Ocultar el div de resultados de cotización por defecto */
+    /* Ocultar div de cotización por defecto */
     #insurance-quote-result {
       display: none;
       margin-top: 15px;
@@ -228,7 +225,7 @@
       color: #fff;
       border: none;
       border-radius: 7px;
-      padding: 8.7px 15.3px; /* 10px 18px * 0.85 */
+      padding: 8.7px 15.3px;
       font-size: 0.7225rem;
       font-weight: 600;
       cursor: pointer;
@@ -243,7 +240,7 @@
         flex-direction: column;
       }
       .button-group {
-        flex-wrap: wrap; /* Permitir que en pantallas pequeñas los botones se envuelvan */
+        flex-wrap: wrap;
         overflow-x: visible;
       }
       .button-group {
@@ -383,7 +380,6 @@
   </div>
 
   <script>
-    // Datos temáticos para selección de aeropuertos
     const thematicAirports = {
       arquitectura: [
         { name: "Barcelona (BCN) - España", code: "BCN" },
@@ -417,7 +413,6 @@
       ]
     };
 
-    // Modal aeropuertos
     const modal = document.getElementById('modal-airports');
     const airportList = document.getElementById('airport-list');
     const closeModalBtn = document.getElementById('close-modal-airports');
@@ -432,7 +427,6 @@
         ).join('');
         modal.style.display = "flex";
       });
-      // Soporte para teclado (Enter)
       btn.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -459,7 +453,6 @@
       }
     });
 
-    // Modal seguro y precarga de fechas y país destino
     const travelInsuranceCheckbox = document.getElementById('travelInsurance');
     const insuranceModal = document.getElementById('insurance-modal');
     const closeInsuranceModalBtn = document.getElementById('close-insurance-modal');
@@ -471,6 +464,12 @@
     const insuredEndDate = document.getElementById('insured-end-date');
     const insuredCountry = document.getElementById('insured-country');
 
+    function resetInsuranceQuote() {
+      const resultDiv = document.getElementById('insurance-quote-result');
+      resultDiv.innerHTML = '';
+      resultDiv.style.display = 'none';
+    }
+
     travelInsuranceCheckbox.addEventListener('change', () => {
       if (travelInsuranceCheckbox.checked) {
         insuredStartDate.value = checkInDateInput.value;
@@ -479,28 +478,24 @@
         insuranceModal.style.display = 'flex';
       } else {
         insuranceModal.style.display = 'none';
+        resetInsuranceQuote();
       }
     });
 
     closeInsuranceModalBtn.addEventListener('click', () => {
       insuranceModal.style.display = 'none';
       travelInsuranceCheckbox.checked = false;
-      const resultDiv = document.getElementById('insurance-quote-result');
-      resultDiv.innerHTML = '';
-      resultDiv.style.display = 'none';
+      resetInsuranceQuote();
     });
 
     window.addEventListener('click', e => {
       if (e.target === insuranceModal) {
         insuranceModal.style.display = 'none';
         travelInsuranceCheckbox.checked = false;
-        const resultDiv = document.getElementById('insurance-quote-result');
-        resultDiv.innerHTML = '';
-        resultDiv.style.display = 'none';
+        resetInsuranceQuote();
       }
     });
 
-    // Actualizar fechas y país si cambian y modal está abierto
     checkInDateInput.addEventListener('change', () => {
       if (insuranceModal.style.display === 'flex') {
         insuredStartDate.value = checkInDateInput.value;
@@ -517,7 +512,6 @@
       }
     });
 
-    // Limitar campo Edad a 3 dígitos numéricos
     const insuredAgeInput = document.getElementById('insured-age');
     insuredAgeInput.addEventListener('input', function() {
       this.value = this.value.replace(/\D/g, '');
@@ -526,7 +520,6 @@
       }
     });
 
-    // Formulario principal
     document.getElementById('search-form').addEventListener('submit', e => {
       e.preventDefault();
       const form = e.target;
@@ -545,7 +538,6 @@
       window.location.href = 'resultados.html';
     });
 
-    // Formulario cotización seguro
     document.getElementById('insurance-quote-form').addEventListener('submit', e => {
       e.preventDefault();
       const name = document.getElementById('insured-name').value.trim();
@@ -583,7 +575,7 @@
           <button onclick="alert('¡Solicitud enviada! Un asesor te contactará pronto.')" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px 22px;border:none;border-radius:7px;cursor:pointer;">Solicitar este seguro</button>
         </div>
       `;
-      resultDiv.style.display = 'block'; // Mostrar el div cuando hay resultado
+      resultDiv.style.display = 'block';
     });
   </script>
 </body>
