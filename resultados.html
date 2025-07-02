@@ -27,7 +27,7 @@
       margin-bottom: 1rem;
     }
     #results-container {
-      max-width: 900px; /* un poco más ancho para que quepan dos columnas */
+      max-width: 900px;
       margin: 0 auto;
       background: rgba(0,0,0,0.75);
       border-radius: 12px;
@@ -37,23 +37,23 @@
     /* Contenedor flex para vuelos y hoteles */
     .results-flex {
       display: flex;
-      flex-wrap: wrap;          /* permite salto de línea si no hay espacio */
-      gap: 20px;                /* espacio entre columnas */
-      justify-content: center;  /* centra horizontalmente */
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
     .result-section {
       background: rgba(0,0,0,0.75);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.9);
-      flex: 1 1 400px;          /* crece, encoge, base 400px */
-      max-width: 48%;           /* máximo ancho para que quepan dos */
+      flex: 1 1 400px;
+      max-width: 48%;
       box-sizing: border-box;
       margin-bottom: 20px;
     }
     @media (max-width: 850px) {
       .result-section {
-        max-width: 100%;        /* en pantallas pequeñas ocupa todo */
+        max-width: 100%;
         flex-basis: 100%;
       }
     }
