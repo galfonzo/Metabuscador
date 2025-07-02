@@ -27,37 +27,39 @@
       margin-bottom: 1rem;
     }
     #results-container {
-      max-width: 765px;
+      max-width: 900px; /* un poco más ancho para que quepan dos columnas */
       margin: 0 auto;
       background: rgba(0,0,0,0.75);
       border-radius: 12px;
-      padding: 21.25px 25.5px;
+      padding: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.9);
     }
+    /* Contenedor flex para vuelos y hoteles */
     .results-flex {
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      flex-wrap: wrap;          /* permite salto de línea si no hay espacio */
+      gap: 20px;                /* espacio entre columnas */
+      justify-content: center;  /* centra horizontalmente */
     }
     .result-section {
-      flex: 1 1 300px;
-      max-width: 45%;
       background: rgba(0,0,0,0.75);
       border-radius: 12px;
-      padding: 21.25px 25.5px;
+      padding: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.9);
+      flex: 1 1 400px;          /* crece, encoge, base 400px */
+      max-width: 48%;           /* máximo ancho para que quepan dos */
+      box-sizing: border-box;
       margin-bottom: 20px;
     }
-    @media (max-width: 650px) {
+    @media (max-width: 850px) {
       .result-section {
-        max-width: 100%;
+        max-width: 100%;        /* en pantallas pequeñas ocupa todo */
         flex-basis: 100%;
       }
     }
     .result-item {
       border-bottom: 1px solid #444;
-      padding: 10.2px 0;
+      padding: 10px 0;
       font-size: 0.935rem;
       line-height: 1.3;
     }
@@ -70,7 +72,7 @@
     button#back-btn {
       display: block;
       margin: 0 auto;
-      padding: 10.2px 21.25px;
+      padding: 10px 21px;
       font-size: 0.935rem;
       font-weight: 700;
       color: #0077cc;
