@@ -396,15 +396,19 @@
   </div>
 
   <script>
-    // Datos ampliados de aeropuertos por temática
+    // Datos ampliados de aeropuertos por temática con destinos populares globales
     const thematicAirports = {
       arquitectura: [
         { name: "Barcelona (BCN) - España", code: "BCN" },
-        { name: "Dubái (DXB) - Emiratos Árabes", code: "DXB" },
+        { name: "Dubái (DXB) - Emiratos Árabes Unidos", code: "DXB" },
         { name: "París (CDG) - Francia", code: "CDG" },
         { name: "Roma (FCO) - Italia", code: "FCO" },
         { name: "Estambul (IST) - Turquía", code: "IST" },
-        { name: "Londres (LHR) - Reino Unido", code: "LHR" }
+        { name: "Londres (LHR) - Reino Unido", code: "LHR" },
+        { name: "Florencia (FLR) - Italia", code: "FLR" },
+        { name: "San Petersburgo (LED) - Rusia", code: "LED" },
+        { name: "Praga (PRG) - República Checa", code: "PRG" },
+        { name: "Venecia (VCE) - Italia", code: "VCE" }
       ],
       playas: [
         { name: "Cancún (CUN) - México", code: "CUN" },
@@ -412,7 +416,11 @@
         { name: "Phuket (HKT) - Tailandia", code: "HKT" },
         { name: "Maldivas (MLE) - Maldivas", code: "MLE" },
         { name: "Bali (DPS) - Indonesia", code: "DPS" },
-        { name: "Ibiza (IBZ) - España", code: "IBZ" }
+        { name: "Ibiza (IBZ) - España", code: "IBZ" },
+        { name: "Maui (OGG) - EE.UU.", code: "OGG" },
+        { name: "Boracay (MPH) - Filipinas", code: "MPH" },
+        { name: "Barbados (BGI) - Barbados", code: "BGI" },
+        { name: "Seychelles (SEZ) - Seychelles", code: "SEZ" }
       ],
       montanas: [
         { name: "Denver (DEN) - EE.UU.", code: "DEN" },
@@ -420,7 +428,11 @@
         { name: "Zúrich (ZRH) - Suiza", code: "ZRH" },
         { name: "Chamonix (GVA) - Francia", code: "GVA" },
         { name: "Innsbruck (INN) - Austria", code: "INN" },
-        { name: "Queenstown (ZQN) - Nueva Zelanda", code: "ZQN" }
+        { name: "Queenstown (ZQN) - Nueva Zelanda", code: "ZQN" },
+        { name: "Aspen (ASE) - EE.UU.", code: "ASE" },
+        { name: "Banff (YBA) - Canadá", code: "YBA" },
+        { name: "Nagano (NGO) - Japón", code: "NGO" },
+        { name: "Zermatt (ZRT) - Suiza", code: "ZRT" }
       ],
       cultura: [
         { name: "Roma (FCO) - Italia", code: "FCO" },
@@ -428,7 +440,11 @@
         { name: "Estambul (IST) - Turquía", code: "IST" },
         { name: "Atenas (ATH) - Grecia", code: "ATH" },
         { name: "Praga (PRG) - República Checa", code: "PRG" },
-        { name: "Marrakech (RAK) - Marruecos", code: "RAK" }
+        { name: "Marrakech (RAK) - Marruecos", code: "RAK" },
+        { name: "Jerusalén (JRS) - Israel", code: "JRS" },
+        { name: "Cusco (CUZ) - Perú", code: "CUZ" },
+        { name: "Cartagena (CTG) - Colombia", code: "CTG" },
+        { name: "Seúl (ICN) - Corea del Sur", code: "ICN" }
       ],
       deporte: [
         { name: "Londres (LHR) - Reino Unido", code: "LHR" },
@@ -436,7 +452,11 @@
         { name: "Madrid (MAD) - España", code: "MAD" },
         { name: "Barcelona (BCN) - España", code: "BCN" },
         { name: "Vancouver (YVR) - Canadá", code: "YVR" },
-        { name: "Rio de Janeiro (GIG) - Brasil", code: "GIG" }
+        { name: "Río de Janeiro (GIG) - Brasil", code: "GIG" },
+        { name: "Múnich (MUC) - Alemania", code: "MUC" },
+        { name: "Turín (TRN) - Italia", code: "TRN" },
+        { name: "Sochi (AER) - Rusia", code: "AER" },
+        { name: "Salt Lake City (SLC) - EE.UU.", code: "SLC" }
       ],
       tours: [
         { name: "El Cairo (CAI) - Egipto", code: "CAI" },
@@ -444,7 +464,11 @@
         { name: "Pekín (PEK) - China", code: "PEK" },
         { name: "Machu Picchu (CUZ) - Perú", code: "CUZ" },
         { name: "Petra (AMM) - Jordania", code: "AMM" },
-        { name: "Angkor Wat (REP) - Camboya", code: "REP" }
+        { name: "Angkor Wat (REP) - Camboya", code: "REP" },
+        { name: "Kioto (KIX) - Japón", code: "KIX" },
+        { name: "Estambul (IST) - Turquía", code: "IST" },
+        { name: "Cartagena (CTG) - Colombia", code: "CTG" },
+        { name: "Jerusalén (JRS) - Israel", code: "JRS" }
       ]
     };
 
