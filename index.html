@@ -197,4 +197,212 @@
       cursor: pointer;
       width: 100%;
       box-shadow: 0 4px 8px rgba(0,119,204,0.4);
-      transition: background 0.3s, box-shadow
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .modal-content button[type="submit"]:hover {
+      background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
+      box-shadow: 0 6px 12px rgba(0,95,163,0.6);
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5em;
+      color: #0077cc;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    #insurance-quote-result {
+      display: none;
+      margin-top: 15px;
+      background: #003f5c;
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.7225rem;
+    }
+    .airport-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 15px 0;
+    }
+    .airport-list li {
+      margin: 8px 0;
+    }
+    .airport-btn {
+      background: linear-gradient(90deg, #00c6ff 60%, #0077cc 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 8.7px 15.3px;
+      font-size: 0.7225rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 2px 0;
+      transition: background 0.2s;
+    }
+    .airport-btn:hover {
+      background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
+    }
+    @media (max-width: 700px) {
+      form#search-form > .row {
+        flex-direction: column;
+      }
+      .button-group {
+        flex-wrap: wrap;
+        overflow-x: visible;
+      }
+      .button-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn-feature {
+        max-width: 350px;
+        width: 90%;
+      }
+      .modal-content {
+        max-width: 90vw;
+      }
+    }
+    #resultados {
+      max-width: 470.6px;
+      margin: 20px auto 40px auto;
+      background: rgba(255,255,255,0.9);
+      color: #222;
+      border-radius: 10px;
+      padding: 15px 20px;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      overflow-y: auto;
+      max-height: 300px;
+    }
+    #resultados div {
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
+    <div class="logo-box">
+      <svg width="290" height="60" viewBox="0 0 290 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+        <title>TuneMyTrip Logotipo</title>
+        <desc>Logotipo con texto TuneMyTrip y brújula estilizada</desc>
+        <style>
+          .tm-text {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            font-size: 36px;
+            fill: #0077cc;
+          }
+          .tm-accent {
+            fill: #00c6ff;
+          }
+          .tm-icon {
+            fill: #0077cc;
+            stroke: #00c6ff;
+            stroke-width: 2;
+          }
+        </style>
+        <circle class="tm-icon" cx="30" cy="30" r="25" />
+        <polygon class="tm-accent" points="30,10 35,30 30,50 25,30" />
+        <circle cx="30" cy="30" r="5" fill="#0077cc" />
+        <text x="70" y="42" class="tm-text">Tune<tspan class="tm-accent">My</tspan>Trip</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="button-group" role="navigation" aria-label="Categorías de viajes">
+    <!-- ... (botones temáticos igual que antes) ... -->
+    <!-- (Por brevedad, omite aquí los botones temáticos, pero en tu código real inclúyelos igual que antes) -->
+  </div>
+
+  <form id="search-form" aria-label="Formulario de búsqueda de viajes">
+    <div class="row">
+      <div>
+        <label for="origin">Origen (ej: MAD)</label>
+        <input type="text" id="origin" name="origin" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
+      </div>
+      <div>
+        <label for="checkInDate">Fecha de salida</label>
+        <input type="date" id="checkInDate" name="checkInDate" required />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="destination">Destino (ej: JFK)</label>
+        <input type="text" id="destination" name="destination" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
+      </div>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="travelInsurance" name="travelInsurance" />
+      <label for="travelInsurance">Contratar seguro de viaje</label>
+    </div>
+
+    <button type="submit" class="btn-submit">Buscar vuelos</button>
+  </form>
+
+  <div id="resultados" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ... (modales y resto del HTML igual que antes) ... -->
+
+  <script>
+    // Conversión automática a mayúsculas en los campos IATA durante el tipeo
+    document.getElementById('origin').addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+    document.getElementById('destination').addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+
+    // ... (resto de la lógica igual que antes, incluyendo la consulta a la API) ...
+    // Por brevedad, aquí solo se muestra la parte relevante, pero en tu archivo real incluye todo el JS de modales, seguro, etc.
+
+    const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
+
+    async function buscarVuelos(origen, destino, fechaSalida) {
+      const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.error) throw new Error(data.error.message);
+        return data.data || [];
+      } catch (error) {
+        console.error('Error API Aviationstack:', error);
+        throw error;
+      }
+    }
+
+    document.getElementById('search-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const origen = document.getElementById('origin').value.trim().toUpperCase();
+      const destino = document.getElementById('destination').value.trim().toUpperCase();
+      const fechaSalida = document.getElementById('checkInDate').value;
+      const resultadosDiv = document.getElementById('resultados');
+      resultadosDiv.innerHTML = 'Buscando vuelos...';
+      try {
+        const vuelos = await buscarVuelos(origen, destino, fechaSalida);
+        if (vuelos.length > 0) {
+          resultadosDiv.innerHTML = vuelos.map(flight => `
+            <div>
+              <strong>${flight.airline.name} - Vuelo ${flight.flight.number}</strong><br/>
+              Salida: ${flight.departure.airport} a las ${flight.departure.scheduled}<br/>
+              Llegada: ${flight.arrival.airport} a las ${flight.arrival.scheduled}<br/>
+              Estado: ${flight.flight_status}
+            </div>
+          `).join('');
+        } else {
+          resultadosDiv.innerHTML = '<p>No se encontraron vuelos para esos parámetros.</p>';
+        }
+      } catch (error) {
+        resultadosDiv.innerHTML = `<p>Error al obtener datos: ${error.message}</p>`;
+      }
+    });
+
+    // ... (resto de la lógica de modales, seguro, etc. igual que antes) ...
+  </script>
+</body>
+</html>
