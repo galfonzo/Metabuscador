@@ -146,6 +146,10 @@
       background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
       box-shadow: 0 6px 12px rgba(0,95,163,0.6);
     }
+    #returnDateContainer {
+      display: none;
+      margin-bottom: 15px;
+    }
     .modal {
       display: none;
       position: fixed;
@@ -381,6 +385,16 @@
         <label for="travelInsurance">Contratar seguro de viaje</label>
       </div>
 
+      <div class="checkbox-group">
+        <input type="checkbox" id="selectHotel" name="selectHotel" />
+        <label for="selectHotel">Seleccionar Hotel</label>
+      </div>
+
+      <div id="returnDateContainer" style="display:none; margin-bottom: 15px;">
+        <label for="returnDate">Fecha de regreso</label>
+        <input type="date" id="returnDate" name="returnDate" />
+      </div>
+
       <button type="submit" class="btn-submit">Buscar vuelos</button>
     </form>
 
@@ -431,6 +445,22 @@
     });
     document.getElementById('destination').addEventListener('input', function() {
       this.value = this.value.toUpperCase();
+    });
+
+    // Mostrar/ocultar fecha de regreso según checkbox "Seleccionar Hotel"
+    const selectHotelCheckbox = document.getElementById('selectHotel');
+    const returnDateContainer = document.getElementById('returnDateContainer');
+    const returnDateInput = document.getElementById('returnDate');
+
+    selectHotelCheckbox.addEventListener('change', () => {
+      if (selectHotelCheckbox.checked) {
+        returnDateContainer.style.display = 'block';
+        returnDateInput.required = true;
+      } else {
+        returnDateContainer.style.display = 'none';
+        returnDateInput.required = false;
+        returnDateInput.value = '';
+      }
     });
 
     // Datos de aeropuertos sugeridos por temática
@@ -629,31 +659,42 @@
       }
     });
 
-    // Búsqueda real de vuelos con Aviationstack
+    // Búsqueda real de vuelos con Aviationstack y manejo de selección hotel
     const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
-
-    async function buscarVuelos(origen, destino, fechaSalida) {
-      const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.error) throw new Error(data.error.message);
-        return data.data || [];
-      } catch (error) {
-        console.error('Error API Aviationstack:', error);
-        throw error;
-      }
-    }
 
     document.getElementById('search-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const origen = document.getElementById('origin').value.trim().toUpperCase();
       const destino = document.getElementById('destination').value.trim().toUpperCase();
       const fechaSalida = document.getElementById('checkInDate').value;
+      const selectHotel = document.getElementById('selectHotel').checked;
+      const fechaRegreso = document.getElementById('returnDate').value;
       const resultadosDiv = document.getElementById('resultados');
+
+      if (selectHotel) {
+        if (!fechaRegreso) {
+          alert('Por favor, selecciona la fecha de regreso para el hotel.');
+          return;
+        }
+        // Redirigir a página de hoteles con parámetros
+        const params = new URLSearchParams({
+          origen,
+          destino,
+          fechaSalida,
+          fechaRegreso
+        });
+        window.location.href = `hoteles.html?${params.toString()}`;
+        return;
+      }
+
+      // Búsqueda de vuelos si no se selecciona hotel
       resultadosDiv.innerHTML = 'Buscando vuelos...';
       try {
-        const vuelos = await buscarVuelos(origen, destino, fechaSalida);
+        const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.error) throw new Error(data.error.message);
+        const vuelos = data.data || [];
         if (vuelos.length > 0) {
           resultadosDiv.innerHTML = vuelos.map(flight => `
             <div>
