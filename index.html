@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <title>TuneMyTrip</title>
   <style>
-    /* Corrección para eliminar tira blanca inferior y scroll horizontal */
+    /* Corrección para eliminar tira blanca inferior y asegurar altura completa */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
     }
-
     body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       font-family: Arial, sans-serif;
       background-image: url('img/mapamundi.png');
       background-size: cover;
@@ -274,7 +276,7 @@
     }
     #resultados {
       max-width: 470.6px;
-      margin: 20px auto 40px auto;
+      margin: 20px auto 0 auto;
       background: rgba(255,255,255,0.9);
       color: #222;
       border-radius: 10px;
@@ -283,6 +285,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       overflow-y: auto;
       max-height: 300px;
+      flex-grow: 1;
     }
     #resultados div {
       margin-bottom: 15px;
