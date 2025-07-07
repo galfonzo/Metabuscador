@@ -148,7 +148,8 @@
     }
     #returnDateContainer {
       display: none;
-      margin-bottom: 15px;
+      flex-basis: 180px;
+      margin-top: 24px;
     }
     .modal {
       display: none;
@@ -282,6 +283,10 @@
       .modal-content {
         max-width: 90vw;
       }
+      #returnDateContainer {
+        flex-basis: auto;
+        margin-top: 10px;
+      }
     }
     main > #resultados {
       max-width: 470.6px;
@@ -373,10 +378,14 @@
           <input type="date" id="checkInDate" name="checkInDate" required />
         </div>
       </div>
-      <div class="row">
-        <div>
+      <div class="row" style="align-items: flex-end; gap: 10px;">
+        <div style="flex: 1;">
           <label for="destination">Destino (ej: JFK)</label>
           <input type="text" id="destination" name="destination" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
+        </div>
+        <div id="returnDateContainer" style="display:none; flex-basis: 180px;">
+          <label for="returnDate">Fecha de regreso</label>
+          <input type="date" id="returnDate" name="returnDate" />
         </div>
       </div>
 
@@ -390,15 +399,11 @@
         <label for="selectHotel">Seleccionar Hotel</label>
       </div>
 
-      <div id="returnDateContainer" style="display:none; margin-bottom: 15px;">
-        <label for="returnDate">Fecha de regreso</label>
-        <input type="date" id="returnDate" name="returnDate" />
-      </div>
-
       <button type="submit" class="btn-submit">Buscar vuelos</button>
     </form>
 
     <div id="resultados" aria-live="polite" aria-atomic="true"></div>
+    <div id="hotel-results" style="max-width:470px; margin: 0 auto 40px auto; background: rgba(255,255,255,0.9); color:#222; border-radius:10px; padding:15px 20px; font-size:0.85rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display:none;"></div>
   </main>
 
   <!-- Modal selección de aeropuerto -->
@@ -670,20 +675,25 @@
       const selectHotel = document.getElementById('selectHotel').checked;
       const fechaRegreso = document.getElementById('returnDate').value;
       const resultadosDiv = document.getElementById('resultados');
+      const hotelResultsDiv = document.getElementById('hotel-results');
+
+      hotelResultsDiv.style.display = 'none';
+      hotelResultsDiv.innerHTML = '';
+      resultadosDiv.innerHTML = '';
 
       if (selectHotel) {
         if (!fechaRegreso) {
           alert('Por favor, selecciona la fecha de regreso para el hotel.');
           return;
         }
-        // Redirigir a página de hoteles con parámetros
-        const params = new URLSearchParams({
-          origen,
-          destino,
-          fechaSalida,
-          fechaRegreso
-        });
-        window.location.href = `hoteles.html?${params.toString()}`;
+        // Aquí se simula búsqueda de hoteles (puedes integrar API real)
+        hotelResultsDiv.style.display = 'block';
+        hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>
+          <ul>
+            <li>Hotel Plaza - 4 estrellas</li>
+            <li>Hotel Central - 3 estrellas</li>
+            <li>Resort Paradise - 5 estrellas</li>
+          </ul>`;
         return;
       }
 
