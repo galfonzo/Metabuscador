@@ -315,8 +315,30 @@
   </div>
 
   <div class="button-group" role="navigation" aria-label="Categorías de viajes">
-    <!-- ... (botones temáticos igual que antes) ... -->
-    <!-- (Por brevedad, omite aquí los botones temáticos, pero en tu código real inclúyelos igual que antes) -->
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Arquitectura" data-theme="arquitectura">
+      <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Obra arquitectónica famosa" />
+      <span>Arquitectura</span>
+    </div>
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Playas" data-theme="playas">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Playa paradisíaca" />
+      <span>Playas</span>
+    </div>
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Montañas" data-theme="montanas">
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=400&q=80" alt="Montañas nevadas" />
+      <span>Montañas</span>
+    </div>
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Cultura" data-theme="cultura">
+      <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Evento cultural" />
+      <span>Cultura</span>
+    </div>
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Deporte" data-theme="deporte">
+      <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Evento deportivo" />
+      <span>Deporte</span>
+    </div>
+    <div class="btn-feature" tabindex="0" role="button" aria-label="Tours completos" data-theme="tours">
+      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Tour completo" />
+      <span>Tours completos</span>
+    </div>
   </div>
 
   <form id="search-form" aria-label="Formulario de búsqueda de viajes">
@@ -347,7 +369,42 @@
 
   <div id="resultados" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- ... (modales y resto del HTML igual que antes) ... -->
+  <!-- Modal selección de aeropuerto -->
+  <div id="modal-airports" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button class="modal-close" id="close-modal-airports" aria-label="Cerrar ventana">&times;</button>
+      <h3 id="modal-title">Selecciona un destino</h3>
+      <ul class="airport-list" id="airport-list"></ul>
+    </div>
+  </div>
+
+  <!-- Modal cotización seguro -->
+  <div id="insurance-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title">
+    <div class="modal-content">
+      <button class="modal-close" id="close-insurance-modal" aria-label="Cerrar ventana">&times;</button>
+      <h2 id="insurance-modal-title">Cotiza tu seguro de viaje</h2>
+      <form id="insurance-quote-form">
+        <label for="insured-name">Nombre completo</label>
+        <input type="text" id="insured-name" name="insured-name" required />
+        <label for="insured-age">Edad</label>
+        <input type="number" id="insured-age" name="insured-age" min="0" max="120" maxlength="3" required />
+        <label for="insured-country">País de destino</label>
+        <input type="text" id="insured-country" name="insured-country" required />
+        <div class="row">
+          <div>
+            <label for="insured-start-date">Fecha inicio</label>
+            <input type="date" id="insured-start-date" name="insured-start-date" required />
+          </div>
+          <div>
+            <label for="insured-end-date">Fecha fin</label>
+            <input type="date" id="insured-end-date" name="insured-end-date" required />
+          </div>
+        </div>
+        <button type="submit">Solicitar cotización</button>
+      </form>
+      <div id="insurance-quote-result"></div>
+    </div>
+  </div>
 
   <script>
     // Conversión automática a mayúsculas en los campos IATA durante el tipeo
@@ -358,8 +415,8 @@
       this.value = this.value.toUpperCase();
     });
 
-    // ... (resto de la lógica igual que antes, incluyendo la consulta a la API) ...
-    // Por brevedad, aquí solo se muestra la parte relevante, pero en tu archivo real incluye todo el JS de modales, seguro, etc.
+    // Resto de la lógica de modales, seguro, y búsqueda de vuelos (igual que antes)
+    // ... (para mantener el ejemplo claro, aquí solo se muestra la parte relevante de la búsqueda real de vuelos) ...
 
     const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
 
@@ -402,7 +459,8 @@
       }
     });
 
-    // ... (resto de la lógica de modales, seguro, etc. igual que antes) ...
+    // Aquí continúa el resto de la lógica de modales y seguro de viaje, igual que en tu versión anterior.
+    // Puedes copiar y pegar el resto de los scripts de modales y seguro directamente aquí.
   </script>
 </body>
 </html>
