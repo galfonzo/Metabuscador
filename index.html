@@ -4,8 +4,15 @@
   <meta charset="UTF-8" />
   <title>TuneMyTrip</title>
   <style>
-    body {
+    /* Corrección para eliminar tira blanca inferior y scroll horizontal */
+    html, body {
+      height: 100%;
       margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       background-image: url('img/mapamundi.png');
       background-size: cover;
@@ -519,7 +526,6 @@
     const modal = document.getElementById('modal-airports');
     const airportList = document.getElementById('airport-list');
     const closeModalBtn = document.getElementById('close-modal-airports');
-    const destinationInput = document.getElementById('destination');
 
     document.querySelectorAll('.btn-feature').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -536,7 +542,7 @@
     airportList.addEventListener('click', e => {
       if (e.target.classList.contains('airport-btn')) {
         const code = e.target.getAttribute('data-code');
-        destinationInput.value = code;
+        document.getElementById('destination').value = code;
         modal.style.display = "none";
       }
     });
@@ -570,7 +576,7 @@
       if (travelInsuranceCheckbox.checked) {
         insuredStartDate.value = checkInDateInput.value;
         insuredEndDate.value = checkInDateInput.value;
-        insuredCountry.value = destinationInput.value.trim();
+        insuredCountry.value = document.getElementById('destination').value.trim();
         insuranceModal.style.display = 'flex';
       } else {
         insuranceModal.style.display = 'none';
@@ -598,9 +604,9 @@
         insuredEndDate.value = checkInDateInput.value;
       }
     });
-    destinationInput.addEventListener('input', () => {
+    document.getElementById('destination').addEventListener('input', () => {
       if (insuranceModal.style.display === 'flex') {
-        insuredCountry.value = destinationInput.value.trim();
+        insuredCountry.value = document.getElementById('destination').value.trim();
       }
     });
 
