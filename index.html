@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>TuneMyTrip</title>
   <style>
-    /* Corrección para eliminar tira blanca inferior y asegurar altura completa */
+    /* Reset y corrección para eliminar espacios blancos */
     html, body {
       height: 100%;
       margin: 0;
@@ -22,6 +22,11 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
       color: white;
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
     .logo-container {
       text-align: center;
@@ -274,9 +279,9 @@
         max-width: 90vw;
       }
     }
-    #resultados {
+    main > #resultados {
       max-width: 470.6px;
-      margin: 20px auto 0 auto;
+      margin: 0 auto 40px auto;
       background: rgba(255,255,255,0.9);
       color: #222;
       border-radius: 10px;
@@ -286,8 +291,9 @@
       overflow-y: auto;
       max-height: 300px;
       flex-grow: 1;
+      margin-bottom: 0;
     }
-    #resultados div {
+    main > #resultados div {
       margin-bottom: 15px;
       padding-bottom: 8px;
       border-bottom: 1px solid #ccc;
@@ -295,89 +301,91 @@
   </style>
 </head>
 <body>
-  <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
-    <div class="logo-box">
-      <svg width="290" height="60" viewBox="0 0 290 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-        <title>TuneMyTrip Logotipo</title>
-        <desc>Logotipo con texto TuneMyTrip y brújula estilizada</desc>
-        <style>
-          .tm-text {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-weight: 700;
-            font-size: 36px;
-            fill: #0077cc;
-          }
-          .tm-accent {
-            fill: #00c6ff;
-          }
-          .tm-icon {
-            fill: #0077cc;
-            stroke: #00c6ff;
-            stroke-width: 2;
-          }
-        </style>
-        <circle class="tm-icon" cx="30" cy="30" r="25" />
-        <polygon class="tm-accent" points="30,10 35,30 30,50 25,30" />
-        <circle cx="30" cy="30" r="5" fill="#0077cc" />
-        <text x="70" y="42" class="tm-text">Tune<tspan class="tm-accent">My</tspan>Trip</text>
-      </svg>
-    </div>
-  </div>
-
-  <div class="button-group" role="navigation" aria-label="Categorías de viajes">
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Arquitectura" data-theme="arquitectura">
-      <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Obra arquitectónica famosa" />
-      <span>Arquitectura</span>
-    </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Playas" data-theme="playas">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Playa paradisíaca" />
-      <span>Playas</span>
-    </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Montañas" data-theme="montanas">
-      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=400&q=80" alt="Montañas nevadas" />
-      <span>Montañas</span>
-    </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Cultura" data-theme="cultura">
-      <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Evento cultural" />
-      <span>Cultura</span>
-    </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Deporte" data-theme="deporte">
-      <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Evento deportivo" />
-      <span>Deporte</span>
-    </div>
-    <div class="btn-feature" tabindex="0" role="button" aria-label="Tours completos" data-theme="tours">
-      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Tour completo" />
-      <span>Tours completos</span>
-    </div>
-  </div>
-
-  <form id="search-form" aria-label="Formulario de búsqueda de viajes">
-    <div class="row">
-      <div>
-        <label for="origin">Origen (ej: MAD)</label>
-        <input type="text" id="origin" name="origin" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
-      </div>
-      <div>
-        <label for="checkInDate">Fecha de salida</label>
-        <input type="date" id="checkInDate" name="checkInDate" required />
-      </div>
-    </div>
-    <div class="row">
-      <div>
-        <label for="destination">Destino (ej: JFK)</label>
-        <input type="text" id="destination" name="destination" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
+  <main>
+    <div class="logo-container" role="banner" aria-label="Logotipo TuneMyTrip">
+      <div class="logo-box">
+        <svg width="290" height="60" viewBox="0 0 290 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+          <title>TuneMyTrip Logotipo</title>
+          <desc>Logotipo con texto TuneMyTrip y brújula estilizada</desc>
+          <style>
+            .tm-text {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              font-weight: 700;
+              font-size: 36px;
+              fill: #0077cc;
+            }
+            .tm-accent {
+              fill: #00c6ff;
+            }
+            .tm-icon {
+              fill: #0077cc;
+              stroke: #00c6ff;
+              stroke-width: 2;
+            }
+          </style>
+          <circle class="tm-icon" cx="30" cy="30" r="25" />
+          <polygon class="tm-accent" points="30,10 35,30 30,50 25,30" />
+          <circle cx="30" cy="30" r="5" fill="#0077cc" />
+          <text x="70" y="42" class="tm-text">Tune<tspan class="tm-accent">My</tspan>Trip</text>
+        </svg>
       </div>
     </div>
 
-    <div class="checkbox-group">
-      <input type="checkbox" id="travelInsurance" name="travelInsurance" />
-      <label for="travelInsurance">Contratar seguro de viaje</label>
+    <div class="button-group" role="navigation" aria-label="Categorías de viajes">
+      <div class="btn-feature" tabindex="0" role="button" aria-label="Arquitectura" data-theme="arquitectura">
+        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Obra arquitectónica famosa" />
+        <span>Arquitectura</span>
+      </div>
+      <div class="btn-feature" tabindex="0" role="button" aria-label="Playas" data-theme="playas">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Playa paradisíaca" />
+        <span>Playas</span>
+      </div>
+      <div class="btn-feature" tabindex="0" role="button" aria-label="Montañas" data-theme="montanas">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=400&q=80" alt="Montañas nevadas" />
+        <span>Montañas</span>
+      </div>
+      <div class="btn-feature" tabindex="0" role="button" aria-label="Cultura" data-theme="cultura">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Evento cultural" />
+        <span>Cultura</span>
+      </div>
+      <div class="btn-feature" tabindex="0" role="button" aria-label="Deporte" data-theme="deporte">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80" alt="Evento deportivo" />
+        <span>Deporte</span>
+      </div>
+      <div class="btn-feature" tabindex="0" role="button" aria-label="Tours completos" data-theme="tours">
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Tour completo" />
+        <span>Tours completos</span>
+      </div>
     </div>
 
-    <button type="submit" class="btn-submit">Buscar vuelos</button>
-  </form>
+    <form id="search-form" aria-label="Formulario de búsqueda de viajes">
+      <div class="row">
+        <div>
+          <label for="origin">Origen (ej: MAD)</label>
+          <input type="text" id="origin" name="origin" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
+        </div>
+        <div>
+          <label for="checkInDate">Fecha de salida</label>
+          <input type="date" id="checkInDate" name="checkInDate" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="destination">Destino (ej: JFK)</label>
+          <input type="text" id="destination" name="destination" placeholder="Ciudad o código IATA" required maxlength="3" autocomplete="off" />
+        </div>
+      </div>
 
-  <div id="resultados" aria-live="polite" aria-atomic="true"></div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="travelInsurance" name="travelInsurance" />
+        <label for="travelInsurance">Contratar seguro de viaje</label>
+      </div>
+
+      <button type="submit" class="btn-submit">Buscar vuelos</button>
+    </form>
+
+    <div id="resultados" aria-live="polite" aria-atomic="true"></div>
+  </main>
 
   <!-- Modal selección de aeropuerto -->
   <div id="modal-airports" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
