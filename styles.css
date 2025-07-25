@@ -1,0 +1,49 @@
+/* Reset y corrección para eliminar espacios blancos */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  background-image: url('img/mapamundi.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.logo-box {
+  display: inline-block;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+  padding: 18px 32px;
+  margin: 0 auto;
+}
+
+/* ... el resto de tu CSS, respetando las identaciones ... */
+
+/* Agrega estilos para .modal-content con tabindex */
+.modal-content:focus {
+  outline: 3px solid #00c6ff;
+}
+
+/* Checkbox, botones, responsive, etc */
+/* ... resto del CSS ... */
