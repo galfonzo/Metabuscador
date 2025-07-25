@@ -113,12 +113,11 @@ form#search-form {
 }
 form#search-form > .row {
   display: flex;
-  gap: 14.45px;
+  flex-direction: column;
+  gap: 6px;
   margin-bottom: 10.8px;
 }
 form#search-form label {
-  display: block;
-  margin-bottom: 4.25px;
   font-weight: 600;
   color: #fff;
   font-size: 0.7225rem;
@@ -133,14 +132,23 @@ form#search-form input[type="number"] {
   font-size: 0.7225rem;
   background: #f8f8f8;
   color: #222;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 form#search-form input[type="text"]:focus,
 form#search-form input[type="date"]:focus,
 form#search-form input[type="number"]:focus {
-  border-color: #0077cc;
-  outline: none;
+  border-color: #00c6ff;
+  outline: 2px solid #00c6ff;
+  outline-offset: 1px;
 }
+
+/* Placeholder */
+form#search-form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Checkbox group */
 .checkbox-group {
   display: flex;
   align-items: center;
@@ -150,6 +158,8 @@ form#search-form input[type="number"]:focus {
   margin-bottom: 20px;
   font-size: 0.7225rem;
 }
+
+/* Botón submit */
 .btn-submit {
   background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
   color: white;
@@ -163,11 +173,19 @@ form#search-form input[type="number"]:focus {
   box-shadow: 0 4px 8px rgba(0,119,204,0.4);
   transition: background 0.3s, box-shadow 0.3s;
 }
-.btn-submit:hover,
-.btn-submit:focus {
+
+.btn-submit:hover:not(:disabled),
+.btn-submit:focus:not(:disabled) {
   background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
   box-shadow: 0 6px 12px rgba(0,95,163,0.6);
   outline: none;
+}
+
+/* Botón submit deshabilitado */
+.btn-submit:disabled {
+  background: grey;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* Fecha regreso contenedor */
@@ -175,6 +193,21 @@ form#search-form input[type="number"]:focus {
   display: none;
   flex-basis: 180px;
   margin-top: 24px;
+  flex-direction: column;
+}
+
+/* Estilos para inputs inválidos */
+form#search-form input.input-error {
+  border-color: #e74c3c !important;
+  background-color: #ffe6e6 !important;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.7rem;
+  margin-top: 2px;
+  min-height: 1.15em; /* Reserve espacio para mensajes */
 }
 
 /* Modal general */
@@ -267,34 +300,4 @@ form#search-form input[type="number"]:focus {
   font-weight: 600;
   cursor: pointer;
   margin: 2px 0;
-  transition: background 0.2s;
-}
-.airport-btn:hover,
-.airport-btn:focus {
-  background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
-  outline: none;
-}
-
-/* Responsive */
-@media (max-width: 700px) {
-  form#search-form > .row {
-    flex-direction: column;
-  }
-  .button-group {
-    flex-wrap: wrap;
-    overflow-x: visible;
-    flex-direction: column;
-    align-items: center;
-  }
-  .btn-feature {
-    max-width: 350px;
-    width: 90%;
-  }
-  .modal-content {
-    max-width: 90vw;
-  }
-  #returnDateContainer {
-    flex-basis: auto;
-    margin-top: 10px;
-  }
-}
+  transition: background
