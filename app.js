@@ -98,7 +98,7 @@ const thematicAirports = {
   ]
 };
 
-// Variables para modales y elementos
+// Variables modales y elementos
 const modalAirports = document.getElementById('modal-airports');
 const modalAirportList = document.getElementById('airport-list');
 const btnCloseModalAirports = document.getElementById('close-modal-airports');
@@ -108,7 +108,7 @@ const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
 
 let lastFocusedElement = null;
 
-// Función para abrir modal con focus trap básico
+// Función abrir modal con foco y guardando último foco
 function openModal(modalEl) {
   lastFocusedElement = document.activeElement;
   modalEl.style.display = 'flex';
@@ -117,7 +117,7 @@ function openModal(modalEl) {
   modalContent.focus();
 }
 
-// Función para cerrar modal y devolver foco
+// Función cerrar modal y devolver foco
 function closeModal(modalEl) {
   modalEl.style.display = 'none';
   if (lastFocusedElement) {
@@ -125,16 +125,19 @@ function closeModal(modalEl) {
   }
 }
 
-// Manejo de trap básico de foco en modales (solo foco en .modal-content y botones)
+// Trap foco básico en modal
 function trapFocus(modalEl) {
-  const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
-  const focusableElements = modalEl.querySelectorAll(focusableElementsString);
+  const focusableElementsSelector =
+    'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+
+  const focusableElements = modalEl.querySelectorAll(focusableElementsSelector);
+  if (focusableElements.length === 0) return;
+
   const firstFocusable = focusableElements[0];
   const lastFocusable = focusableElements[focusableElements.length - 1];
 
-  modalEl.addEventListener('keydown', function(event) {
-    const isTabPressed = (event.key === 'Tab' || event.keyCode === 9);
-
+  modalEl.addEventListener('keydown', function (event) {
+    const isTabPressed = event.key === 'Tab' || event.keyCode === 9;
     if (!isTabPressed) return;
 
     if (event.shiftKey) { // Shift + Tab
@@ -151,11 +154,11 @@ function trapFocus(modalEl) {
   });
 }
 
-// Aplicamos trapFocus a cada modal
+// Aplicar foco seguro a los modales
 trapFocus(modalAirports);
 trapFocus(insuranceModal);
 
-// Función para validar IATA
+// Validación IATA: 3 letras solo
 function isIataValid(value) {
   return /^[A-Z]{3}$/.test(value);
 }
@@ -168,7 +171,7 @@ function isIataValid(value) {
   });
 });
 
-// Mostrar/ocultar fecha regreso y validación
+// Mostrar/ocultar campo "fecha de regreso" dependiendo checkbox hotel
 const selectHotelCheckbox = document.getElementById('selectHotel');
 const returnDateContainer = document.getElementById('returnDateContainer');
 const returnDateInput = document.getElementById('returnDate');
@@ -184,7 +187,7 @@ selectHotelCheckbox.addEventListener('change', () => {
   }
 });
 
-// Manejo de botones temáticos con soporte para teclado (click + enter/space)
+// Manejo botones temáticos con soporte teclado
 const featureButtons = document.querySelectorAll('.btn-feature');
 
 featureButtons.forEach(btn => {
@@ -200,15 +203,14 @@ featureButtons.forEach(btn => {
 function openAirportModal() {
   const theme = this.getAttribute('data-theme');
   const airports = thematicAirports[theme] || [];
-  modalAirportList.innerHTML = airports.map(a => 
+  modalAirportList.innerHTML = airports.map(a =>
     `<li><button class="airport-btn" data-code="${a.code}">${a.name}</button></li>`
   ).join('');
   openModal(modalAirports);
-  // Focus al primer botón
   modalAirportList.querySelector('button')?.focus();
 }
 
-// Selección aeropuerto del modal
+// Selección aeropuerto en modal
 modalAirportList.addEventListener('click', e => {
   if (e.target.classList.contains('airport-btn')) {
     const code = e.target.getAttribute('data-code');
@@ -223,7 +225,7 @@ window.addEventListener('click', e => {
   if (e.target === modalAirports) closeModal(modalAirports);
 });
 
-// Modal de seguro viaje y sincronización con formulario principal
+// Modal seguro viaje y sincronización formulario principal
 const travelInsuranceCheckbox = document.getElementById('travelInsurance');
 const checkInDateInput = document.getElementById('checkInDate');
 const insuredStartDateInput = document.getElementById('insured-start-date');
@@ -248,6 +250,7 @@ travelInsuranceCheckbox.addEventListener('change', () => {
   }
 });
 
+// Cierre modal seguro
 btnCloseInsuranceModal.addEventListener('click', () => {
   travelInsuranceCheckbox.checked = false;
   closeModal(insuranceModal);
@@ -261,7 +264,7 @@ window.addEventListener('click', e => {
   }
 });
 
-// Sincronización de fechas y país destino en modal seguro
+// Sincronización fechas y país destino en modal seguro
 checkInDateInput.addEventListener('change', () => {
   if (insuranceModal.style.display === 'flex') {
     insuredStartDateInput.value = checkInDateInput.value;
@@ -274,17 +277,18 @@ document.getElementById('destination').addEventListener('input', () => {
   }
 });
 
-// Validación restringida para edad en seguro
+// Validación para edad en seguro
 const insuredAgeInput = document.getElementById('insured-age');
-insuredAgeInput.addEventListener('input', function() {
+insuredAgeInput.addEventListener('input', function () {
   this.value = this.value.replace(/\D/g, '');
   if (this.value.length > 3) {
-    this.value = this.value.slice(0,3);
+    this.value = this.value.slice(0, 3);
   }
 });
 
-// Búsqueda vuelos y hoteles con límite de resultados
-const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496'; // RECOMENDADO: Mover esta key a backend
+// Llamada a API AviationStack para buscar vuelos
+// NOTA IMPORTANTE: para uso real, la API key debe usarse en backend para seguridad
+const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496'; 
 
 document.getElementById('search-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -309,7 +313,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
   }
 
   // Validar fechas obligatorias
-  if(!fechaSalida) {
+  if (!fechaSalida) {
     alert('Por favor, selecciona la fecha de salida.');
     return;
   }
@@ -352,7 +356,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
           Estado: ${flight.flight_status}
         </div>
       `).join('');
-      if(vuelos.length > maxResults) {
+      if (vuelos.length > maxResults) {
         resultadosDiv.innerHTML += `<p>Mostrando solo los primeros ${maxResults} resultados.</p>`;
       }
     } else {
@@ -363,7 +367,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
   }
 });
 
-// Formulario seguro de viaje
+// Formulario cotización seguro de viaje
 document.getElementById('insurance-quote-form').addEventListener('submit', (e) => {
   e.preventDefault();
 
