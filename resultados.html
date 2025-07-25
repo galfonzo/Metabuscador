@@ -2,11 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Resultados de Viajes - TuneMyTrip</title>
+  <title>Resultados de Búsqueda - Metabuscador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* Reset y estilos básicos */
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
       background-image: url('img/mapamundi.png');
       background-repeat: no-repeat;
       background-position: center center;
@@ -15,21 +17,187 @@
       color: #fff;
       min-height: 100vh;
       backdrop-filter: brightness(0.6);
-      padding: 34px 17px;
-      font-size: 0.7225rem;
+      padding: 32px 12px;
+      font-size: 0.8rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     h1, h2 {
       text-align: center;
       color: #00c6ff;
-      text-shadow: 0 0 10px rgba(0,198,255,0.8);
-      font-size: 1.2rem;
+      text-shadow: 0 0 12px rgba(0,198,255,0.7);
       margin-top: 0;
       margin-bottom: 1rem;
+      font-weight: 700;
     }
     #results-container {
       max-width: 900px;
-      margin: 0 auto;
-      background: rgba(0,0,0,0.75);
+      margin: 0 auto 20px auto;
+      background: rgba(0, 0, 0, 0.82);
       border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 8px 20px rgba
+      padding: 24px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      overflow-y: auto;
+      min-height: 140px;
+      max-height: 70vh;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #00aaff;
+      border-bottom: 1px solid #00aaff44;
+      padding-bottom: 4px;
+      font-weight: 600;
+    }
+    .result-item {
+      border-bottom: 1px solid #00c6ff99;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      font-size: 0.85rem;
+    }
+    .result-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .empty-result {
+      text-align: center;
+      color: #aaa;
+      margin: 60px 0 40px 0;
+      font-style: italic;
+    }
+    .back-link {
+      display: inline-block;
+      margin: 20px auto 0 auto;
+      padding: 10px 18px;
+      background: #0077cc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 7px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,119,204,0.3);
+      transition: background 0.25s ease-in-out;
+      text-align: center;
+      cursor: pointer;
+    }
+    .back-link:hover,
+    .back-link:focus {
+      background: #005fa3;
+      outline: none;
+    }
+    @media (max-width: 600px) {
+      #results-container {
+        padding: 18px 12px;
+        max-height: none;
+      }
+      h1, h2 {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Resultados de tu búsqueda</h1>
+
+    <div id="flight-results-section">
+      <h2 class="section-title">Vuelos Encontrados</h2>
+      <div id="flight-results-container">
+        <!-- Resultados vuelos -->
+      </div>
+    </div>
+
+    <div id="hotel-results-section" style="margin-top: 30px; display:none;">
+      <h2 class="section-title">Hoteles Disponibles</h2>
+      <div id="hotel-results-container">
+        <!-- Resultados hoteles -->
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="index.html" class="back-link" role="button" aria-label="Volver a búsqueda inicial">↶ Nueva búsqueda</a>
+    </div>
+  </main>
+
+  <script>
+    // Leer resultados guardados desde localStorage (o ajustar según tu flujo)
+    const flightResultsContainer = document.getElementById('flight-results-container');
+    const hotelResultsSection = document.getElementById('hotel-results-section');
+    const hotelResultsContainer = document.getElementById('hotel-results-container');
+
+    // Se asume que los datos se guardan bajo estas claves en localStorage
+    // flightResults: array de vuelos
+    // hotelResults: array de hoteles (puede ser vacío o no existir)
+
+    const flightDataJson = localStorage.getItem('flightResults');
+    const hotelDataJson = localStorage.getItem('hotelResults');
+
+    let flights = [];
+    let hotels = [];
+
+    try {
+      flights = flightDataJson ? JSON.parse(flightDataJson) : [];
+    } catch (e) {
+      flights = [];
+    }
+
+    try {
+      hotels = hotelDataJson ? JSON.parse(hotelDataJson) : [];
+    } catch (e) {
+      hotels = [];
+    }
+
+    // Función para formatear fechas/horas legibles si vienen en ISO 8601
+    function formatDateTime(dateTimeStr) {
+      try {
+        const dt = new Date(dateTimeStr);
+        if (isNaN(dt)) return dateTimeStr || '-';
+        return dt.toLocaleString('es-ES', { 
+          dateStyle: 'short', 
+          timeStyle: 'short' 
+        });
+      } catch {
+        return dateTimeStr || '-';
+      }
+    }
+
+    // Mostrar resultados de vuelos
+    if (flights.length > 0) {
+      flightResultsContainer.innerHTML = flights.map(flight => {
+        return `
+          <div class="result-item">
+            <strong>${flight.airline?.name || 'Aerolínea desconocida'} - Vuelo ${flight.flight?.number || '-'}</strong><br/>
+            Salida: ${flight.departure?.airport || '-'} a las ${formatDateTime(flight.departure?.scheduled)}<br/>
+            Llegada: ${flight.arrival?.airport || '-'} a las ${formatDateTime(flight.arrival?.scheduled)}<br/>
+            Estado: ${flight.flight_status || '-'}
+          </div>
+        `;
+      }).join('');
+    } else {
+      flightResultsContainer.innerHTML = '<p class="empty-result">No se encontraron vuelos para los parámetros ingresados.</p>';
+    }
+
+    // Mostrar resultados de hoteles
+    if (hotels.length > 0) {
+      hotelResultsSection.style.display = 'block';
+      hotelResultsContainer.innerHTML = hotels.map(hotel => {
+        return `
+          <div class="result-item">
+            <strong>${hotel.name || 'Hotel desconocido'}</strong><br/>
+            Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br/>
+            Dirección: ${hotel.address || '-'}<br/>
+            Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
+          </div>
+        `;
+      }).join('');
+    } else {
+      // Ocultar sección hoteles si no hay datos
+      hotelResultsSection.style.display = 'none';
+      hotelResultsContainer.innerHTML = '';
+    }
+
+    // Limpia almacenamiento tras mostrar resultados si se desea (opcional)
+    // localStorage.removeItem('flightResults');
+    // localStorage.removeItem('hotelResults');
+  </script>
+</body>
+</html>
