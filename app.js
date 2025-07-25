@@ -1,100 +1,100 @@
-// Datos tem·ticos corregidos (con cÛdigos IATA reales)
+// Datos tem√°ticos corregidos (con c√≥digos IATA reales)
 const thematicAirports = {
   arquitectura: [
-    { name: "Barcelona (BCN) - EspaÒa", code: "BCN" },
-    { name: "Dub·i (DXB) - Emiratos ¡rabes Unidos", code: "DXB" },
-    { name: "ParÌs (CDG) - Francia", code: "CDG" },
+    { name: "Barcelona (BCN) - Espa√±a", code: "BCN" },
+    { name: "Dub√°i (DXB) - Emiratos √Årabes Unidos", code: "DXB" },
+    { name: "Par√≠s (CDG) - Francia", code: "CDG" },
     { name: "Roma (FCO) - Italia", code: "FCO" },
-    { name: "Estambul (IST) - TurquÌa", code: "IST" },
+    { name: "Estambul (IST) - Turqu√≠a", code: "IST" },
     { name: "Londres (LHR) - Reino Unido", code: "LHR" },
     { name: "Florencia (FLR) - Italia", code: "FLR" },
     { name: "San Petersburgo (LED) - Rusia", code: "LED" },
-    { name: "Praga (PRG) - Rep˙blica Checa", code: "PRG" },
+    { name: "Praga (PRG) - Rep√∫blica Checa", code: "PRG" },
     { name: "Venecia (VCE) - Italia", code: "VCE" },
     { name: "Lisboa (LIS) - Portugal", code: "LIS" },
-    { name: "Osaka (KIX) - JapÛn", code: "KIX" },
-    { name: "Samarcanda (SKD) - Uzbekist·n", code: "SKD" },
-    { name: "Bujar· (BHK) - Uzbekist·n", code: "BHK" },
+    { name: "Osaka (KIX) - Jap√≥n", code: "KIX" },
+    { name: "Samarcanda (SKD) - Uzbekist√°n", code: "SKD" },
+    { name: "Bujar√° (BHK) - Uzbekist√°n", code: "BHK" },
     { name: "Mostar (OMO) - Bosnia-Herzegovina", code: "OMO" }
   ],
   playas: [
-    { name: "Canc˙n (CUN) - MÈxico", code: "CUN" },
+    { name: "Canc√∫n (CUN) - M√©xico", code: "CUN" },
     { name: "Miami (MIA) - EE.UU.", code: "MIA" },
     { name: "Phuket (HKT) - Tailandia", code: "HKT" },
     { name: "Maldivas (MLE) - Maldivas", code: "MLE" },
     { name: "Bali (DPS) - Indonesia", code: "DPS" },
-    { name: "Ibiza (IBZ) - EspaÒa", code: "IBZ" },
+    { name: "Ibiza (IBZ) - Espa√±a", code: "IBZ" },
     { name: "Maui (OGG) - EE.UU.", code: "OGG" },
     { name: "Boracay (MPH) - Filipinas", code: "MPH" },
     { name: "Barbados (BGI) - Barbados", code: "BGI" },
     { name: "Seychelles (SEZ) - Seychelles", code: "SEZ" },
     { name: "Jericoacoara (JJD) - Brasil", code: "JJD" },
-    { name: "Alter do Ch„o (STM) - Brasil", code: "STM" },
-    { name: "Ksamil (TIA) - Albania (cÛdigo del aeropuerto de Tirana)", code: "TIA" },
+    { name: "Alter do Ch√£o (STM) - Brasil", code: "STM" },
+    { name: "Ksamil (TIA) - Albania (c√≥digo del aeropuerto de Tirana)", code: "TIA" },
     { name: "Islas Feroe (FAE) - Dinamarca", code: "FAE" }
   ],
   montanas: [
     { name: "Denver (DEN) - EE.UU.", code: "DEN" },
     { name: "Santiago (SCL) - Chile", code: "SCL" },
-    { name: "Z˙rich (ZRH) - Suiza", code: "ZRH" },
+    { name: "Z√∫rich (ZRH) - Suiza", code: "ZRH" },
     { name: "Chamonix (GVA) - Francia", code: "GVA" },
     { name: "Innsbruck (INN) - Austria", code: "INN" },
     { name: "Queenstown (ZQN) - Nueva Zelanda", code: "ZQN" },
     { name: "Aspen (ASE) - EE.UU.", code: "ASE" },
-    { name: "Banff (YBA) - Canad·", code: "YBA" },
-    { name: "Nagano (NGO) - JapÛn", code: "NGO" },
-    { name: "Zermatt (GVA) - Suiza (aeropuerto Ginebra m·s cercano)", code: "GVA" },
-    { name: "Hokkaido (CTS) - JapÛn", code: "CTS" },
+    { name: "Banff (YBA) - Canad√°", code: "YBA" },
+    { name: "Nagano (NGO) - Jap√≥n", code: "NGO" },
+    { name: "Zermatt (GVA) - Suiza (aeropuerto Ginebra m√°s cercano)", code: "GVA" },
+    { name: "Hokkaido (CTS) - Jap√≥n", code: "CTS" },
     { name: "Bariloche (BRC) - Argentina", code: "BRC" },
     { name: "La Paz (LPB) - Bolivia", code: "LPB" },
-    { name: "Kathmand˙ (KTM) - Nepal", code: "KTM" }
+    { name: "Kathmand√∫ (KTM) - Nepal", code: "KTM" }
   ],
   cultura: [
     { name: "Roma (FCO) - Italia", code: "FCO" },
-    { name: "Kyoto (KIX) - JapÛn", code: "KIX" },
-    { name: "Estambul (IST) - TurquÌa", code: "IST" },
+    { name: "Kyoto (KIX) - Jap√≥n", code: "KIX" },
+    { name: "Estambul (IST) - Turqu√≠a", code: "IST" },
     { name: "Atenas (ATH) - Grecia", code: "ATH" },
-    { name: "Praga (PRG) - Rep˙blica Checa", code: "PRG" },
+    { name: "Praga (PRG) - Rep√∫blica Checa", code: "PRG" },
     { name: "Marrakech (RAK) - Marruecos", code: "RAK" },
-    { name: "JerusalÈn (JRS) - Israel", code: "JRS" },
-    { name: "Cusco (CUZ) - Per˙", code: "CUZ" },
+    { name: "Jerusal√©n (JRS) - Israel", code: "JRS" },
+    { name: "Cusco (CUZ) - Per√∫", code: "CUZ" },
     { name: "Cartagena (CTG) - Colombia", code: "CTG" },
-    { name: "Se˙l (ICN) - Corea del Sur", code: "ICN" },
+    { name: "Se√∫l (ICN) - Corea del Sur", code: "ICN" },
     { name: "Luang Prabang (LPQ) - Laos", code: "LPQ" },
     { name: "Mostar (OMO) - Bosnia-Herzegovina", code: "OMO" },
-    { name: "Matera (BRI) - Italia (aeropuerto Bari m·s cercano)", code: "BRI" }
+    { name: "Matera (BRI) - Italia (aeropuerto Bari m√°s cercano)", code: "BRI" }
   ],
   deporte: [
     { name: "Londres (LHR) - Reino Unido", code: "LHR" },
     { name: "Melbourne (MEL) - Australia", code: "MEL" },
-    { name: "Madrid (MAD) - EspaÒa", code: "MAD" },
-    { name: "Barcelona (BCN) - EspaÒa", code: "BCN" },
-    { name: "Vancouver (YVR) - Canad·", code: "YVR" },
-    { name: "RÌo de Janeiro (GIG) - Brasil", code: "GIG" },
-    { name: "M˙nich (MUC) - Alemania", code: "MUC" },
-    { name: "TurÌn (TRN) - Italia", code: "TRN" },
+    { name: "Madrid (MAD) - Espa√±a", code: "MAD" },
+    { name: "Barcelona (BCN) - Espa√±a", code: "BCN" },
+    { name: "Vancouver (YVR) - Canad√°", code: "YVR" },
+    { name: "R√≠o de Janeiro (GIG) - Brasil", code: "GIG" },
+    { name: "M√∫nich (MUC) - Alemania", code: "MUC" },
+    { name: "Tur√≠n (TRN) - Italia", code: "TRN" },
     { name: "Sochi (AER) - Rusia", code: "AER" },
     { name: "Salt Lake City (SLC) - EE.UU.", code: "SLC" },
-    { name: "MedellÌn (MDE) - Colombia", code: "MDE" },
-    { name: "Tokyo (HND) - JapÛn", code: "HND" },
+    { name: "Medell√≠n (MDE) - Colombia", code: "MDE" },
+    { name: "Tokyo (HND) - Jap√≥n", code: "HND" },
     { name: "Jericoacoara (JJD) - Brasil", code: "JJD" }
   ],
   tours: [
     { name: "El Cairo (CAI) - Egipto", code: "CAI" },
     { name: "Nueva Delhi (DEL) - India", code: "DEL" },
-    { name: "PekÌn (PEK) - China", code: "PEK" },
-    { name: "Machu Picchu (CUZ) - Per˙", code: "CUZ" },
+    { name: "Pek√≠n (PEK) - China", code: "PEK" },
+    { name: "Machu Picchu (CUZ) - Per√∫", code: "CUZ" },
     { name: "Petra (AMM) - Jordania", code: "AMM" },
     { name: "Angkor Wat (REP) - Camboya", code: "REP" },
-    { name: "Kioto (KIX) - JapÛn", code: "KIX" },
-    { name: "Estambul (IST) - TurquÌa", code: "IST" },
+    { name: "Kioto (KIX) - Jap√≥n", code: "KIX" },
+    { name: "Estambul (IST) - Turqu√≠a", code: "IST" },
     { name: "Cartagena (CTG) - Colombia", code: "CTG" },
-    { name: "JerusalÈn (JRS) - Israel", code: "JRS" },
-    { name: "Islas Andam·n (IXZ) - India", code: "IXZ" },
+    { name: "Jerusal√©n (JRS) - Israel", code: "JRS" },
+    { name: "Islas Andam√°n (IXZ) - India", code: "IXZ" },
     { name: "San Pedro de Atacama (CJC) - Chile", code: "CJC" },
     { name: "Dubrovnik (DBV) - Croacia", code: "DBV" },
     { name: "Reykjavik (KEF) - Islandia", code: "KEF" },
-    { name: "Valle de ViÒales (HAV) - Cuba (aeropuerto La Habana)", code: "HAV" }
+    { name: "Valle de Vi√±ales (HAV) - Cuba (aeropuerto La Habana)", code: "HAV" }
   ]
 };
 
@@ -108,7 +108,7 @@ const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
 
 let lastFocusedElement = null;
 
-// FunciÛn para abrir modal con focus trap b·sico
+// Funci√≥n para abrir modal con focus trap b√°sico
 function openModal(modalEl) {
   lastFocusedElement = document.activeElement;
   modalEl.style.display = 'flex';
@@ -117,7 +117,7 @@ function openModal(modalEl) {
   modalContent.focus();
 }
 
-// FunciÛn para cerrar modal y devolver foco
+// Funci√≥n para cerrar modal y devolver foco
 function closeModal(modalEl) {
   modalEl.style.display = 'none';
   if (lastFocusedElement) {
@@ -125,7 +125,7 @@ function closeModal(modalEl) {
   }
 }
 
-// Manejo de trap b·sico de foco en modales (solo foco en .modal-content y botones)
+// Manejo de trap b√°sico de foco en modales (solo foco en .modal-content y botones)
 function trapFocus(modalEl) {
   const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
   const focusableElements = modalEl.querySelectorAll(focusableElementsString);
@@ -155,12 +155,12 @@ function trapFocus(modalEl) {
 trapFocus(modalAirports);
 trapFocus(insuranceModal);
 
-// FunciÛn para validar IATA
+// Funci√≥n para validar IATA
 function isIataValid(value) {
   return /^[A-Z]{3}$/.test(value);
 }
 
-// ConversiÛn autom·tica a may˙sculas en campos IATA
+// Conversi√≥n autom√°tica a may√∫sculas en campos IATA
 ['origin', 'destination'].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener('input', () => {
@@ -168,7 +168,7 @@ function isIataValid(value) {
   });
 });
 
-// Mostrar/ocultar fecha regreso y validaciÛn
+// Mostrar/ocultar fecha regreso y validaci√≥n
 const selectHotelCheckbox = document.getElementById('selectHotel');
 const returnDateContainer = document.getElementById('returnDateContainer');
 const returnDateInput = document.getElementById('returnDate');
@@ -184,7 +184,7 @@ selectHotelCheckbox.addEventListener('change', () => {
   }
 });
 
-// Manejo de botones tem·ticos con soporte para teclado (click + enter/space)
+// Manejo de botones tem√°ticos con soporte para teclado (click + enter/space)
 const featureButtons = document.querySelectorAll('.btn-feature');
 
 featureButtons.forEach(btn => {
@@ -204,11 +204,11 @@ function openAirportModal() {
     `<li><button class="airport-btn" data-code="${a.code}">${a.name}</button></li>`
   ).join('');
   openModal(modalAirports);
-  // Focus al primer botÛn
+  // Focus al primer bot√≥n
   modalAirportList.querySelector('button')?.focus();
 }
 
-// SelecciÛn aeropuerto del modal
+// Selecci√≥n aeropuerto del modal
 modalAirportList.addEventListener('click', e => {
   if (e.target.classList.contains('airport-btn')) {
     const code = e.target.getAttribute('data-code');
@@ -223,7 +223,7 @@ window.addEventListener('click', e => {
   if (e.target === modalAirports) closeModal(modalAirports);
 });
 
-// Modal de seguro viaje y sincronizaciÛn con formulario principal
+// Modal de seguro viaje y sincronizaci√≥n con formulario principal
 const travelInsuranceCheckbox = document.getElementById('travelInsurance');
 const checkInDateInput = document.getElementById('checkInDate');
 const insuredStartDateInput = document.getElementById('insured-start-date');
@@ -261,7 +261,7 @@ window.addEventListener('click', e => {
   }
 });
 
-// SincronizaciÛn de fechas y paÌs destino en modal seguro
+// Sincronizaci√≥n de fechas y pa√≠s destino en modal seguro
 checkInDateInput.addEventListener('change', () => {
   if (insuranceModal.style.display === 'flex') {
     insuredStartDateInput.value = checkInDateInput.value;
@@ -274,7 +274,7 @@ document.getElementById('destination').addEventListener('input', () => {
   }
 });
 
-// ValidaciÛn restringida para edad en seguro
+// Validaci√≥n restringida para edad en seguro
 const insuredAgeInput = document.getElementById('insured-age');
 insuredAgeInput.addEventListener('input', function() {
   this.value = this.value.replace(/\D/g, '');
@@ -283,7 +283,7 @@ insuredAgeInput.addEventListener('input', function() {
   }
 });
 
-// B˙squeda vuelos y hoteles con lÌmite de resultados
+// B√∫squeda vuelos y hoteles con l√≠mite de resultados
 const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496'; // RECOMENDADO: Mover esta key a backend
 
 document.getElementById('search-form').addEventListener('submit', async (e) => {
@@ -304,7 +304,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
 
   // Validar IATA
   if (!isIataValid(origen) || !isIataValid(destino)) {
-    alert('Los cÛdigos IATA deben tener exactamente 3 letras may˙sculas.');
+    alert('Los c√≥digos IATA deben tener exactamente 3 letras may√∫sculas.');
     return;
   }
 
@@ -319,7 +319,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
   }
 
   if (selectHotel) {
-    // SimulaciÛn b˙squeda hoteles (posteriormente integrar API real)
+    // Simulaci√≥n b√∫squeda hoteles (posteriormente integrar API real)
     hotelResultsDiv.style.display = 'block';
     hotelResultsDiv.innerHTML = `
       <h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>
@@ -331,7 +331,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
     return;
   }
 
-  // B˙squeda vuelos (limitar resultados)
+  // B√∫squeda vuelos (limitar resultados)
   resultadosDiv.innerHTML = 'Buscando vuelos...';
   try {
     const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
@@ -356,7 +356,7 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
         resultadosDiv.innerHTML += `<p>Mostrando solo los primeros ${maxResults} resultados.</p>`;
       }
     } else {
-      resultadosDiv.innerHTML = '<p>No se encontraron vuelos para esos par·metros.</p>';
+      resultadosDiv.innerHTML = '<p>No se encontraron vuelos para esos par√°metros.</p>';
     }
   } catch (error) {
     resultadosDiv.innerHTML = `<p>Error al obtener datos: ${error.message}</p>`;
@@ -375,7 +375,7 @@ document.getElementById('insurance-quote-form').addEventListener('submit', (e) =
   const endDate = document.getElementById('insured-end-date').value;
 
   if (!/^\d{1,3}$/.test(ageStr) || isNaN(age) || age < 0 || age > 120) {
-    alert('Por favor, ingresa una edad v·lida (0-120, m·ximo 3 dÌgitos).');
+    alert('Por favor, ingresa una edad v√°lida (0-120, m√°ximo 3 d√≠gitos).');
     return;
   }
   if (endDate < startDate) {
@@ -392,10 +392,10 @@ document.getElementById('insurance-quote-form').addEventListener('submit', (e) =
   const resultDiv = document.getElementById('insurance-quote-result');
   resultDiv.innerHTML = `
     <div>
-      <strong style="color:#00c6ff;font-size:1.2em;">CotizaciÛn para ${name}:</strong><br>
+      <strong style="color:#00c6ff;font-size:1.2em;">Cotizaci√≥n para ${name}:</strong><br>
       Destino: ${country}<br>
       Fechas: ${startDate} a ${endDate}<br>
-      Edad: ${age} aÒos<br>
+      Edad: ${age} a√±os<br>
       <span style="font-size:1.1em;">Precio estimado: <strong style="color:#000;">$${quote} USD</strong></span>
     </div>
     <div style="margin-top:10px;">
@@ -405,6 +405,6 @@ document.getElementById('insurance-quote-form').addEventListener('submit', (e) =
   resultDiv.style.display = 'block';
 
   document.getElementById('btn-solicitar-seguro').addEventListener('click', () => {
-    alert('°Solicitud enviada! Un asesor te contactar· pronto.');
+    alert('¬°Solicitud enviada! Un asesor te contactar√° pronto.');
   });
 });
