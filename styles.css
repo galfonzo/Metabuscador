@@ -34,12 +34,11 @@ main {
   text-align: center;
   margin: 30px 0;
 }
-
 .logo-box {
   display: inline-block;
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
   padding: 18px 32px;
   color: #0077cc;
   font-weight: 700;
@@ -60,14 +59,14 @@ main {
   align-items: stretch;
 }
 
-/* Buttons - btn-feature */
+/* Buttons */
 .btn-feature {
   flex: 0 0 auto;
   max-width: 140px;
   min-width: 120px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
   overflow: hidden;
   text-align: center;
   cursor: pointer;
@@ -86,52 +85,32 @@ main {
 .btn-feature:focus {
   outline: none;
   transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
   border-color: #00c6ff;
-}
-
-.btn-feature img {
-  width: 100%;
-  height: 93.5px;
-  object-fit: cover;
-  display: block;
-  border-bottom: 1px solid #eee;
-  flex-shrink: 0;
-}
-
-.btn-feature span {
-  margin-top: 8px;
-  display: block;
-  text-align: center;
-  color: #0077cc;
-  font-weight: 700;
 }
 
 /* Formulario */
 form#search-form {
   max-width: 470.6px;
   margin: 0 auto 40px auto;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   padding: 18.1px 21.7px;
   border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   font-size: 0.7225rem;
   color: #fff;
 }
-
 form#search-form > .row {
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 10.8px;
 }
-
 form#search-form label {
   font-weight: 600;
   color: #fff;
   font-size: 0.7225rem;
 }
-
 form#search-form input[type="text"],
 form#search-form input[type="date"],
 form#search-form input[type="number"] {
@@ -144,7 +123,6 @@ form#search-form input[type="number"] {
   color: #222;
   transition: border-color 0.3s, background-color 0.3s;
 }
-
 form#search-form input[type="text"]:focus,
 form#search-form input[type="date"]:focus,
 form#search-form input[type="number"]:focus {
@@ -170,7 +148,7 @@ form#search-form input::placeholder {
   font-size: 0.7225rem;
 }
 
-/* Botón submit */
+/* Submit button */
 .btn-submit {
   background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
   color: white;
@@ -181,25 +159,22 @@ form#search-form input::placeholder {
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0,119,204,0.4);
+  box-shadow: 0 4px 8px rgba(0, 119, 204, 0.4);
   transition: background 0.3s, box-shadow 0.3s;
 }
-
 .btn-submit:hover:not(:disabled),
 .btn-submit:focus:not(:disabled) {
   background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
-  box-shadow: 0 6px 12px rgba(0,95,163,0.6);
+  box-shadow: 0 6px 12px rgba(0, 95, 163, 0.6);
   outline: none;
 }
-
-/* Botón submit deshabilitado */
 .btn-submit:disabled {
   background: grey;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* Fecha regreso contenedor */
+/* Fecha regreso container */
 #returnDateContainer {
   display: none;
   flex-basis: 180px;
@@ -207,21 +182,21 @@ form#search-form input::placeholder {
   flex-direction: column;
 }
 
-/* Estilos para inputs inválidos */
+/* Inputs con error */
 form#search-form input.input-error {
   border-color: #e74c3c !important;
   background-color: #ffe6e6 !important;
 }
 
-/* Mensajes de error */
+/* Mensajes error */
 .error-message {
   color: #e74c3c;
   font-size: 0.7rem;
   margin-top: 2px;
-  min-height: 1.15em; /* Reserva espacio para mensaje */
+  min-height: 1.15em; /* deja espacio para evitar saltos */
 }
 
-/* Modal general */
+/* Modales */
 .modal {
   display: none;
   position: fixed;
@@ -246,12 +221,9 @@ form#search-form input.input-error {
   font-size: 0.7225rem;
   outline: none;
 }
-
 .modal-content:focus {
   outline: 3px solid #00c6ff;
 }
-
-/* Botón cerrar modal */
 .modal-close {
   position: absolute;
   top: 10px;
@@ -264,7 +236,7 @@ form#search-form input.input-error {
 }
 
 /* Resultados */
-#resultados {
+#resultados, #hotel-results {
   max-width: 470.6px;
   margin: 0 auto 40px auto;
   background: rgba(255,255,255,0.9);
@@ -276,37 +248,21 @@ form#search-form input.input-error {
   overflow-y: auto;
   max-height: 300px;
 }
-
-#resultados div {
+#resultados div, #hotel-results div {
   margin-bottom: 15px;
   padding-bottom: 8px;
   border-bottom: 1px solid #ccc;
 }
 
-#hotel-results {
-  max-width: 470.6px;
-  margin: 0 auto 40px auto;
-  background: rgba(255,255,255,0.9);
-  color: #222;
-  border-radius: 10px;
-  padding: 15px 20px;
-  font-size: 0.85rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  overflow-y: auto;
-  max-height: 300px;
-}
-
-/* Lista aeropuertos en modal */
+/* Lista aeropuertos modal */
 .airport-list {
   list-style: none;
   padding: 0;
   margin: 0 0 15px 0;
 }
-
 .airport-list li {
   margin: 8px 0;
 }
-
 .airport-btn {
   background: linear-gradient(90deg, #00c6ff 60%, #0077cc 100%);
   color: #fff;
@@ -319,7 +275,6 @@ form#search-form input.input-error {
   margin: 2px 0;
   transition: background 0.2s;
 }
-
 .airport-btn:hover,
 .airport-btn:focus {
   background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
