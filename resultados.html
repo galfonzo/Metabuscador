@@ -33,7 +33,7 @@
     #results-container {
       max-width: 900px;
       margin: 0 auto 20px auto;
-      background: rgba(0, 0, 0, 0.82);
+      background: rgba(0,0,0,0.82);
       border-radius: 12px;
       padding: 24px 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
@@ -111,7 +111,7 @@
       if (!dtStr) return '-';
       const dt = new Date(dtStr);
       if (!isNaN(dt)) {
-        return dt.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
+        return dt.toLocaleString('es-ES', { dateStyle:'short', timeStyle:'short' });
       }
       return dtStr;
     }
