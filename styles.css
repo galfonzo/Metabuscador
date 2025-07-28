@@ -214,7 +214,7 @@ form#search-form input.input-error {
   color: #e74c3c;
   font-size: 0.7rem;
   margin-top: 2px;
-  min-height: 1.15em; /* Reserva espacio para mensaje */
+  min-height: 1.15em;
 }
 
 /* Modal general */
