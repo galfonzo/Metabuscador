@@ -10,19 +10,40 @@
   <main>
     <div class="logo-container">
       <div class="logo-box">
+        <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
         <h1>Metabuscador</h1>
       </div>
     </div>
 
+    <!-- Botones temáticos con imágenes -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
-      <button class="btn-feature" data-theme="arquitectura" type="button">Arquitectura</button>
-      <button class="btn-feature" data-theme="playas" type="button">Playas</button>
-      <button class="btn-feature" data-theme="montanas" type="button">Montañas</button>
-      <button class="btn-feature" data-theme="cultura" type="button">Cultura</button>
-      <button class="btn-feature" data-theme="deporte" type="button">Deporte</button>
-      <button class="btn-feature" data-theme="tours" type="button">Tours</button>
+      <button class="btn-feature" data-theme="arquitectura" type="button" aria-label="Viajes de Arquitectura">
+        <img src="img/destinos/arquitectura.jpg" alt="Arquitectura - destinos" />
+        <span>Arquitectura</span>
+      </button>
+      <button class="btn-feature" data-theme="playas" type="button" aria-label="Viajes a Playas">
+        <img src="img/destinos/playas.jpg" alt="Playas - destinos" />
+        <span>Playas</span>
+      </button>
+      <button class="btn-feature" data-theme="montanas" type="button" aria-label="Viajes a Montañas">
+        <img src="img/destinos/montanas.jpg" alt="Montañas - destinos" />
+        <span>Montañas</span>
+      </button>
+      <button class="btn-feature" data-theme="cultura" type="button" aria-label="Viajes de Cultura">
+        <img src="img/destinos/cultura.jpg" alt="Cultura - destinos" />
+        <span>Cultura</span>
+      </button>
+      <button class="btn-feature" data-theme="deporte" type="button" aria-label="Viajes de Deporte">
+        <img src="img/destinos/deporte.jpg" alt="Deporte - destinos" />
+        <span>Deporte</span>
+      </button>
+      <button class="btn-feature" data-theme="tours" type="button" aria-label="Viajes de Tours">
+        <img src="img/destinos/tours.jpg" alt="Tours - destinos" />
+        <span>Tours</span>
+      </button>
     </div>
 
+    <!-- Formulario principal -->
     <form id="search-form" novalidate>
       <div class="row">
         <label for="origin">Origen (Código IATA)</label>
@@ -47,4 +68,37 @@
         <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
       </div>
 
-      <div id="returnDateContainer" class="row" style
+      <div id="returnDateContainer" class="row" style="display:none;">
+        <label for="returnDate">Fecha de regreso</label>
+        <input type="date" id="returnDate" name="returnDate" aria-describedby="error-returnDate" />
+        <div id="error-returnDate" class="error-message" aria-live="polite"></div>
+      </div>
+
+      <button type="submit" class="btn-submit" disabled>Buscar</button>
+    </form>
+
+    <!-- Contenedores para mostrar resultados inline (opcional) -->
+    <section id="resultados" aria-live="polite"></section>
+    <section id="hotel-results" aria-live="polite" style="display:none;"></section>
+
+    <!-- Modal listado aeropuertos -->
+    <div class="modal" id="modal-airports" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title" aria-describedby="modal-airports-desc" style="display:none;">
+      <div class="modal-content" tabindex="0">
+        <button class="modal-close" id="close-modal-airports" aria-label="Cerrar listado de aeropuertos">&times;</button>
+        <h2 id="modal-airports-title">Selecciona un aeropuerto</h2>
+        <ul id="airport-list" class="airport-list"></ul>
+      </div>
+    </div>
+
+    <!-- Modal seguro de viaje -->
+    <div class="modal" id="insurance-modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" aria-describedby="insurance-modal-desc" style="display:none;">
+      <div class="modal-content" tabindex="0">
+        <button class="modal-close" id="close-insurance-modal" aria-label="Cerrar cotización de seguro">&times;</button>
+        <h2 id="insurance-modal-title">Cotización Seguro de Viaje</h2>
+        <p id="insurance-modal-desc">Completa los datos para la cotización</p>
+        <form id="insurance-quote-form" novalidate>
+          <div class="row">
+            <label for="insured-name">Nombre completo</label>
+            <input type="text" id="insured-name" name="insured-name" required placeholder="Tu nombre" />
+          </div>
+          <div class="row">
