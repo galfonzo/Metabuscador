@@ -8,6 +8,7 @@
 </head>
 <body>
   <main>
+    <!-- Logo -->
     <div class="logo-container">
       <div class="logo-box">
         <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
@@ -15,6 +16,7 @@
       </div>
     </div>
 
+    <!-- Botones temáticos con imágenes -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
       <button class="btn-feature" data-theme="arquitectura" type="button" aria-label="Viajes de Arquitectura">
         <img src="img/destinos/arquitectura.jpg" alt="Arquitectura - destinos" />
@@ -42,6 +44,7 @@
       </button>
     </div>
 
+    <!-- Formulario principal -->
     <form id="search-form" novalidate>
       <div class="row">
         <label for="origin">Origen (Código IATA)</label>
@@ -75,11 +78,11 @@
       <button type="submit" class="btn-submit" disabled>Buscar</button>
     </form>
 
-    <!-- Contenedores resultados -->
+    <!-- Contenedores para mostrar resultados inline -->
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Modales -->
+    <!-- Modal listado aeropuertos -->
     <div class="modal" id="modal-airports" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title" aria-describedby="modal-airports-desc" style="display:none;">
       <div class="modal-content" tabindex="0">
         <button class="modal-close" id="close-modal-airports" aria-label="Cerrar listado de aeropuertos">&times;</button>
@@ -88,6 +91,7 @@
       </div>
     </div>
 
+    <!-- Modal seguro de viaje -->
     <div class="modal" id="insurance-modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" aria-describedby="insurance-modal-desc" style="display:none;">
       <div class="modal-content" tabindex="0">
         <button class="modal-close" id="close-insurance-modal" aria-label="Cerrar cotización de seguro">&times;</button>
