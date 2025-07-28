@@ -18,6 +18,8 @@
       backdrop-filter: brightness(0.6);
       padding: 32px 12px;
       font-size: 0.8rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     h1, h2 {
       text-align: center;
@@ -105,63 +107,55 @@
     </div>
   </main>
   <script>
-    // Utilidad segura para fecha legible
     function formatDateTime(dtStr) {
       if (!dtStr) return '-';
       const dt = new Date(dtStr);
       if (!isNaN(dt)) {
-        return dt.toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' });
+        return dt.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
       }
       return dtStr;
     }
     const resultsContainer = document.getElementById('results-container');
     let contenidoHTML = "";
 
-    // Hoteles
     let hotelData = [];
     try {
       const hotelJson = localStorage.getItem('hotelResults');
       hotelData = hotelJson ? JSON.parse(hotelJson) : [];
-    } catch { hotelData = []; }
+    } catch {hotelData = [];}
 
-    if (hotelData && hotelData.length > 0) {
-      contenidoHTML += `
-        <h2 class="section-title">Hoteles disponibles</h2>
-        ${hotelData.map(hotel => `
-          <div class="result-item">
-            <strong>${hotel.name || 'Hotel desconocido'}</strong><br>
-            Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
-            Dirección: ${hotel.address || '-'}<br>
-            Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
-          </div>
-        `).join('')}
-      `;
+    if(hotelData.length > 0) {
+      contenidoHTML += `<h2 class="section-title">Hoteles disponibles</h2>`;
+      contenidoHTML += hotelData.map(hotel =>
+        `<div class="result-item">
+          <strong>${hotel.name || 'Hotel desconocido'}</strong><br>
+          Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
+          Dirección: ${hotel.address || '-'}<br>
+          Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
+        </div>`).join('');
     }
 
-    // Vuelos
     let vueloData = [];
     try {
       const vueloJson = localStorage.getItem('flightResults');
       vueloData = vueloJson ? JSON.parse(vueloJson) : [];
-    } catch { vueloData = []; }
+    } catch {vueloData = [];}
 
-    if (vueloData && vueloData.length > 0) {
-      contenidoHTML += `
-        <h2 class="section-title">Vuelos encontrados</h2>
-        ${vueloData.map(flight => `
-          <div class="result-item">
-            <strong>${(flight.airline && flight.airline.name) || 'Aerolínea desconocida'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
-            Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
-            Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
-            Estado: ${flight.flight_status || '-'}
-          </div>
-        `).join('')}
-      `;
+    if(vueloData.length > 0) {
+      contenidoHTML += `<h2 class="section-title">Vuelos encontrados</h2>`;
+      contenidoHTML += vueloData.map(flight =>
+        `<div class="result-item">
+          <strong>${(flight.airline && flight.airline.name) || 'Aerolínea desconocida'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
+          Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
+          Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
+          Estado: ${flight.flight_status || '-'}
+        </div>`).join('');
     }
 
-    if (!contenidoHTML) {
-      contenidoHTML = `<p class="empty-result">No se encontraron resultados o los datos fueron mal pasados.<br>Haz una nueva búsqueda.</p>`;
+    if(!contenidoHTML){
+      contenidoHTML = `<p class="empty-result">No se encontraron resultados o los datos fueron mal pasados.<br>Por favor, realiza una nueva búsqueda.</p>`;
     }
+
     resultsContainer.innerHTML = contenidoHTML;
   </script>
 </body>
