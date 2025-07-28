@@ -124,7 +124,7 @@
       hotelData = hotelJson ? JSON.parse(hotelJson) : [];
     } catch {hotelData = [];}
 
-    if(hotelData.length > 0) {
+    if (hotelData.length > 0) {
       contenidoHTML += `<h2 class="section-title">Hoteles disponibles</h2>`;
       contenidoHTML += hotelData.map(hotel =>
         `<div class="result-item">
@@ -141,7 +141,7 @@
       vueloData = vueloJson ? JSON.parse(vueloJson) : [];
     } catch {vueloData = [];}
 
-    if(vueloData.length > 0) {
+    if (vueloData.length > 0) {
       contenidoHTML += `<h2 class="section-title">Vuelos encontrados</h2>`;
       contenidoHTML += vueloData.map(flight =>
         `<div class="result-item">
@@ -152,7 +152,7 @@
         </div>`).join('');
     }
 
-    if(!contenidoHTML){
+    if (!contenidoHTML){
       contenidoHTML = `<p class="empty-result">No se encontraron resultados o los datos fueron mal pasados.<br>Por favor, realiza una nueva búsqueda.</p>`;
     }
 
