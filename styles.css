@@ -1,11 +1,10 @@
-/* Reset & global */
+/* Reset y estilos globales */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
-
 body {
   min-height: 100vh;
   display: flex;
@@ -26,7 +25,6 @@ body {
   text-align: center;
   margin: 30px 0;
 }
-
 .logo-box {
   display: inline-block;
   background: #fff;
@@ -37,7 +35,6 @@ body {
   font-weight: 700;
   font-size: 1.8rem;
 }
-
 .logo-img {
   max-height: 60px;
   margin-bottom: 8px;
@@ -46,7 +43,7 @@ body {
   margin-right: auto;
 }
 
-/* Button Group */
+/* Botones temáticos */
 .button-group {
   display: flex;
   justify-content: center;
@@ -59,8 +56,6 @@ body {
   flex-direction: row;
   align-items: stretch;
 }
-
-/* Buttons - btn-feature */
 .btn-feature {
   flex: 0 0 auto;
   max-width: 140px;
@@ -81,7 +76,6 @@ body {
   align-items: center;
   user-select: none;
 }
-
 .btn-feature:hover,
 .btn-feature:focus {
   outline: none;
@@ -89,7 +83,6 @@ body {
   box-shadow: 0 12px 25px rgba(0,0,0,0.18);
   border-color: #00c6ff;
 }
-
 .btn-feature img {
   width: 100%;
   height: 93.5px;
@@ -98,7 +91,6 @@ body {
   border-bottom: 1px solid #eee;
   flex-shrink: 0;
 }
-
 .btn-feature span {
   margin-top: 8px;
   display: block;
@@ -148,8 +140,6 @@ form#search-form input[type="number"]:focus {
   outline: 2px solid #00c6ff;
   outline-offset: 1px;
 }
-
-/* Placeholder */
 form#search-form input::placeholder {
   color: #aaa;
   font-style: italic;
@@ -180,15 +170,12 @@ form#search-form input::placeholder {
   box-shadow: 0 4px 8px rgba(0,119,204,0.4);
   transition: background 0.3s, box-shadow 0.3s;
 }
-
 .btn-submit:hover:not(:disabled),
 .btn-submit:focus:not(:disabled) {
   background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
   box-shadow: 0 6px 12px rgba(0,95,163,0.6);
   outline: none;
 }
-
-/* Botón submit deshabilitado */
 .btn-submit:disabled {
   background: grey;
   cursor: not-allowed;
@@ -203,13 +190,11 @@ form#search-form input::placeholder {
   flex-direction: column;
 }
 
-/* Estilos para inputs inválidos */
+/* Inputs error */
 form#search-form input.input-error {
   border-color: #e74c3c !important;
   background-color: #ffe6e6 !important;
 }
-
-/* Mensajes de error */
 .error-message {
   color: #e74c3c;
   font-size: 0.7rem;
@@ -217,7 +202,7 @@ form#search-form input.input-error {
   min-height: 1.15em;
 }
 
-/* Modal general */
+/* Modales */
 .modal {
   display: none;
   position: fixed;
@@ -227,7 +212,6 @@ form#search-form input.input-error {
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
   background: #fff;
   color: #222;
@@ -242,12 +226,9 @@ form#search-form input.input-error {
   font-size: 0.7225rem;
   outline: none;
 }
-
 .modal-content:focus {
   outline: 3px solid #00c6ff;
 }
-
-/* Botón cerrar modal */
 .modal-close {
   position: absolute;
   top: 10px;
@@ -272,24 +253,21 @@ form#search-form input.input-error {
   overflow-y: auto;
   max-height: 300px;
 }
-
 #resultados div, #hotel-results div {
   margin-bottom: 15px;
   padding-bottom: 8px;
   border-bottom: 1px solid #ccc;
 }
 
-/* Lista aeropuertos en modal */
+/* Lista aeropuertos */
 .airport-list {
   list-style: none;
   padding: 0;
   margin: 0 0 15px 0;
 }
-
 .airport-list li {
   margin: 8px 0;
 }
-
 .airport-btn {
   background: linear-gradient(90deg, #00c6ff 60%, #0077cc 100%);
   color: #fff;
@@ -302,7 +280,6 @@ form#search-form input.input-error {
   margin: 2px 0;
   transition: background 0.2s;
 }
-
 .airport-btn:hover,
 .airport-btn:focus {
   background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
