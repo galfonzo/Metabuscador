@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Metabuscador - Búsqueda de vuelos y seguros</title>
+  <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -46,7 +46,7 @@
 
       <div class="checkbox-group">
         <input type="checkbox" id="selectHotel" name="selectHotel" />
-        <label for="selectHotel">Seleccionar hotel (viaje ida y vuelta)</label>
+        <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
       </div>
 
       <div id="returnDateContainer" class="row" style="display:none;">
@@ -58,10 +58,8 @@
       <button type="submit" class="btn-submit" disabled>Buscar</button>
     </form>
 
-    <!-- Resultados vuelos -->
+    <!-- Contenedores para mostrar resultados sin recargar página, si deseas -->
     <section id="resultados" aria-live="polite"></section>
-
-    <!-- Resultados hoteles -->
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
     <!-- Modal listado aeropuertos -->
@@ -105,7 +103,6 @@
         <div id="insurance-quote-result" style="margin-top:12px; display:none;"></div>
       </div>
     </div>
-
   </main>
   <script src="app.js"></script>
 </body>
