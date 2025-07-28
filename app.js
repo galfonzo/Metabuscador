@@ -1,4 +1,36 @@
-// Aquí debes insertar el objeto thematicAirports con tus datos temáticos tal cual los definiste.
+// Object thematicAirports debe estar definido en este archivo o importado si lo tienes separado, ejemplo:
+const thematicAirports = {
+  arquitectura: [
+    { code: 'MAD', name: 'Aeropuerto Adolfo Suárez Madrid-Barajas' },
+    { code: 'BCN', name: 'Aeropuerto Josep Tarradellas Barcelona-El Prat' },
+    { code: 'FCO', name: 'Aeropuerto de Roma-Fiumicino' },
+  ],
+  playas: [
+    { code: 'CUN', name: 'Aeropuerto Internacional de Cancún' },
+    { code: 'LPI', name: 'Aeropuerto de Gran Canaria' },
+    { code: 'PMI', name: 'Aeropuerto de Palma de Mallorca' },
+  ],
+  montanas: [
+    { code: 'MEX', name: 'Aeropuerto Internacional Benito Juárez' },
+    { code: 'GVA', name: 'Aeropuerto de Ginebra' },
+    { code: 'ZRH', name: 'Aeropuerto de Zúrich' },
+  ],
+  cultura: [
+    { code: 'JFK', name: 'Aeropuerto John F. Kennedy' },
+    { code: 'LHR', name: 'Aeropuerto de Londres-Heathrow' },
+    { code: 'CDG', name: 'Aeropuerto Charles de Gaulle' },
+  ],
+  deporte: [
+    { code: 'SFO', name: 'Aeropuerto Internacional de San Francisco' },
+    { code: 'MUC', name: 'Aeropuerto de Múnich' },
+    { code: 'BCN', name: 'Aeropuerto Josep Tarradellas Barcelona-El Prat' },
+  ],
+  tours: [
+    { code: 'NYC', name: 'Aeropuerto LaGuardia' },
+    { code: 'LAX', name: 'Aeropuerto Internacional de Los Ángeles' },
+    { code: 'DXB', name: 'Aeropuerto Internacional de Dubái' },
+  ],
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('search-form');
@@ -22,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastFocusedElement = null;
   let modalKeydownHandler = null;
 
-  // Funciones para abrir y cerrar modales con trap focus
+  // Funciones para trap focus en modales
   function openModal(modalEl) {
     lastFocusedElement = document.activeElement;
     modalEl.style.display = 'flex';
@@ -55,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     modalEl.addEventListener('keydown', modalKeydownHandler);
   }
+
   function closeModal(modalEl) {
     modalEl.style.display = 'none';
     if (lastFocusedElement) lastFocusedElement.focus();
@@ -64,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Validaciones e inline errors
+  // Validaciones y mensajes inline
   function showError(input, message) {
     let errorDiv = input.nextElementSibling;
     if (!errorDiv || !errorDiv.classList.contains('error-message')) {
@@ -75,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     errorDiv.textContent = message;
     input.classList.add('input-error');
   }
+
   function clearError(input) {
     let errorDiv = input.nextElementSibling;
     if (errorDiv && errorDiv.classList.contains('error-message')) {
@@ -82,9 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     input.classList.remove('input-error');
   }
+
   function isIataValid(value) {
     return /^[A-Z]{3}$/.test(value);
   }
+
   function validateIata(input) {
     if (!input.value.trim()) {
       showError(input, 'Este campo es obligatorio.');
@@ -97,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearError(input);
     return true;
   }
+
   function validateDate(input) {
     if (!input.value) {
       showError(input, 'Este campo es obligatorio.');
@@ -112,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearError(input);
     return true;
   }
+
   function validateReturnDate() {
     if (selectHotelCheckbox.checked) {
       if (!returnDateInput.value) {
@@ -131,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
   }
+
   function validateForm() {
     const validOrigin = validateIata(originInput);
     const validDestination = validateIata(destinationInput);
@@ -141,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return formIsValid;
   }
 
-  // Event listeners para validación y transformación
+  // Escuchar inputs para validación dinámica y mayúsculas
   [originInput, destinationInput].forEach(input => {
     input.addEventListener('input', () => {
       input.value = input.value.toUpperCase();
@@ -149,11 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
       validateForm();
     });
   });
+
   checkInDateInput.addEventListener('input', () => {
     validateDate(checkInDateInput);
     validateReturnDate();
     validateForm();
   });
+
   returnDateInput.addEventListener('input', () => {
     validateReturnDate();
     validateForm();
@@ -172,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     validateForm();
   });
 
+  // Inicial estado campo regreso
   if (selectHotelCheckbox.checked) {
     returnDateContainer.style.display = 'flex';
     returnDateInput.setAttribute('required', 'required');
@@ -180,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     returnDateInput.removeAttribute('required');
   }
 
-  // Botones temáticos
+  // Botones temáticos con accesibilidad teclado y apertura modal
   const featureButtons = document.querySelectorAll('.btn-feature');
   featureButtons.forEach(btn => {
     btn.addEventListener('click', openAirportModal);
@@ -192,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Abrir modal listado aeropuertos según temática
   function openAirportModal() {
     const theme = this.getAttribute('data-theme');
     const airports = thematicAirports[theme] || [];
@@ -202,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modalAirportList.querySelector('button')?.focus();
   }
 
+  // Selección aeropuerto en modal
   modalAirportList.addEventListener('click', e => {
     if (e.target.classList.contains('airport-btn')) {
       const code = e.target.getAttribute('data-code');
@@ -217,9 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === modalAirports) closeModal(modalAirports);
   });
 
-  // API Key (colócala en backend en producción!!)
+  // Clave API AviationStack (por seguridad no poner en producción así)
   const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
 
+  // Envío formulario - búsqueda
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -236,21 +281,21 @@ document.addEventListener('DOMContentLoaded', () => {
     hotelResultsDiv.innerHTML = '';
 
     if (selectHotel) {
-      // Resultado simulados de hoteles
+      // Hoteles simulados
       const hotelsSimulated = [
         { name: 'Hotel Plaza', stars: 4, address: destino, price: 120 },
         { name: 'Hotel Central', stars: 3, address: destino, price: 85 },
         { name: 'Resort Paradise', stars: 5, address: destino, price: 250 }
       ];
       hotelResultsDiv.style.display = 'block';
-      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>`+
+      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>` +
         hotelsSimulated.map(hotel =>
           `<div>
             <strong>${hotel.name}</strong> - ${hotel.stars} estrellas - ${hotel.address} - $${hotel.price} USD
           </div>`).join('');
       localStorage.setItem('hotelResults', JSON.stringify(hotelsSimulated));
       localStorage.setItem('flightResults', JSON.stringify([]));
-      // Si quieres ir a pagina de resultados, descomenta la siguiente linea:
+      // Para usar página de resultados, descomenta la línea siguiente:
       // window.location.href = 'resultados.html';
       return;
     }
@@ -290,8 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Seguro de viaje (la lógica es larga, adaptar similarmente si la usas)
-  // ...
+  // Aquí puedes agregar funciones para el modal de seguro de viaje si lo usas
 
+  // Inicializar validación
   validateForm();
 });
