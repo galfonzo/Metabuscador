@@ -1,4 +1,4 @@
-// Inserta aquí el objeto thematicAirports con tus datos temáticos (si es muy largo puedes importarlo externamente)
+// Aquí debes insertar el objeto thematicAirports con tus datos temáticos tal cual los definiste.
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('search-form');
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastFocusedElement = null;
   let modalKeydownHandler = null;
 
+  // Funciones para abrir y cerrar modales con trap focus
   function openModal(modalEl) {
     lastFocusedElement = document.activeElement;
     modalEl.style.display = 'flex';
@@ -29,24 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
     modalContent.setAttribute('tabindex', '0');
     modalContent.focus();
 
-    modalKeydownHandler = function(event) {
-      const focusableElementsSelector = 'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
-      const focusableElements = modalEl.querySelectorAll(focusableElementsSelector);
-      if(focusableElements.length === 0) return;
+    modalKeydownHandler = event => {
+      const focusableElsSelector = 'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+      const focusableEls = modalEl.querySelectorAll(focusableElsSelector);
+      if (focusableEls.length === 0) return;
 
-      const firstFocusable = focusableElements[0];
-      const lastFocusable = focusableElements[focusableElements.length-1];
-      const isTabPressed = (event.key === 'Tab' || event.keyCode === 9);
+      const firstFocusable = focusableEls[0];
+      const lastFocusable = focusableEls[focusableEls.length - 1];
+      const isTabPressed = event.key === 'Tab' || event.keyCode === 9;
 
-      if(!isTabPressed) return;
+      if (!isTabPressed) return;
 
-      if(event.shiftKey) {
-        if(document.activeElement === firstFocusable) {
+      if (event.shiftKey) { // shift + tab
+        if (document.activeElement === firstFocusable) {
           event.preventDefault();
           lastFocusable.focus();
         }
-      } else {
-        if(document.activeElement === lastFocusable) {
+      } else { // tab
+        if (document.activeElement === lastFocusable) {
           event.preventDefault();
           firstFocusable.focus();
         }
@@ -54,19 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     modalEl.addEventListener('keydown', modalKeydownHandler);
   }
-
   function closeModal(modalEl) {
     modalEl.style.display = 'none';
-    if(lastFocusedElement) lastFocusedElement.focus();
-    if(modalKeydownHandler) {
+    if (lastFocusedElement) lastFocusedElement.focus();
+    if (modalKeydownHandler) {
       modalEl.removeEventListener('keydown', modalKeydownHandler);
       modalKeydownHandler = null;
     }
   }
 
+  // Validaciones e inline errors
   function showError(input, message) {
     let errorDiv = input.nextElementSibling;
-    if(!errorDiv || !errorDiv.classList.contains('error-message')) {
+    if (!errorDiv || !errorDiv.classList.contains('error-message')) {
       errorDiv = document.createElement('div');
       errorDiv.className = 'error-message';
       input.parentNode.insertBefore(errorDiv, input.nextSibling);
@@ -74,57 +75,52 @@ document.addEventListener('DOMContentLoaded', () => {
     errorDiv.textContent = message;
     input.classList.add('input-error');
   }
-
   function clearError(input) {
     let errorDiv = input.nextElementSibling;
-    if(errorDiv && errorDiv.classList.contains('error-message')) {
+    if (errorDiv && errorDiv.classList.contains('error-message')) {
       errorDiv.textContent = '';
     }
     input.classList.remove('input-error');
   }
-
   function isIataValid(value) {
     return /^[A-Z]{3}$/.test(value);
   }
-
   function validateIata(input) {
-    if(!input.value.trim()) {
+    if (!input.value.trim()) {
       showError(input, 'Este campo es obligatorio.');
       return false;
     }
-    if(!isIataValid(input.value)) {
+    if (!isIataValid(input.value)) {
       showError(input, 'Código IATA inválido. Deben ser 3 letras mayúsculas.');
       return false;
     }
     clearError(input);
     return true;
   }
-
   function validateDate(input) {
-    if(!input.value) {
+    if (!input.value) {
       showError(input, 'Este campo es obligatorio.');
       return false;
     }
     const inputDate = new Date(input.value + 'T00:00:00');
     const today = new Date();
-    today.setHours(0,0,0,0);
-    if(inputDate < today) {
+    today.setHours(0, 0, 0, 0);
+    if (inputDate < today) {
       showError(input, 'La fecha no puede ser anterior a hoy.');
       return false;
     }
     clearError(input);
     return true;
   }
-
   function validateReturnDate() {
-    if(selectHotelCheckbox.checked) {
-      if(!returnDateInput.value) {
+    if (selectHotelCheckbox.checked) {
+      if (!returnDateInput.value) {
         showError(returnDateInput, 'La fecha de regreso es obligatoria.');
         return false;
       }
       const ds = new Date(checkInDateInput.value + 'T00:00:00');
       const dr = new Date(returnDateInput.value + 'T00:00:00');
-      if(dr <= ds) {
+      if (dr <= ds) {
         showError(returnDateInput, 'La fecha de regreso debe ser posterior a la fecha de salida.');
         return false;
       }
@@ -135,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
   }
-
   function validateForm() {
     const validOrigin = validateIata(originInput);
     const validDestination = validateIata(destinationInput);
@@ -146,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return formIsValid;
   }
 
+  // Event listeners para validación y transformación
   [originInput, destinationInput].forEach(input => {
     input.addEventListener('input', () => {
       input.value = input.value.toUpperCase();
@@ -153,20 +149,18 @@ document.addEventListener('DOMContentLoaded', () => {
       validateForm();
     });
   });
-
   checkInDateInput.addEventListener('input', () => {
     validateDate(checkInDateInput);
     validateReturnDate();
     validateForm();
   });
-
   returnDateInput.addEventListener('input', () => {
     validateReturnDate();
     validateForm();
   });
 
   selectHotelCheckbox.addEventListener('change', () => {
-    if(selectHotelCheckbox.checked) {
+    if (selectHotelCheckbox.checked) {
       returnDateContainer.style.display = 'flex';
       returnDateInput.setAttribute('required', 'required');
     } else {
@@ -178,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     validateForm();
   });
 
-  if(selectHotelCheckbox.checked) {
+  if (selectHotelCheckbox.checked) {
     returnDateContainer.style.display = 'flex';
     returnDateInput.setAttribute('required', 'required');
   } else {
@@ -190,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const featureButtons = document.querySelectorAll('.btn-feature');
   featureButtons.forEach(btn => {
     btn.addEventListener('click', openAirportModal);
-    btn.addEventListener('keydown', (e) => {
-      if(e.key === "Enter" || e.key === " " || e.keyCode===13 || e.keyCode===32) {
+    btn.addEventListener('keydown', e => {
+      if (e.key === "Enter" || e.key === " " || e.keyCode === 13 || e.keyCode === 32) {
         e.preventDefault();
         openAirportModal.call(btn, e);
       }
@@ -209,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   modalAirportList.addEventListener('click', e => {
-    if(e.target.classList.contains('airport-btn')) {
+    if (e.target.classList.contains('airport-btn')) {
       const code = e.target.getAttribute('data-code');
       destinationInput.value = code;
       validateIata(destinationInput);
@@ -219,15 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btnCloseModalAirports.addEventListener('click', () => closeModal(modalAirports));
-  window.addEventListener('click', (e) => { if(e.target === modalAirports) closeModal(modalAirports); });
+  window.addEventListener('click', e => {
+    if (e.target === modalAirports) closeModal(modalAirports);
+  });
 
-  // API Key AviationStack (considerar mover a backend)
+  // API Key (colócala en backend en producción!!)
   const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    if(!validateForm()) return;
+    if (!validateForm()) return;
 
     const origen = originInput.value.trim();
     const destino = destinationInput.value.trim();
@@ -239,22 +235,23 @@ document.addEventListener('DOMContentLoaded', () => {
     hotelResultsDiv.style.display = 'none';
     hotelResultsDiv.innerHTML = '';
 
-    if(selectHotel) {
+    if (selectHotel) {
+      // Resultado simulados de hoteles
       const hotelsSimulated = [
-        {name: 'Hotel Plaza', stars: 4, address: destino, price: 120},
-        {name: 'Hotel Central', stars: 3, address: destino, price: 85},
-        {name: 'Resort Paradise', stars: 5, address: destino, price: 250}
+        { name: 'Hotel Plaza', stars: 4, address: destino, price: 120 },
+        { name: 'Hotel Central', stars: 3, address: destino, price: 85 },
+        { name: 'Resort Paradise', stars: 5, address: destino, price: 250 }
       ];
       hotelResultsDiv.style.display = 'block';
-      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>` +
+      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>`+
         hotelsSimulated.map(hotel =>
           `<div>
             <strong>${hotel.name}</strong> - ${hotel.stars} estrellas - ${hotel.address} - $${hotel.price} USD
           </div>`).join('');
       localStorage.setItem('hotelResults', JSON.stringify(hotelsSimulated));
       localStorage.setItem('flightResults', JSON.stringify([]));
-      // Puedes descomentar para ir a resultados.html
-      // window.location.href = "resultados.html";
+      // Si quieres ir a pagina de resultados, descomenta la siguiente linea:
+      // window.location.href = 'resultados.html';
       return;
     }
 
@@ -265,10 +262,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(url);
       const data = await response.json();
 
-      if(data.error) throw new Error(data.error.message);
+      if (data.error) throw new Error(data.error.message);
 
       const vuelos = data.data || [];
-      if(vuelos.length > 0) {
+      if (vuelos.length > 0) {
         const maxResults = 10;
         resultadosDiv.innerHTML = vuelos.slice(0, maxResults).map(flight => `
           <div>
@@ -286,15 +283,15 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('flightResults', JSON.stringify([]));
         localStorage.setItem('hotelResults', JSON.stringify([]));
       }
-    } catch(error){
+    } catch (error) {
       resultadosDiv.innerHTML = `<p>Error al obtener datos: ${error.message}</p>`;
       localStorage.setItem('flightResults', JSON.stringify([]));
       localStorage.setItem('hotelResults', JSON.stringify([]));
     }
   });
 
-  // --- Seguro de viaje (como has definido) ---
-// ... Seguro de viaje igual que antes ...
-  
+  // Seguro de viaje (la lógica es larga, adaptar similarmente si la usas)
+  // ...
+
   validateForm();
 });
