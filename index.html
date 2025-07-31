@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
 
-  <!-- Enlace a CSS con query string para evitar caché -->
+  <!-- Enlace CSS con query string para evitar caché -->
   <link rel="stylesheet" href="styles.css?v=20250731" />
 </head>
 <body>
@@ -45,6 +45,7 @@
     </div>
 
     <form id="search-form" novalidate>
+      <!-- Contenedor para inputs en fila -->
       <div class="inputs-row">
         <div class="row">
           <label for="origin">Origen (Código IATA)</label>
@@ -84,9 +85,7 @@
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Aquí estarían los modales sin cambios -->
-    <!-- ... -->
-
+    <!-- Modales sin cambios, pueden agregarse según sea necesario -->
   </main>
   <script src="app.js"></script>
 </body>
