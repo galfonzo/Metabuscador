@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <!-- Botones temáticos sin imágenes fijas, solo texto -->
+    <!-- Botones temáticos sin imágenes fijas -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
       <button class="btn-feature" data-theme="arquitectura" type="button" aria-label="Viajes de Arquitectura">Arquitectura</button>
       <button class="btn-feature" data-theme="playas" type="button" aria-label="Viajes a Playas">Playas</button>
@@ -25,54 +25,47 @@
       <button class="btn-feature" data-theme="tours" type="button" aria-label="Viajes de Tours">Tours</button>
     </div>
 
-    <!-- Formulario principal -->
     <form id="search-form" novalidate>
       <div class="row">
         <label for="origin">Origen (Código IATA)</label>
         <input type="text" id="origin" name="origin" maxlength="3" required placeholder="Ej: MAD" autocomplete="off" aria-describedby="error-origin" />
         <div id="error-origin" class="error-message" aria-live="polite"></div>
       </div>
-
       <div class="row">
         <label for="destination">Destino (Código IATA)</label>
         <input type="text" id="destination" name="destination" maxlength="3" required placeholder="Ej: BCN" autocomplete="off" aria-describedby="error-destination" />
         <div id="error-destination" class="error-message" aria-live="polite"></div>
       </div>
-
       <div class="row">
         <label for="checkInDate">Fecha de salida</label>
         <input type="date" id="checkInDate" name="checkInDate" required aria-describedby="error-checkInDate" />
         <div id="error-checkInDate" class="error-message" aria-live="polite"></div>
       </div>
-
       <div class="checkbox-group">
         <input type="checkbox" id="selectHotel" name="selectHotel" />
         <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
       </div>
-
       <div id="returnDateContainer" class="row" style="display:none;">
         <label for="returnDate">Fecha de regreso</label>
         <input type="date" id="returnDate" name="returnDate" aria-describedby="error-returnDate" />
         <div id="error-returnDate" class="error-message" aria-live="polite"></div>
       </div>
-
       <button type="submit" class="btn-submit" disabled>Buscar</button>
     </form>
 
-    <!-- Contenedores para mostrar resultados inline -->
+    <button type="button" id="solicitar-seguro-btn" class="btn-feature" style="margin:35px auto 0 auto;display:block;">Cotizar seguro de viajero</button>
+
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Modal listado aeropuertos -->
     <div class="modal" id="modal-airports" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title" aria-describedby="modal-airports-desc" style="display:none;">
       <div class="modal-content" tabindex="0">
         <button class="modal-close" id="close-modal-airports" aria-label="Cerrar listado de aeropuertos">&times;</button>
-        <h2 id="modal-airports-title">Selecciona un aeropuerto</h2>
+        <h2 id="modal-airports-title">Selecciona un destino</h2>
         <ul id="airport-list" class="airport-list"></ul>
       </div>
     </div>
 
-    <!-- Modal seguro de viaje -->
     <div class="modal" id="insurance-modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" aria-describedby="insurance-modal-desc" style="display:none;">
       <div class="modal-content" tabindex="0">
         <button class="modal-close" id="close-insurance-modal" aria-label="Cerrar cotización de seguro">&times;</button>
@@ -105,7 +98,6 @@
       </div>
     </div>
   </main>
-
   <script src="app.js"></script>
 </body>
 </html>
