@@ -7,6 +7,15 @@
 
   <!-- Enlace CSS con query string para evitar caché -->
   <link rel="stylesheet" href="styles.css?v=20250731" />
+
+  <!-- FontAwesome CDN para iconos -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pVvuHt7NscgnDzqSc69MBMNOLd9fLLWLU+Q75Rs61f8h2torzgUKDfmq9Sd7pAT+P8xuSb9OxsqT4z7boPp7bw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
 <body>
   <main>
@@ -16,45 +25,63 @@
       </div>
     </div>
 
-    <!-- Botones temáticos con imágenes -->
+    <!-- Botones temáticos con iconos FontAwesome -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
       <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura">
-        <img src="img/arquitectura.png" alt="Icono Arquitectura" class="btn-img" />
+        <i class="fas fa-landmark fa-3x" aria-hidden="true"></i>
         Arquitectura
       </button>
       <button class="btn-feature" type="button" aria-label="Viajes a Playas">
-        <img src="img/playas.png" alt="Icono Playas" class="btn-img" />
+        <i class="fas fa-umbrella-beach fa-3x" aria-hidden="true"></i>
         Playas
       </button>
       <button class="btn-feature" type="button" aria-label="Viajes a Montañas">
-        <img src="img/montanas.png" alt="Icono Montañas" class="btn-img" />
+        <i class="fas fa-mountain fa-3x" aria-hidden="true"></i>
         Montañas
       </button>
       <button class="btn-feature" type="button" aria-label="Viajes de Cultura">
-        <img src="img/cultura.png" alt="Icono Cultura" class="btn-img" />
+        <i class="fas fa-theater-masks fa-3x" aria-hidden="true"></i>
         Cultura
       </button>
       <button class="btn-feature" type="button" aria-label="Viajes de Deporte">
-        <img src="img/deporte.png" alt="Icono Deporte" class="btn-img" />
+        <i class="fas fa-futbol fa-3x" aria-hidden="true"></i>
         Deporte
       </button>
       <button class="btn-feature" type="button" aria-label="Viajes de Tours">
-        <img src="img/tours.png" alt="Icono Tours" class="btn-img" />
+        <i class="fas fa-route fa-3x" aria-hidden="true"></i>
         Tours
       </button>
     </div>
 
     <form id="search-form" novalidate>
-      <!-- Contenedor para inputs en fila -->
+      <!-- Contenedor inputs dispuestos horizontalmente -->
       <div class="inputs-row">
         <div class="row">
           <label for="origin">Origen (Código IATA)</label>
-          <input type="text" id="origin" name="origin" maxlength="3" required placeholder="Ej: MAD" autocomplete="off" aria-describedby="error-origin" />
+          <input
+            type="text"
+            id="origin"
+            name="origin"
+            maxlength="3"
+            required
+            placeholder="Ej: MAD"
+            autocomplete="off"
+            aria-describedby="error-origin"
+          />
           <div id="error-origin" class="error-message" aria-live="polite"></div>
         </div>
         <div class="row">
           <label for="destination">Destino (Código IATA)</label>
-          <input type="text" id="destination" name="destination" maxlength="3" required placeholder="Ej: BCN" autocomplete="off" aria-describedby="error-destination" />
+          <input
+            type="text"
+            id="destination"
+            name="destination"
+            maxlength="3"
+            required
+            placeholder="Ej: BCN"
+            autocomplete="off"
+            aria-describedby="error-destination"
+          />
           <div id="error-destination" class="error-message" aria-live="polite"></div>
         </div>
         <div class="row">
@@ -78,14 +105,19 @@
       <button type="submit" class="btn-submit" disabled>Buscar</button>
     </form>
 
-    <button type="button" id="solicitar-seguro-btn" class="btn-feature" style="margin: 35px auto 0 auto; display: block;">
+    <button
+      type="button"
+      id="solicitar-seguro-btn"
+      class="btn-feature"
+      style="margin: 35px auto 0 auto; display: block;"
+    >
       Cotizar seguro de viajero
     </button>
 
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Modales sin cambios, pueden agregarse según sea necesario -->
+    <!-- Modales sin cambios (puedes agregarlos si los necesitas) -->
   </main>
   <script src="app.js"></script>
 </body>
