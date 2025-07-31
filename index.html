@@ -27,27 +27,27 @@
 
     <!-- Botones temáticos con iconos FontAwesome -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
-      <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura">
+      <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura" data-theme="arquitectura">
         <i class="fas fa-landmark fa-3x" aria-hidden="true"></i>
         Arquitectura
       </button>
-      <button class="btn-feature" type="button" aria-label="Viajes a Playas">
+      <button class="btn-feature" type="button" aria-label="Viajes a Playas" data-theme="playas">
         <i class="fas fa-umbrella-beach fa-3x" aria-hidden="true"></i>
         Playas
       </button>
-      <button class="btn-feature" type="button" aria-label="Viajes a Montañas">
+      <button class="btn-feature" type="button" aria-label="Viajes a Montañas" data-theme="montanas">
         <i class="fas fa-mountain fa-3x" aria-hidden="true"></i>
         Montañas
       </button>
-      <button class="btn-feature" type="button" aria-label="Viajes de Cultura">
+      <button class="btn-feature" type="button" aria-label="Viajes de Cultura" data-theme="cultura">
         <i class="fas fa-theater-masks fa-3x" aria-hidden="true"></i>
         Cultura
       </button>
-      <button class="btn-feature" type="button" aria-label="Viajes de Deporte">
+      <button class="btn-feature" type="button" aria-label="Viajes de Deporte" data-theme="deporte">
         <i class="fas fa-futbol fa-3x" aria-hidden="true"></i>
         Deporte
       </button>
-      <button class="btn-feature" type="button" aria-label="Viajes de Tours">
+      <button class="btn-feature" type="button" aria-label="Viajes de Tours" data-theme="tours">
         <i class="fas fa-route fa-3x" aria-hidden="true"></i>
         Tours
       </button>
@@ -112,8 +112,40 @@
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Modales aquí pueden ir si las tienes -->
+    <!-- Modal cotización seguro -->
+    <div id="insurance-modal" class="modal" style="display:none;">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title">
+        <button id="close-insurance-modal" aria-label="Cerrar modal" class="close-button">&times;</button>
+        <h2 id="insurance-modal-title">Cotización Seguro de Viajero</h2>
+        <form id="insurance-quote-form" novalidate>
+          <div class="row">
+            <label for="insured-name">Nombre completo</label>
+            <input type="text" id="insured-name" name="insured-name" required placeholder="Ej: Juan Pérez" />
+          </div>
+          <div class="row">
+            <label for="insured-age">Edad</label>
+            <input type="number" id="insured-age" name="insured-age" min="0" max="120" required placeholder="Ej: 35" />
+          </div>
+          <div class="row">
+            <label for="insured-country">Destino (Código IATA o país)</label>
+            <input type="text" id="insured-country" name="insured-country" required placeholder="Ej: ESP o MAD" />
+          </div>
+          <div class="row">
+            <label for="insured-start-date">Fecha inicio</label>
+            <input type="date" id="insured-start-date" name="insured-start-date" required />
+          </div>
+          <div class="row">
+            <label for="insured-end-date">Fecha fin</label>
+            <input type="date" id="insured-end-date" name="insured-end-date" required />
+          </div>
+          <button type="submit" class="btn-submit">Calcular cotización</button>
+        </form>
+        <div id="insurance-quote-result" style="margin-top: 20px; display:none;"></div>
+      </div>
+    </div>
+
   </main>
+
   <script src="app.js"></script>
 </body>
 </html>
