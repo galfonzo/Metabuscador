@@ -4,17 +4,14 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-}
-
-body {
-  background-color: #fff9f0; /* fondo beige crudo */
-  color: #222; /* texto oscuro para buen contraste */
   font-family: Arial, sans-serif;
+  background-color: #fff9f0; /* beige crudo */
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Contenedor logo */
@@ -25,13 +22,7 @@ body {
 
 .logo-box {
   display: inline-block;
-  background: transparent;
-  box-shadow: none;
   padding: 0;
-  border-radius: 0;
-  color: inherit;
-  font-weight: normal;
-  font-size: inherit;
 }
 
 .logo-img {
@@ -48,7 +39,7 @@ body {
   justify-content: center;
   flex-wrap: nowrap;
   gap: 22px;
-  margin: 40px auto 25px auto;
+  margin: 40px auto 25px;
   max-width: 1100px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -96,7 +87,7 @@ body {
 form#search-form .inputs-row {
   display: flex;
   gap: 20px;
-  flex-wrap: nowrap; /* evitar que envuelvan */
+  flex-wrap: nowrap;
   justify-content: center;
   margin-bottom: 20px;
   max-width: 100%;
@@ -113,6 +104,18 @@ form#search-form .inputs-row input[type="text"],
 form#search-form .inputs-row input[type="date"] {
   width: 100%;
   box-sizing: border-box;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+}
+
+form#search-form .inputs-row input[type="text"]:focus,
+form#search-form .inputs-row input[type="date"]:focus {
+  border-color: #00c6ff;
+  outline: none;
+  box-shadow: 0 0 5px #00c6ff;
 }
 
 /* Checkbox grupos */
@@ -131,10 +134,10 @@ form#search-form {
   max-width: 470.6px;
   margin: 0 auto 40px auto;
   background: rgba(0,0,0,0.07);
-  padding: 18.1px 21.7px;
+  padding: 20px 24px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-size: 0.7225rem;
+  font-size: 0.8rem;
   color: #222;
 }
 
@@ -142,46 +145,35 @@ form#search-form > .row {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: 10.8px;
+  margin-bottom: 12px;
 }
 
 form#search-form label {
   font-weight: 600;
   color: #222;
-  font-size: 0.7225rem;
+  font-size: 0.8rem;
 }
 
-form#search-form input[type="text"],
-form#search-form input[type="date"],
-form#search-form input[type="number"] {
-  padding: 7.2px 8.7px;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.7225rem;
-  background: #fff;
+form#search-form input.input-error {
+  border-color: #e74c3c !important;
+  background-color: #ffe6e6 !important;
   color: #222;
-  transition: border-color 0.3s, background-color 0.3s;
 }
 
-form#search-form input[type="text"]:focus,
-form#search-form input[type="date"]:focus,
-form#search-form input[type="number"]:focus {
-  border-color: #00c6ff;
-  outline: 2px solid #00c6ff;
-  outline-offset: 1px;
+.error-message {
+  color: #e74c3c;
+  font-size: 0.75rem;
+  margin-top: 3px;
+  min-height: 1.2em;
 }
 
-form#search-form input::placeholder {
-  color: #aaa;
-  font-style: italic;
-}
-
+/* Botón enviar */
 .btn-submit {
   background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
   color: white;
   font-weight: 700;
-  font-size: 0.795rem;
-  padding: 8.7px;
+  font-size: 0.9rem;
+  padding: 10px 0;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -203,6 +195,7 @@ form#search-form input::placeholder {
   box-shadow: none;
 }
 
+/* Contenedor fecha regreso */
 #returnDateContainer {
   display: none;
   flex-basis: 180px;
@@ -210,23 +203,10 @@ form#search-form input::placeholder {
   flex-direction: column;
 }
 
-form#search-form input.input-error {
-  border-color: #e74c3c !important;
-  background-color: #ffe6e6 !important;
-  color: #222;
-}
-
-.error-message {
-  color: #e74c3c;
-  font-size: 0.7rem;
-  margin-top: 2px;
-  min-height: 1.15em;
-}
-
 /* Responsive para pantallas pequeñas */
 @media (max-width: 700px) {
   form#search-form .inputs-row {
-    flex-wrap: wrap; /* permite que inputs envuelvan verticalmente */
+    flex-wrap: wrap;
   }
   form#search-form .inputs-row > .row {
     flex: 1 1 100%;
@@ -241,9 +221,6 @@ form#search-form input.input-error {
   .btn-feature {
     max-width: 350px;
     width: 90%;
-  }
-  .modal-content {
-    max-width: 90vw;
   }
   #returnDateContainer {
     flex-basis: auto;
