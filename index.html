@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
 
-  <!-- Enlace CSS con query string para evitar caché -->
   <link rel="stylesheet" href="styles.css?v=20250731" />
-
-  <!-- FontAwesome CDN para iconos -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-pVvuHt7NscgnDzqSc69MBMNOLd9fLLWLU+Q75Rs61f8h2torzgUKDfmq9Sd7pAT+P8xuSb9OxsqT4z7boPp7bw=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
@@ -25,7 +21,6 @@
       </div>
     </div>
 
-    <!-- Botones temáticos con iconos FontAwesome -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
       <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura" data-theme="arquitectura">
         <i class="fas fa-landmark fa-3x" aria-hidden="true"></i>
@@ -90,14 +85,15 @@
         </div>
       </div>
 
-      <div class="checkbox-group" style="justify-content: center; margin-bottom: 40px;">
-        <input type="checkbox" id="cotizarSeguro" name="cotizarSeguro" />
-        <label for="cotizarSeguro" style="cursor: pointer;">Cotizar seguro de viajero</label>
-      </div>
-
-      <div class="checkbox-group">
-        <input type="checkbox" id="selectHotel" name="selectHotel" />
-        <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
+      <div class="checkbox-group center-checks">
+        <div class="checkbox-item">
+          <input type="checkbox" id="cotizarSeguro" name="cotizarSeguro" />
+          <label for="cotizarSeguro" style="cursor: pointer;">Cotizar seguro de viajero</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="selectHotel" name="selectHotel" />
+          <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
+        </div>
       </div>
 
       <div id="returnDateContainer" class="row" style="display:none;">
@@ -111,6 +107,15 @@
 
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
+
+    <!-- Modal ciudades y aeropuerto -->
+    <div id="modal-airports" class="modal" style="display:none;">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title">
+        <button id="close-modal-airports" aria-label="Cerrar modal" class="close-button">&times;</button>
+        <h2 id="modal-airports-title">Selecciona un aeropuerto</h2>
+        <ul id="airport-list" style="list-style:none; padding:0; margin:0;"></ul>
+      </div>
+    </div>
 
     <!-- Modal cotización seguro -->
     <div id="insurance-modal" class="modal" style="display:none;">
