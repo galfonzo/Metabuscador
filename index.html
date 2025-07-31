@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
 
-  <!-- Enlace CSS con query string para evitar caché -->
+  <!-- Enlace a CSS con query string para evitar caché -->
   <link rel="stylesheet" href="styles.css?v=20250731" />
 </head>
 <body>
@@ -13,11 +13,10 @@
     <div class="logo-container">
       <div class="logo-box">
         <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
-        <!-- Texto eliminado para centrarse en logo -->
       </div>
     </div>
 
-    <!-- Botones temáticos con imagen + texto -->
+    <!-- Botones temáticos con imágenes -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
       <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura">
         <img src="img/arquitectura.png" alt="Icono Arquitectura" class="btn-img" />
@@ -46,7 +45,6 @@
     </div>
 
     <form id="search-form" novalidate>
-      <!-- Contenedor para inputs en fila -->
       <div class="inputs-row">
         <div class="row">
           <label for="origin">Origen (Código IATA)</label>
@@ -69,23 +67,25 @@
         <input type="checkbox" id="selectHotel" name="selectHotel" />
         <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
       </div>
+
       <div id="returnDateContainer" class="row" style="display:none;">
         <label for="returnDate">Fecha de regreso</label>
         <input type="date" id="returnDate" name="returnDate" aria-describedby="error-returnDate" />
         <div id="error-returnDate" class="error-message" aria-live="polite"></div>
       </div>
+
       <button type="submit" class="btn-submit" disabled>Buscar</button>
     </form>
 
-    <button type="button" id="solicitar-seguro-btn" class="btn-feature" style="margin:35px auto 0 auto; display:block;">
+    <button type="button" id="solicitar-seguro-btn" class="btn-feature" style="margin: 35px auto 0 auto; display: block;">
       Cotizar seguro de viajero
     </button>
 
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Modales aquí, igual que antes -->
-    <!-- ... (sin cambios) ... -->
+    <!-- Aquí estarían los modales sin cambios -->
+    <!-- ... -->
 
   </main>
   <script src="app.js"></script>
