@@ -1,4 +1,4 @@
-// Listado temático con código IATA y ciudad/ región
+// Datos de aeropuertos temáticos
 const thematicAirports = {
   arquitectura: [
     { code: 'MAD', city: 'Madrid' },
@@ -56,206 +56,198 @@ const thematicAirports = {
   ],
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Elementos HTML
-  const form = document.getElementById('search-form');
-  const btnSubmit = form.querySelector('.btn-submit');
-  const originInput = document.getElementById('origin');
-  const destinationInput = document.getElementById('destination');
-  const checkInDateInput = document.getElementById('checkInDate');
-  const selectHotelCheckbox = document.getElementById('selectHotel');
-  const returnDateContainer = document.getElementById('returnDateContainer');
-  const returnDateInput = document.getElementById('returnDate');
-  const resultadosDiv = document.getElementById('resultados');
-  const hotelResultsDiv = document.getElementById('hotel-results');
+// Referencias DOM
+const modalAirports = document.getElementById('modal-airports');
+const modalAirportList = document.getElementById('airport-list');
+const closeModalAirportsBtn = document.getElementById('close-modal-airports');
+const insuranceModal = document.getElementById('insurance-modal');
+const closeInsuranceModalBtn = document.getElementById('close-insurance-modal');
 
-  // Validaciones
-  function showError(input, message) {
-    let errorDiv = input.nextElementSibling;
-    if (!errorDiv || !errorDiv.classList.contains('error-message')) {
-      errorDiv = document.createElement('div');
-      errorDiv.className = 'error-message';
-      input.parentNode.insertBefore(errorDiv, input.nextSibling);
-    }
-    errorDiv.textContent = message;
-    input.classList.add('input-error');
-  }
-  function clearError(input) {
-    let errorDiv = input.nextElementSibling;
-    if (errorDiv && errorDiv.classList.contains('error-message')) {
-      errorDiv.textContent = '';
-    }
-    input.classList.remove('input-error');
-  }
-  function isIataValid(value) {
-    return /^[A-Z]{3}$/.test(value);
-  }
-  function validateIata(input) {
-    if (!input.value.trim()) {
-      showError(input, 'Este campo es obligatorio.');
-      return false;
-    }
-    if (!isIataValid(input.value)) {
-      showError(input, 'Código IATA inválido. Deben ser 3 letras mayúsculas.');
-      return false;
-    }
-    clearError(input);
-    return true;
-  }
-  function validateDate(input) {
-    if (!input.value) {
-      showError(input, 'Este campo es obligatorio.');
-      return false;
-    }
-    const inputDate = new Date(input.value + 'T00:00:00');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (inputDate < today) {
-      showError(input, 'La fecha no puede ser anterior a hoy.');
-      return false;
-    }
-    clearError(input);
-    return true;
-  }
-  function validateReturnDate() {
-    if (selectHotelCheckbox.checked) {
-      if (!returnDateInput.value) {
-        showError(returnDateInput, 'La fecha de regreso es obligatoria.');
-        return false;
-      }
-      const ds = new Date(checkInDateInput.value + 'T00:00:00');
-      const dr = new Date(returnDateInput.value + 'T00:00:00');
-      if (dr <= ds) {
-        showError(returnDateInput, 'La fecha de regreso debe ser posterior a la fecha de salida.');
-        return false;
-      }
-      clearError(returnDateInput);
-      return true;
-    } else {
-      clearError(returnDateInput);
-      return true;
-    }
-  }
-  function validateForm() {
-    const validOrigin = validateIata(originInput);
-    const validDestination = validateIata(destinationInput);
-    const validCheckIn = validateDate(checkInDateInput);
-    const validReturn = validateReturnDate();
-    const formIsValid = validOrigin && validDestination && validCheckIn && validReturn;
-    btnSubmit.disabled = !formIsValid;
-    return formIsValid;
-  }
+const originInput = document.getElementById('origin');
+const destinationInput = document.getElementById('destination');
+const checkInDateInput = document.getElementById('checkInDate');
+const returnDateContainer = document.getElementById('returnDateContainer');
+const returnDateInput = document.getElementById('returnDate');
+const selectHotelCheckbox = document.getElementById('selectHotel');
+const selectInsuranceCheckbox = document.getElementById('selectInsurance');
+const insuranceQuoteForm = document.getElementById('insurance-quote-form');
+const insuranceQuoteResult = document.getElementById('insurance-quote-result');
+const insuredNameInput = document.getElementById('insured-name');
+const insuredAgeInput = document.getElementById('insured-age');
+const insuredCountryInput = document.getElementById('insured-country');
+const insuredStartDateInput = document.getElementById('insured-start-date');
+const insuredEndDateInput = document.getElementById('insured-end-date');
 
-  // Eventos para inputs
-  [originInput, destinationInput].forEach(input => {
-    input.addEventListener('input', () => {
-      input.value = input.value.toUpperCase();
-      validateIata(input);
-      validateForm();
-    });
+const searchForm = document.getElementById('search-form');
+const resultadosDiv = document.getElementById('resultados');
+const hotelResultsDiv = document.getElementById('hotel-results');
+
+const btnSubmit = searchForm.querySelector('.btn-submit');
+
+// Función para abrir modal
+function openModal(modal) {
+  modal.style.display = 'flex';
+  modal.focus();
+  document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar modal
+function closeModal(modal) {
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Abrir modal aeropuertos con aeropuertos temáticos
+document.querySelectorAll('.btn-feature').forEach(btn => {
+  btn.addEventListener('click', function () {
+    const theme = this.getAttribute('data-theme');
+    const airports = thematicAirports[theme] || [];
+    modalAirportList.innerHTML = airports.map(a =>
+      `<li><button class="airport-btn" data-code="${a.code}">${a.city} (${a.code})</button></li>`
+    ).join('');
+    openModal(modalAirports);
+    // focus al primer botón
+    setTimeout(() => {
+      const firstBtn = modalAirportList.querySelector('button');
+      if (firstBtn) firstBtn.focus();
+    }, 100);
   });
-  checkInDateInput.addEventListener('input', () => {
-    validateDate(checkInDateInput);
-    validateReturnDate();
-    validateForm();
-  });
-  returnDateInput.addEventListener('input', () => {
-    validateReturnDate();
-    validateForm();
-  });
-
-  // Mostrar/ocultar fecha regreso según checkbox
-  selectHotelCheckbox.addEventListener('change', () => {
-    if (selectHotelCheckbox.checked) {
-      returnDateContainer.style.display = 'flex';
-      returnDateInput.setAttribute('required', 'required');
-    } else {
-      returnDateContainer.style.display = 'none';
-      returnDateInput.removeAttribute('required');
-      returnDateInput.value = '';
-      clearError(returnDateInput);
-    }
-    validateForm();
-  });
-
-  if (selectHotelCheckbox.checked) {
-    returnDateContainer.style.display = 'flex';
-    returnDateInput.setAttribute('required', 'required');
-  } else {
-    returnDateContainer.style.display = 'none';
-    returnDateInput.removeAttribute('required');
-  }
-
-  // Envío formulario
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    const origen = originInput.value.trim();
-    const destino = destinationInput.value.trim();
-    const fechaSalida = checkInDateInput.value;
-    const incluirHotel = selectHotelCheckbox.checked;
-    const fechaRegreso = returnDateInput.value;
-
-    resultadosDiv.innerHTML = '';
-    hotelResultsDiv.style.display = 'none';
-    hotelResultsDiv.innerHTML = '';
-
-    if (incluirHotel) {
-      // Simulación de hoteles
-      const hotelsSimulated = [
-        { name: 'Hotel Plaza', stars: 4, address: destino, price: 120 },
-        { name: 'Hotel Central', stars: 3, address: destino, price: 85 },
-        { name: 'Resort Paradise', stars: 5, address: destino, price: 250 }
-      ];
-      hotelResultsDiv.style.display = 'block';
-      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>` +
-        hotelsSimulated.map(hotel =>
-          `<div>
-            <strong>${hotel.name}</strong> - ${hotel.stars} estrellas - ${hotel.address} - $${hotel.price} USD
-          </div>`).join('');
-      localStorage.setItem('hotelResults', JSON.stringify(hotelsSimulated));
-      localStorage.setItem('flightResults', JSON.stringify([]));
-      return;
-    }
-
-    resultadosDiv.innerHTML = 'Buscando vuelos...';
-
-    try {
-      const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
-      const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (data.error) throw new Error(data.error.message);
-
-      const vuelos = data.data || [];
-
-      if (vuelos.length > 0) {
-        const maxResults = 10;
-        resultadosDiv.innerHTML = vuelos.slice(0, maxResults).map(flight => `
-          <div>
-            <strong>${flight.airline.name} - Vuelo ${flight.flight.number}</strong><br/>
-            Salida: ${flight.departure.airport} a las ${flight.departure.scheduled}<br/>
-            Llegada: ${flight.arrival.airport} a las ${flight.arrival.scheduled}<br/>
-            Estado: ${flight.flight_status}
-          </div>
-        `).join('') + (vuelos.length > maxResults ? `<p>Mostrando solo los primeros ${maxResults} resultados.</p>` : '');
-
-        localStorage.setItem('flightResults', JSON.stringify(vuelos));
-        localStorage.setItem('hotelResults', JSON.stringify([]));
-      } else {
-        resultadosDiv.innerHTML = '<p>No se encontraron vuelos para esos parámetros.</p>';
-        localStorage.setItem('flightResults', JSON.stringify([]));
-        localStorage.setItem('hotelResults', JSON.stringify([]));
-      }
-    } catch (error) {
-      resultadosDiv.innerHTML = `<p>Error al obtener datos: ${error.message}</p>`;
-      localStorage.setItem('flightResults', JSON.stringify([]));
-      localStorage.setItem('hotelResults', JSON.stringify([]));
-    }
-  });
-
-  // Validar formulario inicial
-  validateForm();
 });
+
+// Cerrar modal aeropuertos
+closeModalAirportsBtn.addEventListener('click', () => closeModal(modalAirports));
+modalAirports.addEventListener('click', e => {
+  if (e.target === modalAirports) closeModal(modalAirports);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modalAirports.style.display === 'flex') closeModal(modalAirports);
+});
+
+// Al seleccionar aeropuerto de la lista
+modalAirportList.addEventListener('click', e => {
+  if (e.target.classList.contains('airport-btn')) {
+    const code = e.target.getAttribute('data-code');
+    // Lógica para asignar el aeropuerto elegido en el input más lógico
+    // Aquí asignamos al input que tenga el foco o la última caja que se usó
+    if (document.activeElement === originInput || originInput.value === '') {
+      originInput.value = code;
+    } else {
+      destinationInput.value = code;
+    }
+    closeModal(modalAirports);
+    originInput.focus();
+  }
+});
+
+// Mostrar u ocultar fecha regreso según checkbox (hotel seleccionado)
+selectHotelCheckbox.addEventListener('change', () => {
+  returnDateContainer.style.display = selectHotelCheckbox.checked ? 'flex' : 'none';
+});
+
+// Habilitar botón buscar solo si campos obligatorios están llenos
+function validateInputs() {
+  const originVal = originInput.value.trim().toUpperCase();
+  const destVal = destinationInput.value.trim().toUpperCase();
+  const dateVal = checkInDateInput.value;
+
+  let valid = true;
+
+  if (!originVal || originVal.length !== 3) valid = false;
+  if (!destVal || destVal.length !== 3) valid = false;
+  if (!dateVal) valid = false;
+
+  btnSubmit.disabled = !valid;
+}
+originInput.addEventListener('input', validateInputs);
+destinationInput.addEventListener('input', validateInputs);
+checkInDateInput.addEventListener('input', validateInputs);
+returnDateInput.addEventListener('input', validateInputs);
+
+// Checkbox seguro abre modal de cotización seguro
+selectInsuranceCheckbox.addEventListener('change', () => {
+  if (selectInsuranceCheckbox.checked) {
+    // Prellenar formulario con datos de viaje actuales
+    insuredCountryInput.value = destinationInput.value.toUpperCase();
+    insuredStartDateInput.value = checkInDateInput.value;
+    insuredEndDateInput.value = returnDateInput.value || checkInDateInput.value;
+    openModal(insuranceModal);
+  } else {
+    closeModal(insuranceModal);
+  }
+});
+
+// Cerrar modal seguro
+closeInsuranceModalBtn.addEventListener('click', () => {
+  closeModal(insuranceModal);
+  selectInsuranceCheckbox.checked = false;
+});
+insuranceModal.addEventListener('click', e => {
+  if (e.target === insuranceModal) {
+    closeModal(insuranceModal);
+    selectInsuranceCheckbox.checked = false;
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && insuranceModal.style.display === 'flex') {
+    closeModal(insuranceModal);
+    selectInsuranceCheckbox.checked = false;
+  }
+});
+
+// Validación y simulación cotización seguro
+insuranceQuoteForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  // Validar campos simples
+  if (
+    !insuredNameInput.value.trim() ||
+    !insuredAgeInput.value ||
+    !insuredCountryInput.value.trim() ||
+    !insuredStartDateInput.value ||
+    !insuredEndDateInput.value
+  ) {
+    alert('Por favor completa todos los campos para cotizar el seguro.');
+    return;
+  }
+
+  // Simular cálculo simple
+  let age = parseInt(insuredAgeInput.value, 10);
+  let days =
+    (new Date(insuredEndDateInput.value) - new Date(insuredStartDateInput.value)) /
+    (1000 * 60 * 60 * 24);
+  if (days < 0) {
+    alert('La fecha fin debe ser posterior a la fecha inicio.');
+    return;
+  }
+  days = Math.ceil(days) + 1;
+
+  // Cotización base
+  let basePrice = 20;
+  if (age < 18) basePrice = 15;
+  else if (age > 65) basePrice = 35;
+
+  let price = basePrice + days * 2.5;
+
+  insuranceQuoteResult.style.display = 'block';
+  insuranceQuoteResult.textContent = `Estimado ${insuredNameInput.value.trim()}, el precio estimado del seguro es USD ${price.toFixed(2)} para ${days} día(s) de viaje.`;
+});
+
+// Validación básica del formulario búsqueda y envío (simulado)
+searchForm.addEventListener('submit', e => {
+  e.preventDefault();
+  resultadosDiv.textContent = 'Buscando vuelos y hoteles...';
+
+  // Simulación de resultados (puedes reemplazarlo con fetch / API real)
+  setTimeout(() => {
+    resultadosDiv.textContent = `Resultados para vuelo: ${originInput.value.toUpperCase()} → ${destinationInput.value.toUpperCase()}, salida ${checkInDateInput.value}${returnDateInput.value ? ', regreso ' + returnDateInput.value : ''}.`;
+    if (selectHotelCheckbox.checked) {
+      hotelResultsDiv.style.display = 'block';
+      hotelResultsDiv.textContent = 'Mostrando opciones de hotel disponibles...';
+    } else {
+      hotelResultsDiv.style.display = 'none';
+    }
+  }, 1200);
+});
+
+// Validar inputs al cargar la página
+validateInputs();
