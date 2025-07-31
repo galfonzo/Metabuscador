@@ -2,114 +2,89 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Metabuscador - Búsqueda de Viajes</title>
+  <title>Metabuscador de viajes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+  <!-- FontAwesome para iconos (si usas) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-p0JbV1PRcb7cn+Tx9z8y4D+e01Y8ucP93hvHw4b0f7c6pu0TGxkG8q6O3plfSV+ldhPeP9dq2RWgYG8R+Jrvjw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
 <body>
-  <header>
-    <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo" />
-    <h1>Metabuscador de viajes</h1>
-  </header>
-
   <main>
+    <div class="logo-container">
+      <div class="logo-box">
+        <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
+      </div>
+    </div>
+
     <form id="search-form" novalidate>
-      <fieldset>
-        <legend>Buscar vuelos y hoteles</legend>
-
-        <div class="form-group">
-          <label for="origin">Origen (código IATA):</label>
-          <input type="text" id="origin" name="origin" maxlength="3" aria-describedby="origin-error" autocomplete="off" required />
-          <div class="error-message" id="origin-error" aria-live="polite"></div>
+      <div class="inputs-row">
+        <div class="row">
+          <label for="origin">Origen (IATA)</label>
+          <input type="text" id="origin" name="origin" placeholder="Ej. MVD" maxlength="3" autocomplete="off" />
         </div>
-
-        <div class="form-group">
-          <label for="destination">Destino (código IATA):</label>
-          <input type="text" id="destination" name="destination" maxlength="3" aria-describedby="destination-error" autocomplete="off" required />
-          <div class="error-message" id="destination-error" aria-live="polite"></div>
+        <div class="row">
+          <label for="destination">Destino (IATA)</label>
+          <input type="text" id="destination" name="destination" placeholder="Ej. BUE" maxlength="3" autocomplete="off" />
         </div>
-
-        <div class="form-group">
-          <label for="checkInDate">Fecha de salida:</label>
-          <input type="date" id="checkInDate" name="checkInDate" aria-describedby="checkInDate-error" required />
-          <div class="error-message" id="checkInDate-error" aria-live="polite"></div>
+        <div class="row">
+          <label for="checkInDate">Fecha de salida</label>
+          <input type="date" id="checkInDate" name="checkInDate" />
         </div>
+      </div>
 
-        <div class="form-group checkbox-group">
-          <input type="checkbox" id="selectHotel" name="selectHotel" />
-          <label for="selectHotel">Buscar también hoteles</label>
-        </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="selectHotel" name="selectHotel" />
+        <label for="selectHotel">Incluir hotel</label>
+      </div>
 
-        <div class="form-group" id="returnDateContainer" style="display:none;">
-          <label for="returnDate">Fecha de regreso:</label>
-          <input type="date" id="returnDate" name="returnDate" aria-describedby="returnDate-error" />
-          <div class="error-message" id="returnDate-error" aria-live="polite"></div>
-        </div>
+      <div id="returnDateContainer" style="display:none;">
+        <label for="returnDate">Fecha de regreso</label>
+        <input type="date" id="returnDate" name="returnDate" />
+      </div>
 
-        <div class="form-group checkbox-group">
-          <input type="checkbox" id="quoteInsurance" name="quoteInsurance" />
-          <label for="quoteInsurance">Cotizar seguro de viajero</label>
-        </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="insuranceCheckbox" name="insuranceCheckbox" />
+        <label for="insuranceCheckbox">Cotizar seguro de viajero</label>
+      </div>
 
-        <button type="submit" class="btn-submit" disabled>Buscar</button>
-      </fieldset>
+      <button type="submit" class="btn-submit" disabled>Buscar vuelos</button>
     </form>
 
-    <section aria-live="polite" id="resultados"></section>
+    <div id="resultados"></div>
 
-    <section class="features">
-      <h2>Explora destinos según tu interés:</h2>
-      <div class="feature-buttons">
-        <button class="btn-feature" data-theme="arquitectura" aria-label="Mostrar destinos de arquitectura">Arquitectura</button>
-        <button class="btn-feature" data-theme="playas" aria-label="Mostrar destinos de playas">Playas</button>
-        <button class="btn-feature" data-theme="montanas" aria-label="Mostrar destinos de montañas">Montañas</button>
-        <button class="btn-feature" data-theme="cultura" aria-label="Mostrar destinos culturales">Cultura</button>
-        <button class="btn-feature" data-theme="deporte" aria-label="Mostrar destinos deportivos">Deporte</button>
-        <button class="btn-feature" data-theme="tours" aria-label="Mostrar destinos para tours">Tours</button>
+    <!-- Modal seguro -->
+    <div id="insurance-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" style="display:none;">
+      <div class="modal-content" role="document" tabindex="0">
+        <button id="close-insurance-modal" aria-label="Cerrar modal">&times;</button>
+        <h2>Cotización Seguro de Viaje</h2>
+        <form id="insurance-quote-form" novalidate>
+          <label for="insured-name">Nombre completo</label>
+          <input type="text" id="insured-name" name="insured-name" required />
+
+          <label for="insured-age">Edad</label>
+          <input type="number" id="insured-age" name="insured-age" min="0" max="120" required />
+
+          <label for="insured-country">Destino</label>
+          <input type="text" id="insured-country" name="insured-country" readonly />
+
+          <label for="insured-start-date">Fecha inicio</label>
+          <input type="date" id="insured-start-date" name="insured-start-date" required />
+
+          <label for="insured-end-date">Fecha fin</label>
+          <input type="date" id="insured-end-date" name="insured-end-date" required />
+
+          <button type="submit" class="btn-submit">Calcular cotización</button>
+        </form>
+        <div id="insurance-quote-result" style="margin-top: 12px; display:none;"></div>
       </div>
-    </section>
-
-    <section id="hotel-results" aria-live="polite"></section>
+    </div>
   </main>
-
-  <!-- Modal Ciudades/Códigos -->
-  <div id="modal-airports" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalAirportsTitle" style="display:none;">
-    <div class="modal-content" role="document">
-      <button id="close-modal-airports" class="modal-close" aria-label="Cerrar modal">×</button>
-      <h3 id="modalAirportsTitle">Selecciona una ciudad</h3>
-      <ul id="airport-list" tabindex="0" class="airport-list"></ul>
-    </div>
-  </div>
-
-  <!-- Modal Cotizar Seguro -->
-  <div id="insurance-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="insuranceModalTitle" style="display:none;">
-    <div class="modal-content" role="document">
-      <button id="close-insurance-modal" class="modal-close" aria-label="Cerrar modal">×</button>
-      <h3 id="insuranceModalTitle">Cotización Seguro de Viajero</h3>
-
-      <form id="insurance-quote-form" novalidate>
-        <label for="insured-name">Nombre completo:</label>
-        <input type="text" id="insured-name" name="insured-name" required autocomplete="name" />
-
-        <label for="insured-age">Edad:</label>
-        <input type="number" id="insured-age" name="insured-age" min="0" max="120" required />
-
-        <label for="insured-country">Destino:</label>
-        <input type="text" id="insured-country" name="insured-country" readonly />
-
-        <label for="insured-start-date">Fecha inicio:</label>
-        <input type="date" id="insured-start-date" name="insured-start-date" required />
-
-        <label for="insured-end-date">Fecha fin:</label>
-        <input type="date" id="insured-end-date" name="insured-end-date" required />
-
-        <button type="submit" class="btn-submit">Calcular cotización</button>
-      </form>
-
-      <div id="insurance-quote-result" style="display:none; margin-top:1rem;"></div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
 </body>
 </html>
