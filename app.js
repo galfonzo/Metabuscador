@@ -68,27 +68,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const returnDateInput = document.getElementById('returnDate');
   const resultadosDiv = document.getElementById('resultados');
   const hotelResultsDiv = document.getElementById('hotel-results');
-
-  const modalAirports = document.getElementById('modal-airports');
-  const modalAirportList = document.getElementById('airport-list');
-  const btnCloseModalAirports = document.getElementById('close-modal-airports');
-
   const insuranceModal = document.getElementById('insurance-modal');
   const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
+  const cotizarSeguroCheckbox = document.getElementById('cotizarSeguro');
 
   // Modal seguro accesible desde botón visible
-  document.getElementById('solicitar-seguro-btn').addEventListener('click',()=>{
-    openModal(insuranceModal);
-    // Prellenar fechas y destino si están disponibles
-    document.getElementById('insured-start-date').value = checkInDateInput.value || '';
-    document.getElementById('insured-end-date').value = (returnDateInput && returnDateInput.value) ? returnDateInput.value : (checkInDateInput.value || '');
-    document.getElementById('insured-country').value = destinationInput.value || '';
+  cotizarSeguroCheckbox.addEventListener('change', () => {
+    if (cotizarSeguroCheckbox.checked) {
+      openModal(insuranceModal);
+      // Prellenar fechas y destino si están disponibles
+      document.getElementById('insured-start-date').value = checkInDateInput.value || '';
+      document.getElementById('insured-end-date').value = returnDateInput.value || checkInDateInput.value || '';
+      document.getElementById('insured-country').value = destinationInput.value || '';
+    }
   });
 
   btnCloseInsuranceModal.addEventListener('click', () => closeModal(insuranceModal));
   window.addEventListener('click', e => {
-    if(e.target === insuranceModal) closeModal(insuranceModal);
-    if(e.target === modalAirports) closeModal(modalAirports);
+    if (e.target === insuranceModal) closeModal(insuranceModal);
   });
 
   let lastFocusedElement = null;
@@ -242,7 +239,22 @@ document.addEventListener('DOMContentLoaded', () => {
     returnDateContainer.style.display = 'none';
     returnDateInput.removeAttribute('required');
   }
+
   // Botones temáticos: abrir modal ciudades/códigos
+  const modalAirports = document.createElement('div');
+  modalAirports.id = 'modal-airports';
+  modalAirports.className = 'modal';
+  modalAirports.style.display = 'none';
+  modalAirports.innerHTML = `
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title">
+      <button id="close-modal-airports" aria-label="Cerrar modal" class="close-button">&times;</button>
+      <h2 id="modal-airports-title">Selecciona un aeropuerto</h2>
+      <ul id="airport-list" style="list-style:none; padding:0; margin:0;"></ul>
+    </div>`;
+  document.body.appendChild(modalAirports);
+  const modalAirportList = document.getElementById('airport-list');
+  const btnCloseModalAirports = document.getElementById('close-modal-airports');
+
   const featureButtons = document.querySelectorAll('.btn-feature');
   featureButtons.forEach(btn => {
     btn.addEventListener('click', openAirportModal);
@@ -257,7 +269,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const theme = this.getAttribute('data-theme');
     const airports = thematicAirports[theme] || [];
     modalAirportList.innerHTML = airports.map(a =>
-      `<li><button class="airport-btn" data-code="${a.code}">${a.city} (${a.code})</button></li>`
+      `<li style="margin:8px 0;">
+        <button class="airport-btn" data-code="${a.code}" style="font-size:1rem; padding: 8px 14px; border-radius: 7px; border: none; background: #00c6ff; color: #003f5c; cursor: pointer; width: 100%; text-align: left;">
+          ${a.city} (${a.code})
+        </button>
+      </li>`
     ).join('');
     openModal(modalAirports);
     modalAirportList.querySelector('button')?.focus();
@@ -272,11 +288,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   btnCloseModalAirports.addEventListener('click', () => closeModal(modalAirports));
+  window.addEventListener('click', e => {
+    if(e.target === modalAirports) closeModal(modalAirports);
+  });
+
   // API Key (debes actualizarla si tienes una personalizada)
   const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validateForm()) return;
+
     const origen = originInput.value.trim();
     const destino = destinationInput.value.trim();
     const fechaSalida = checkInDateInput.value;
@@ -285,7 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
     resultadosDiv.innerHTML = '';
     hotelResultsDiv.style.display = 'none';
     hotelResultsDiv.innerHTML = '';
+
     if (selectHotel) {
+      // Simulación de resultados de hoteles
       const hotelsSimulated = [
         { name: 'Hotel Plaza', stars: 4, address: destino, price: 120 },
         { name: 'Hotel Central', stars: 3, address: destino, price: 85 },
@@ -299,9 +323,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>`).join('');
       localStorage.setItem('hotelResults', JSON.stringify(hotelsSimulated));
       localStorage.setItem('flightResults', JSON.stringify([]));
-      // window.location.href = 'resultados.html'; // descomenta si deseas navegación autmática
       return;
     }
+
     resultadosDiv.innerHTML = 'Buscando vuelos...';
     try {
       const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
@@ -312,16 +336,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (vuelos.length > 0) {
         const maxResults = 10;
         resultadosDiv.innerHTML = vuelos.slice(0, maxResults).map(flight => `
-          <div>
+          <div style="margin-bottom: 16px; padding: 12px; border-radius: 8px; background: rgba(0,198,255,0.15); color: #003f5c;">
             <strong>${flight.airline.name} - Vuelo ${flight.flight.number}</strong><br/>
-            Salida: ${flight.departure.airport} a las ${flight.departure.scheduled}<br/>
-            Llegada: ${flight.arrival.airport} a las ${flight.arrival.scheduled}<br/>
+            Salida: ${flight.departure.airport} a las ${new Date(flight.departure.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}<br/>
+            Llegada: ${flight.arrival.airport} a las ${new Date(flight.arrival.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}<br/>
             Estado: ${flight.flight_status}
           </div>
         `).join('') + (vuelos.length > maxResults ? `<p>Mostrando solo los primeros ${maxResults} resultados.</p>` : '');
         localStorage.setItem('flightResults', JSON.stringify(vuelos));
         localStorage.setItem('hotelResults', JSON.stringify([]));
-        // window.location.href = 'resultados.html'; // descomenta si deseas navegación automática
       } else {
         resultadosDiv.innerHTML = '<p>No se encontraron vuelos para esos parámetros.</p>';
         localStorage.setItem('flightResults', JSON.stringify([]));
@@ -343,27 +366,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const country = document.getElementById('insured-country').value.trim();
     const startDate = document.getElementById('insured-start-date').value;
     const endDate = document.getElementById('insured-end-date').value;
-    if (!name) {alert('Por favor ingresa tu nombre completo.'); return;}
-    if (!/^\d{1,3}$/.test(ageStr) || isNaN(age) || age < 0 || age > 120) {alert('Edad no válida.'); return;}
-    if (endDate < startDate) {alert('La fecha fin debe ser igual o posterior a la de inicio.'); return;}
-    let quote = 0; if (age < 18) quote = 30; else if (age < 40) quote = 50; else if (age < 65) quote = 70; else quote = 120;
+
+    if (!name) {
+      alert('Por favor ingresa tu nombre completo.');
+      return;
+    }
+    if (!/^\d{1,3}$/.test(ageStr) || isNaN(age) || age < 0 || age > 120) {
+      alert('Edad no válida.');
+      return;
+    }
+    if (endDate < startDate) {
+      alert('La fecha fin debe ser igual o posterior a la de inicio.');
+      return;
+    }
+    let quote = 0;
+    if (age < 18) quote = 30;
+    else if (age < 40) quote = 50;
+    else if (age < 65) quote = 70;
+    else quote = 120;
+
     const resultDiv = document.getElementById('insurance-quote-result');
     resultDiv.innerHTML =
-    `<div>
-      <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br/>
-      Destino: ${country}<br/>
-      Fechas: ${startDate} a ${endDate}<br/>
-      Edad: ${age} años<br/>
-      <span style="font-size:1.1em;">Precio estimado: <strong style="color:#000;">$${quote} USD</strong></span>
-    </div>
-    <div style="margin-top:10px;">
-      <button id="btn-solicitar-seguro" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px 22px;border:none;border-radius:7px;cursor:pointer;">Solicitar este seguro</button>
-    </div>
-    `;
-    resultDiv.style.display = 'block';
-    document.getElementById('btn-solicitar-seguro').addEventListener('click', () => {
-      alert('¡Solicitud enviada! Un asesor te contactará pronto.');
-    });
-  });
-  validateForm();
-});
+      `<div>
+        <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br/>
+        Destino: ${country}<br/>
+        Fechas: ${startDate} a ${endDate}<br/>
+        Edad: ${age} años<br/>
+        <span style="font-size:1.1em;">Precio estimado: <strong style="color:#000;">$${quote} USD</strong></span>
+      </div>
+      <div style="margin-top:10px;">
+        <button id="btn-solicitar-seguro" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px
