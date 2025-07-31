@@ -4,25 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Enlace al CSS con query string para evitar cache -->
+  <link rel="stylesheet" href="styles.css?v=20250731" />
 </head>
 <body>
   <main>
     <div class="logo-container">
       <div class="logo-box">
         <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
-        <h1>Metabuscador</h1>
+        <!-- Texto "Metabuscador" eliminado -->
       </div>
     </div>
 
-    <!-- Botones temáticos sin imágenes fijas -->
+    <!-- Botones temáticos con imágenes y texto -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
-      <button class="btn-feature" data-theme="arquitectura" type="button" aria-label="Viajes de Arquitectura">Arquitectura</button>
-      <button class="btn-feature" data-theme="playas" type="button" aria-label="Viajes a Playas">Playas</button>
-      <button class="btn-feature" data-theme="montanas" type="button" aria-label="Viajes a Montañas">Montañas</button>
-      <button class="btn-feature" data-theme="cultura" type="button" aria-label="Viajes de Cultura">Cultura</button>
-      <button class="btn-feature" data-theme="deporte" type="button" aria-label="Viajes de Deporte">Deporte</button>
-      <button class="btn-feature" data-theme="tours" type="button" aria-label="Viajes de Tours">Tours</button>
+      <button class="btn-feature" data-theme="arquitectura" type="button" aria-label="Viajes de Arquitectura">
+        <img src="img/arquitectura.png" alt="Icono Arquitectura" class="btn-img" />
+        Arquitectura
+      </button>
+      <button class="btn-feature" data-theme="playas" type="button" aria-label="Viajes a Playas">
+        <img src="img/playas.png" alt="Icono Playas" class="btn-img" />
+        Playas
+      </button>
+      <button class="btn-feature" data-theme="montanas" type="button" aria-label="Viajes a Montañas">
+        <img src="img/montanas.png" alt="Icono Montañas" class="btn-img" />
+        Montañas
+      </button>
+      <button class="btn-feature" data-theme="cultura" type="button" aria-label="Viajes de Cultura">
+        <img src="img/cultura.png" alt="Icono Cultura" class="btn-img" />
+        Cultura
+      </button>
+      <button class="btn-feature" data-theme="deporte" type="button" aria-label="Viajes de Deporte">
+        <img src="img/deporte.png" alt="Icono Deporte" class="btn-img" />
+        Deporte
+      </button>
+      <button class="btn-feature" data-theme="tours" type="button" aria-label="Viajes de Tours">
+        <img src="img/tours.png" alt="Icono Tours" class="btn-img" />
+        Tours
+      </button>
     </div>
 
     <form id="search-form" novalidate>
