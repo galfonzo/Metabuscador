@@ -7,12 +7,12 @@ html, body {
 }
 
 body {
+  background-color: #fff9f0; /* fondo beige crudo */
+  color: #222; /* texto oscuro para buen contraste */
+  font-family: Arial, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: Arial, sans-serif;
-  background-color: #fff9f0; /* Fondo beige crudo */
-  color: #222; /* Texto oscuro para buen contraste */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -42,7 +42,7 @@ body {
   margin-right: auto;
 }
 
-/* Botones temáticos con imágenes */
+/* Botones temáticos con iconos FontAwesome */
 .button-group {
   display: flex;
   justify-content: center;
@@ -86,14 +86,13 @@ body {
   border-color: #00c6ff;
 }
 
-.btn-feature .btn-img {
-  max-width: 80px;
-  max-height: 80px;
+/* Estilos para iconos FontAwesome dentro de botones */
+.btn-feature i {
   margin-bottom: 8px;
-  object-fit: contain;
+  color: #0077cc;
 }
 
-/* --- Contenedor inputs forma fila responsable --- */
+/* Contenedor para inputs dispuestos horizontalmente */
 form#search-form .inputs-row {
   display: flex;
   gap: 20px;
@@ -146,7 +145,6 @@ form#search-form label {
 form#search-form input[type="text"],
 form#search-form input[type="date"],
 form#search-form input[type="number"] {
-  width: 100%;
   padding: 7.2px 8.7px;
   border: 1.5px solid #ccc;
   border-radius: 6px;
@@ -226,8 +224,7 @@ form#search-form input.input-error {
   min-height: 1.15em;
 }
 
-/* Modales, resultados y responsividad omitidos para brevedad, mantener igual que antes */
-
+/* Responsive para pantallas pequeñas */
 @media (max-width: 700px) {
   form#search-form > .row {
     flex-direction: column;
