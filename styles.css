@@ -1,126 +1,127 @@
-/* Reset básico y estilos globales */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
 
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: Arial, sans-serif;
-  background-color: #fff9f0; /* Fondo beige crudo muy claro */
-  color: #222; /* Texto oscuro para buen contraste */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  <!-- Enlace a CSS con query string para evitar cache -->
+  <link rel="stylesheet" href="styles.css?v=20250731" />
 
-/* Contenedor logo */
-.logo-container {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- FontAwesome CDN para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-pVvuHt7NscgnDzqSc69MBMNOLd9fLLWLU+Q75Rs61f8h2torzgUKDfmq9Sd7pAT+P8xuSb9OxsqT4z7boPp7bw==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <main>
+    <div class="logo-container">
+      <div class="logo-box">
+        <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
+      </div>
+    </div>
 
-/* Eliminamos la “ventana” blanca para que sólo muestre el logo */
-.logo-box {
-  display: inline-block;
-  background: transparent; /* fondo transparente */
-  box-shadow: none;        /* sin sombra */
-  padding: 0;
-  border-radius: 0;
-  color: inherit;
-  font-weight: normal;
-  font-size: inherit;
-}
+    <!-- Botones temáticos con iconos FontAwesome -->
+    <div class="button-group" role="group" aria-label="Categorías temáticas">
+      <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura">
+        <i class="fas fa-landmark fa-3x" aria-hidden="true"></i>
+        Arquitectura
+      </button>
+      <button class="btn-feature" type="button" aria-label="Viajes a Playas">
+        <i class="fas fa-umbrella-beach fa-3x" aria-hidden="true"></i>
+        Playas
+      </button>
+      <button class="btn-feature" type="button" aria-label="Viajes a Montañas">
+        <i class="fas fa-mountain fa-3x" aria-hidden="true"></i>
+        Montañas
+      </button>
+      <button class="btn-feature" type="button" aria-label="Viajes de Cultura">
+        <i class="fas fa-theater-masks fa-3x" aria-hidden="true"></i>
+        Cultura
+      </button>
+      <button class="btn-feature" type="button" aria-label="Viajes de Deporte">
+        <i class="fas fa-futbol fa-3x" aria-hidden="true"></i>
+        Deporte
+      </button>
+      <button class="btn-feature" type="button" aria-label="Viajes de Tours">
+        <i class="fas fa-route fa-3x" aria-hidden="true"></i>
+        Tours
+      </button>
+    </div>
 
-/* Logo agrandado 25% (150px de altura máxima) */
-.logo-img {
-  max-height: 150px; /* 25% más grande que 120px */
-  margin-bottom: 8px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+    <form id="search-form" novalidate>
+      <div class="row">
+        <label for="origin">Origen (Código IATA)</label>
+        <input type="text" id="origin" name="origin" maxlength="3" required placeholder="Ej: MAD" autocomplete="off" aria-describedby="error-origin" />
+        <div id="error-origin" class="error-message" aria-live="polite"></div>
+      </div>
+      <div class="row">
+        <label for="destination">Destino (Código IATA)</label>
+        <input type="text" id="destination" name="destination" maxlength="3" required placeholder="Ej: BCN" autocomplete="off" aria-describedby="error-destination" />
+        <div id="error-destination" class="error-message" aria-live="polite"></div>
+      </div>
+      <div class="row">
+        <label for="checkInDate">Fecha de salida</label>
+        <input type="date" id="checkInDate" name="checkInDate" required aria-describedby="error-checkInDate" />
+        <div id="error-checkInDate" class="error-message" aria-live="polite"></div>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="selectHotel" name="selectHotel" />
+        <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
+      </div>
+      <div id="returnDateContainer" class="row" style="display:none;">
+        <label for="returnDate">Fecha de regreso</label>
+        <input type="date" id="returnDate" name="returnDate" aria-describedby="error-returnDate" />
+        <div id="error-returnDate" class="error-message" aria-live="polite"></div>
+      </div>
+      <button type="submit" class="btn-submit" disabled>Buscar</button>
+    </form>
 
-/* Botones temáticos con iconos y texto */
-.button-group {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  gap: 22px;
-  margin: 40px auto 25px auto;
-  max-width: 1100px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  flex-direction: row;
-  align-items: stretch;
-}
+    <button type="button" id="solicitar-seguro-btn" class="btn-feature" style="margin:35px auto 0 auto;display:block;">Cotizar seguro de viajero</button>
 
-.btn-feature {
-  flex: 0 0 auto;
-  max-width: 140px;
-  min-width: 120px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 16px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-  overflow: hidden;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
-  border: 2px solid transparent;
-  color: #0077cc;
-  font-weight: 700;
-  font-size: 0.918rem;
-  display: flex;
-  flex-direction: column; /* apilar icono y texto verticalmente */
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  padding: 12px 10px;
-}
+    <section id="resultados" aria-live="polite"></section>
+    <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-.btn-feature i {
-  margin-bottom: 8px;
-  color: #0077cc;
-}
+    <div class="modal" id="modal-airports" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title" aria-describedby="modal-airports-desc" style="display:none;">
+      <div class="modal-content" tabindex="0">
+        <button class="modal-close" id="close-modal-airports" aria-label="Cerrar listado de aeropuertos">&times;</button>
+        <h2 id="modal-airports-title">Selecciona un destino</h2>
+        <ul id="airport-list" class="airport-list"></ul>
+      </div>
+    </div>
 
-/* Para el caso previo con imágenes en botones (si se usaran) */
-.btn-feature .btn-img {
-  max-width: 80px;
-  max-height: 80px;
-  margin-bottom: 8px;
-  object-fit: contain;
-  filter: none;
-}
-
-.btn-feature:hover,
-.btn-feature:focus {
-  outline: none;
-  transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
-  border-color: #00c6ff;
-}
-
-/* Formulario principal */
-form#search-form {
-  max-width: 470.6px;
-  margin: 0 auto 40px auto;
-  background: rgba(0,0,0,0.07); /* fondo muy tenue para contraste suave */
-  padding: 18.1px 21.7px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-size: 0.7225rem;
-  color: #222;
-}
-
-form#search-form > .row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 10.8px;
-}
-
-form#search-form label {
-  font-weight:
+    <div class="modal" id="insurance-modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" aria-describedby="insurance-modal-desc" style="display:none;">
+      <div class="modal-content" tabindex="0">
+        <button class="modal-close" id="close-insurance-modal" aria-label="Cerrar cotización de seguro">&times;</button>
+        <h2 id="insurance-modal-title">Cotización Seguro de Viaje</h2>
+        <p id="insurance-modal-desc">Completa los datos para la cotización</p>
+        <form id="insurance-quote-form" novalidate>
+          <div class="row">
+            <label for="insured-name">Nombre completo</label>
+            <input type="text" id="insured-name" name="insured-name" required placeholder="Tu nombre" />
+          </div>
+          <div class="row">
+            <label for="insured-age">Edad</label>
+            <input type="number" id="insured-age" name="insured-age" min="0" max="120" required placeholder="Edad en años" />
+          </div>
+          <div class="row">
+            <label for="insured-country">Destino</label>
+            <input type="text" id="insured-country" name="insured-country" readonly />
+          </div>
+          <div class="row">
+            <label for="insured-start-date">Fecha inicio</label>
+            <input type="date" id="insured-start-date" name="insured-start-date" readonly />
+          </div>
+          <div class="row">
+            <label for="insured-end-date">Fecha fin</label>
+            <input type="date" id="insured-end-date" name="insured-end-date" readonly />
+          </div>
+          <button type="submit" class="btn-submit">Cotizar</button>
+        </form>
+        <div id="insurance-quote-result" style="margin-top:12px; display:none;"></div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
