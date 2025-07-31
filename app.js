@@ -57,6 +57,7 @@ const thematicAirports = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Elementos HTML
   const form = document.getElementById('search-form');
   const btnSubmit = form.querySelector('.btn-submit');
   const originInput = document.getElementById('origin');
@@ -66,13 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const returnDateContainer = document.getElementById('returnDateContainer');
   const returnDateInput = document.getElementById('returnDate');
   const resultadosDiv = document.getElementById('resultados');
-
-  const insuranceModal = document.getElementById('insurance-modal');
-  const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
-  const insuranceCheckbox = document.getElementById('insuranceCheckbox');
+  const hotelResultsDiv = document.getElementById('hotel-results');
 
   // Validaciones
-
   function showError(input, message) {
     let errorDiv = input.nextElementSibling;
     if (!errorDiv || !errorDiv.classList.contains('error-message')) {
@@ -149,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return formIsValid;
   }
 
-  // Convertir input a mayúsculas en IATA y validar
+  // Eventos para inputs
   [originInput, destinationInput].forEach(input => {
     input.addEventListener('input', () => {
       input.value = input.value.toUpperCase();
@@ -157,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
       validateForm();
     });
   });
-
   checkInDateInput.addEventListener('input', () => {
     validateDate(checkInDateInput);
     validateReturnDate();
@@ -168,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     validateForm();
   });
 
-  // Mostrar u ocultar fecha regreso según checkbox hotel
+  // Mostrar/ocultar fecha regreso según checkbox
   selectHotelCheckbox.addEventListener('change', () => {
     if (selectHotelCheckbox.checked) {
       returnDateContainer.style.display = 'flex';
@@ -190,129 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     returnDateInput.removeAttribute('required');
   }
 
-  // Modal seguro: Abrir al marcar checkbox
-  insuranceCheckbox.addEventListener('change', () => {
-    if (insuranceCheckbox.checked) {
-      openModal(insuranceModal);
-      // Prellenar campos del modal con datos si existen
-      document.getElementById('insured-start-date').value = checkInDateInput.value || '';
-      document.getElementById('insured-end-date').value = returnDateInput.value || checkInDateInput.value || '';
-      document.getElementById('insured-country').value = destinationInput.value || '';
-    } else {
-      closeModal(insuranceModal);
-      clearInsuranceForm();
-    }
-  });
-
-  btnCloseInsuranceModal.addEventListener('click', () => {
-    closeModal(insuranceModal);
-    insuranceCheckbox.checked = false;
-  });
-
-  window.addEventListener('click', e => {
-    if (e.target === insuranceModal) {
-      closeModal(insuranceModal);
-      insuranceCheckbox.checked = false;
-    }
-  });
-
-  let lastFocusedElement = null;
-  let modalKeydownHandler = null;
-  function openModal(modalEl) {
-    lastFocusedElement = document.activeElement;
-    modalEl.style.display = 'flex';
-    const modalContent = modalEl.querySelector('.modal-content');
-    modalContent.setAttribute('tabindex', '0');
-    modalContent.focus();
-
-    modalKeydownHandler = event => {
-      const focusableElsSelector = 'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
-      const focusableEls = modalEl.querySelectorAll(focusableElsSelector);
-      if (focusableEls.length === 0) return;
-      const firstFocusable = focusableEls[0];
-      const lastFocusable = focusableEls[focusableEls.length - 1];
-      const isTabPressed = event.key === 'Tab' || event.keyCode === 9;
-      if (!isTabPressed) return;
-      if (event.shiftKey) {
-        if (document.activeElement === firstFocusable) {
-          event.preventDefault();
-          lastFocusable.focus();
-        }
-      } else {
-        if (document.activeElement === lastFocusable) {
-          event.preventDefault();
-          firstFocusable.focus();
-        }
-      }
-    };
-    modalEl.addEventListener('keydown', modalKeydownHandler);
-  }
-  function closeModal(modalEl) {
-    modalEl.style.display = 'none';
-    if (lastFocusedElement) lastFocusedElement.focus();
-    if (modalKeydownHandler) {
-      modalEl.removeEventListener('keydown', modalKeydownHandler);
-      modalKeydownHandler = null;
-    }
-  }
-
-  function clearInsuranceForm() {
-    document.getElementById('insurance-quote-form').reset();
-    document.getElementById('insurance-quote-result').style.display = 'none';
-  }
-
-  // Formulario seguro: cálculo de cotización
-  document.getElementById('insurance-quote-form').addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('insured-name').value.trim();
-    const ageStr = document.getElementById('insured-age').value.trim();
-    const age = parseInt(ageStr, 10);
-    const country = document.getElementById('insured-country').value.trim();
-    const startDate = document.getElementById('insured-start-date').value;
-    const endDate = document.getElementById('insured-end-date').value;
-
-    if (!name) {
-      alert('Por favor ingresa tu nombre completo.');
-      return;
-    }
-    if (!/^\d{1,3}$/.test(ageStr) || isNaN(age) || age < 0 || age > 120) {
-      alert('Edad no válida.');
-      return;
-    }
-    if (endDate < startDate) {
-      alert('La fecha fin debe ser igual o posterior a la de inicio.');
-      return;
-    }
-
-    let quote = 0;
-    if (age < 18) quote = 30;
-    else if (age < 40) quote = 50;
-    else if (age < 65) quote = 70;
-    else quote = 120;
-
-    const resultDiv = document.getElementById('insurance-quote-result');
-    resultDiv.innerHTML =
-      `<div>
-        <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br/>
-        Destino: ${country}<br/>
-        Fechas: ${startDate} a ${endDate}<br/>
-        Edad: ${age} años<br/>
-        <span style="font-size:1.1em;">Precio estimado: <strong style="color:#000;">$${quote} USD</strong></span>
-      </div>
-      <div style="margin-top:10px;">
-        <button id="btn-solicitar-seguro" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px 22px;border:none;border-radius:7px;cursor:pointer;">Solicitar este seguro</button>
-      </div>`;
-    resultDiv.style.display = 'block';
-
-    document.getElementById('btn-solicitar-seguro').addEventListener('click', () => {
-      alert('¡Solicitud enviada! Un asesor te contactará pronto.');
-      closeModal(insuranceModal);
-      insuranceCheckbox.checked = false;
-      clearInsuranceForm();
-    });
-  });
-
-  // Submit búsqueda vuelos + hoteles
+  // Envío formulario
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -320,20 +194,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const origen = originInput.value.trim();
     const destino = destinationInput.value.trim();
     const fechaSalida = checkInDateInput.value;
-    const selectHotel = selectHotelCheckbox.checked;
+    const incluirHotel = selectHotelCheckbox.checked;
     const fechaRegreso = returnDateInput.value;
 
     resultadosDiv.innerHTML = '';
-    resultadosDiv.style.color = '#222';
+    hotelResultsDiv.style.display = 'none';
+    hotelResultsDiv.innerHTML = '';
 
-    if (selectHotel) {
-      // Simulación datos hoteles
+    if (incluirHotel) {
+      // Simulación de hoteles
       const hotelsSimulated = [
         { name: 'Hotel Plaza', stars: 4, address: destino, price: 120 },
         { name: 'Hotel Central', stars: 3, address: destino, price: 85 },
         { name: 'Resort Paradise', stars: 5, address: destino, price: 250 }
       ];
-      resultadosDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>` +
+      hotelResultsDiv.style.display = 'block';
+      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>` +
         hotelsSimulated.map(hotel =>
           `<div>
             <strong>${hotel.name}</strong> - ${hotel.stars} estrellas - ${hotel.address} - $${hotel.price} USD
@@ -343,10 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    resultadosDiv.textContent = 'Buscando vuelos...';
+    resultadosDiv.innerHTML = 'Buscando vuelos...';
 
     try {
-      const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496'; // Cambiar por tu API Key si tienes
+      const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
       const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
       const response = await fetch(url);
       const data = await response.json();
@@ -359,12 +235,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const maxResults = 10;
         resultadosDiv.innerHTML = vuelos.slice(0, maxResults).map(flight => `
           <div>
-            <strong>${flight.airline?.name || 'Aerolínea desconocida'} - Vuelo ${flight.flight?.number || '-'}</strong><br/>
-            Salida: ${flight.departure?.airport || '-'} a las ${flight.departure?.scheduled || '-'}<br/>
-            Llegada: ${flight.arrival?.airport || '-'} a las ${flight.arrival?.scheduled || '-'}<br/>
-            Estado: ${flight.flight_status || '-'}
+            <strong>${flight.airline.name} - Vuelo ${flight.flight.number}</strong><br/>
+            Salida: ${flight.departure.airport} a las ${flight.departure.scheduled}<br/>
+            Llegada: ${flight.arrival.airport} a las ${flight.arrival.scheduled}<br/>
+            Estado: ${flight.flight_status}
           </div>
         `).join('') + (vuelos.length > maxResults ? `<p>Mostrando solo los primeros ${maxResults} resultados.</p>` : '');
+
         localStorage.setItem('flightResults', JSON.stringify(vuelos));
         localStorage.setItem('hotelResults', JSON.stringify([]));
       } else {
@@ -379,5 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Validar formulario inicial
   validateForm();
 });
