@@ -1,3 +1,4 @@
+// Listado temático con código IATA y ciudad/ región
 const thematicAirports = {
   arquitectura: [
     { code: 'MAD', city: 'Madrid' },
@@ -56,6 +57,7 @@ const thematicAirports = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Elementos HTML
   const form = document.getElementById('search-form');
   const btnSubmit = form.querySelector('.btn-submit');
   const originInput = document.getElementById('origin');
@@ -67,80 +69,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultadosDiv = document.getElementById('resultados');
   const hotelResultsDiv = document.getElementById('hotel-results');
 
-  const insuranceModal = document.getElementById('insurance-modal');
-  const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
-  const cotizarSeguroCheckbox = document.getElementById('cotizarSeguro');
-
-  // Modal aeropuerto
   const modalAirports = document.getElementById('modal-airports');
   const modalAirportList = document.getElementById('airport-list');
   const btnCloseModalAirports = document.getElementById('close-modal-airports');
 
-  // Abrir modal aeropuerto al clicar botón categoría
-  document.querySelectorAll('.btn-feature').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const theme = btn.getAttribute('data-theme');
-      const airports = thematicAirports[theme] || [];
-      modalAirportList.innerHTML = airports.map(a => `
-        <li style="margin:8px 0;">
-          <button class="airport-btn" data-code="${a.code}" style="
-            font-size:1rem;
-            padding: 8px 14px;
-            border-radius: 7px;
-            border: none;
-            background: #00c6ff;
-            color: #003f5c;
-            cursor: pointer;
-            width: 100%;
-            text-align: left;
-          ">
-            ${a.city} (${a.code})
-          </button>
-        </li>
-      `).join('');
-      openModal(modalAirports);
-      // Focus primer botón
-      const firstBtn = modalAirportList.querySelector('button.airport-btn');
-      if (firstBtn) firstBtn.focus();
-    });
+  const insuranceModal = document.getElementById('insurance-modal');
+  const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
+
+  // Modal seguro accesible desde botón visible
+  document.getElementById('solicitar-seguro-btn').addEventListener('click', () => {
+    openModal(insuranceModal);
+    // Prellenar fechas y destino si están disponibles
+    document.getElementById('insured-start-date').value = checkInDateInput.value || '';
+    document.getElementById('insured-end-date').value = (returnDateInput && returnDateInput.value) ? returnDateInput.value : (checkInDateInput.value || '');
+    document.getElementById('insured-country').value = destinationInput.value || '';
   });
 
-  // Selección aeropuerto en modal
-  modalAirportList.addEventListener('click', e => {
-    if (e.target.classList.contains('airport-btn')) {
-      const code = e.target.getAttribute('data-code');
-      destinationInput.value = code;
-      validateIata(destinationInput);
-      validateForm();
-      closeModal(modalAirports);
-    }
+  btnCloseInsuranceModal.addEventListener('click', () => closeModal(insuranceModal));
+  window.addEventListener('click', e => {
+    if (e.target === insuranceModal) closeModal(insuranceModal);
+    if (e.target === modalAirports) closeModal(modalAirports);
   });
 
-  btnCloseModalAirports.addEventListener('click', () => closeModal(modalAirports));
-  window.addEventListener('click', e => { if (e.target === modalAirports) closeModal(modalAirports); });
-
-  // Abrir modal seguro al marcar checkbox
-  cotizarSeguroCheckbox.addEventListener('change', () => {
-    if (cotizarSeguroCheckbox.checked) {
-      openModal(insuranceModal);
-      // Prellenar campos
-      document.getElementById('insured-start-date').value = checkInDateInput.value || '';
-      document.getElementById('insured-end-date').value = returnDateInput.value || checkInDateInput.value || '';
-      document.getElementById('insured-country').value = destinationInput.value || '';
-    }
-  });
-  btnCloseInsuranceModal.addEventListener('click', () => {
-    closeModal(insuranceModal);
-    cotizarSeguroCheckbox.checked = false;
-  });
-  window.addEventListener('click', e => { if (e.target === insuranceModal) {
-    closeModal(insuranceModal);
-    cotizarSeguroCheckbox.checked = false;
-  }});
-
-  // Modal helpers accesibilidad
   let lastFocusedElement = null;
   let modalKeydownHandler = null;
+
   function openModal(modalEl) {
     lastFocusedElement = document.activeElement;
     modalEl.style.display = 'flex';
@@ -170,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     modalEl.addEventListener('keydown', modalKeydownHandler);
   }
+
   function closeModal(modalEl) {
     modalEl.style.display = 'none';
     if (lastFocusedElement) lastFocusedElement.focus();
@@ -179,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Validaciones
   function showError(input, message) {
     let errorDiv = input.nextElementSibling;
     if (!errorDiv || !errorDiv.classList.contains('error-message')) {
@@ -190,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     errorDiv.textContent = message;
     input.classList.add('input-error');
   }
+
   function clearError(input) {
     let errorDiv = input.nextElementSibling;
     if (errorDiv && errorDiv.classList.contains('error-message')) {
@@ -197,9 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     input.classList.remove('input-error');
   }
+
   function isIataValid(value) {
     return /^[A-Z]{3}$/.test(value);
   }
+
   function validateIata(input) {
     if (!input.value.trim()) {
       showError(input, 'Este campo es obligatorio.');
@@ -212,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearError(input);
     return true;
   }
+
   function validateDate(input) {
     if (!input.value) {
       showError(input, 'Este campo es obligatorio.');
@@ -227,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearError(input);
     return true;
   }
+
   function validateReturnDate() {
     if (selectHotelCheckbox.checked) {
       if (!returnDateInput.value) {
@@ -246,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
   }
+
   function validateForm() {
     const validOrigin = validateIata(originInput);
     const validDestination = validateIata(destinationInput);
@@ -256,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return formIsValid;
   }
 
-  // Inputs uppercase y validaciones on input
   [originInput, destinationInput].forEach(input => {
     input.addEventListener('input', () => {
       input.value = input.value.toUpperCase();
@@ -264,11 +222,13 @@ document.addEventListener('DOMContentLoaded', () => {
       validateForm();
     });
   });
+
   checkInDateInput.addEventListener('input', () => {
     validateDate(checkInDateInput);
     validateReturnDate();
     validateForm();
   });
+
   returnDateInput.addEventListener('input', () => {
     validateReturnDate();
     validateForm();
@@ -286,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     validateForm();
   });
-  // Iniciar con estado correcto
+
   if (selectHotelCheckbox.checked) {
     returnDateContainer.style.display = 'flex';
     returnDateInput.setAttribute('required', 'required');
@@ -295,7 +255,43 @@ document.addEventListener('DOMContentLoaded', () => {
     returnDateInput.removeAttribute('required');
   }
 
-  // Submit formulario principal
+  // Botones temáticos: abrir modal ciudades/códigos
+  const featureButtons = document.querySelectorAll('.btn-feature');
+  featureButtons.forEach(btn => {
+    btn.addEventListener('click', openAirportModal);
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ' || e.keyCode === 13 || e.keyCode === 32) {
+        e.preventDefault();
+        openAirportModal.call(btn, e);
+      }
+    });
+  });
+
+  function openAirportModal() {
+    const theme = this.getAttribute('data-theme');
+    const airports = thematicAirports[theme] || [];
+    modalAirportList.innerHTML = airports.map(a =>
+      `<li><button class="airport-btn" data-code="${a.code}">${a.city} (${a.code})</button></li>`
+    ).join('');
+    openModal(modalAirports);
+    modalAirportList.querySelector('button')?.focus();
+  }
+
+  modalAirportList.addEventListener('click', e => {
+    if (e.target.classList.contains('airport-btn')) {
+      const code = e.target.getAttribute('data-code');
+      destinationInput.value = code;
+      validateIata(destinationInput);
+      validateForm();
+      closeModal(modalAirports);
+    }
+  });
+
+  btnCloseModalAirports.addEventListener('click', () => closeModal(modalAirports));
+
+  // API Key (debes actualizarla si tienes una personalizada)
+  const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496';
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -305,9 +301,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const fechaSalida = checkInDateInput.value;
     const selectHotel = selectHotelCheckbox.checked;
     const fechaRegreso = returnDateInput.value;
-    resultadosDiv.innerHTML = '';
-    hotelResultsDiv.style.display = 'none';
-    hotelResultsDiv.innerHTML = '';
+
+    // Vaciar resultados anteriores en localStorage
+    localStorage.setItem('hotelResults', JSON.stringify([]));
+    localStorage.setItem('flightResults', JSON.stringify([]));
 
     if (selectHotel) {
       // Simulación resultados hoteles
@@ -316,60 +313,40 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Hotel Central', stars: 3, address: destino, price: 85 },
         { name: 'Resort Paradise', stars: 5, address: destino, price: 250 }
       ];
-      hotelResultsDiv.style.display = 'block';
-      hotelResultsDiv.innerHTML = `<h3>Hoteles disponibles en ${destino} desde ${fechaSalida} hasta ${fechaRegreso}:</h3>` +
-        hotelsSimulated.map(hotel =>
-          `<div>
-            <strong>${hotel.name}</strong> - ${hotel.stars} estrellas - ${hotel.address} - $${hotel.price} USD
-          </div>`).join('');
       localStorage.setItem('hotelResults', JSON.stringify(hotelsSimulated));
       localStorage.setItem('flightResults', JSON.stringify([]));
+      window.location.href = 'resultados.html';
       return;
     }
 
-    resultadosDiv.innerHTML = 'Buscando vuelos...';
     try {
-      const API_KEY = '3e076e1ca4d7e04f3cc113cfa57fe496'; // Cambiar si tienes otro
+      resultadosDiv.innerHTML = 'Buscando vuelos...';
       const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&dep_iata=${origen}&arr_iata=${destino}&flight_date=${fechaSalida}`;
       const response = await fetch(url);
       const data = await response.json();
+
       if (data.error) throw new Error(data.error.message);
+
       const vuelos = data.data || [];
-      if (vuelos.length > 0) {
-        const maxResults = 10;
-        resultadosDiv.innerHTML = vuelos.slice(0, maxResults).map(flight => `
-          <div style="margin-bottom: 16px; padding: 12px; border-radius: 8px; background: rgba(0,198,255,0.15); color: #003f5c;">
-            <strong>${flight.airline.name} - Vuelo ${flight.flight.number}</strong><br/>
-            Salida: ${flight.departure.airport} a las ${new Date(flight.departure.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}<br/>
-            Llegada: ${flight.arrival.airport} a las ${new Date(flight.arrival.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}<br/>
-            Estado: ${flight.flight_status}
-          </div>
-        `).join('') + (vuelos.length > maxResults ? `<p>Mostrando solo los primeros ${maxResults} resultados.</p>` : '');
-        localStorage.setItem('flightResults', JSON.stringify(vuelos));
-        localStorage.setItem('hotelResults', JSON.stringify([]));
-      } else {
-        resultadosDiv.innerHTML = '<p>No se encontraron vuelos para esos parámetros.</p>';
-        localStorage.setItem('flightResults', JSON.stringify([]));
-        localStorage.setItem('hotelResults', JSON.stringify([]));
-      }
+
+      localStorage.setItem('flightResults', JSON.stringify(vuelos));
+      localStorage.setItem('hotelResults', JSON.stringify([]));
+
+      window.location.href = 'resultados.html';
     } catch (error) {
       resultadosDiv.innerHTML = `<p>Error al obtener datos: ${error.message}</p>`;
-      localStorage.setItem('flightResults', JSON.stringify([]));
-      localStorage.setItem('hotelResults', JSON.stringify([]));
     }
   });
 
-  // Form cotizar seguro viajero
+  // Modal seguro, formulario validación y ejemplo de cotización básica
   document.getElementById('insurance-quote-form').addEventListener('submit', e => {
     e.preventDefault();
-
     const name = document.getElementById('insured-name').value.trim();
     const ageStr = document.getElementById('insured-age').value.trim();
     const age = parseInt(ageStr, 10);
     const country = document.getElementById('insured-country').value.trim();
     const startDate = document.getElementById('insured-start-date').value;
     const endDate = document.getElementById('insured-end-date').value;
-
     if (!name) {
       alert('Por favor ingresa tu nombre completo.');
       return;
@@ -378,24 +355,18 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Edad no válida.');
       return;
     }
-    if (!startDate || !endDate) {
-      alert('Por favor completa las fechas de inicio y fin.');
-      return;
-    }
     if (endDate < startDate) {
       alert('La fecha fin debe ser igual o posterior a la de inicio.');
       return;
     }
-
     let quote = 0;
     if (age < 18) quote = 30;
     else if (age < 40) quote = 50;
     else if (age < 65) quote = 70;
     else quote = 120;
-
     const resultDiv = document.getElementById('insurance-quote-result');
-    resultDiv.innerHTML = `
-      <div>
+    resultDiv.innerHTML =
+      `<div>
         <strong style="color:#00c6ff;font-size:1.2em;">Cotización para ${name}:</strong><br/>
         Destino: ${country}<br/>
         Fechas: ${startDate} a ${endDate}<br/>
@@ -405,16 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <div style="margin-top:10px;">
         <button id="btn-solicitar-seguro" style="background:#00c6ff;color:#003f5c;font-weight:700;padding:10px 22px;border:none;border-radius:7px;cursor:pointer;">Solicitar este seguro</button>
       </div>
-    `;
+      `;
     resultDiv.style.display = 'block';
-
     document.getElementById('btn-solicitar-seguro').addEventListener('click', () => {
       alert('¡Solicitud enviada! Un asesor te contactará pronto.');
-      closeModal(insuranceModal);
-      cotizarSeguroCheckbox.checked = false;
     });
   });
 
-  // Inicial validacion
   validateForm();
 });
