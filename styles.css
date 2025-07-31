@@ -48,7 +48,7 @@ body {
   margin-right: auto;
 }
 
-/* Botones temáticos sin imágenes, solo texto */
+/* Botones temáticos con imagen y texto */
 .button-group {
   display: flex;
   justify-content: center;
@@ -78,10 +78,18 @@ body {
   font-weight: 700;
   font-size: 0.918rem;
   display: flex;
+  flex-direction: column; /* para apilar imagen y texto verticalmente */
   justify-content: center;
   align-items: center;
   user-select: none;
   padding: 12px 10px;
+}
+
+.btn-feature .btn-img {
+  max-width: 80px;
+  max-height: 80px;
+  margin-bottom: 8px;
+  object-fit: contain;
 }
 
 .btn-feature:hover,
