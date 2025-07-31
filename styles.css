@@ -84,4 +84,238 @@ body {
   padding: 12px 10px;
 }
 
-.btn-feature:hover
+.btn-feature:hover,
+.btn-feature:focus {
+  outline: none;
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+  border-color: #00c6ff;
+}
+
+/* Formulario principal */
+form#search-form {
+  max-width: 470.6px;
+  margin: 0 auto 40px auto;
+  background: rgba(0,0,0,0.7);
+  padding: 18.1px 21.7px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  font-size: 0.7225rem;
+  color: #fff;
+}
+
+form#search-form > .row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10.8px;
+}
+
+form#search-form label {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.7225rem;
+}
+
+form#search-form input[type="text"],
+form#search-form input[type="date"],
+form#search-form input[type="number"] {
+  width: 100%;
+  padding: 7.2px 8.7px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.7225rem;
+  background: #f8f8f8;
+  color: #222;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+form#search-form input[type="text"]:focus,
+form#search-form input[type="date"]:focus,
+form#search-form input[type="number"]:focus {
+  border-color: #00c6ff;
+  outline: 2px solid #00c6ff;
+  outline-offset: 1px;
+}
+
+form#search-form input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Checkbox grupo */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 0.7225rem;
+}
+
+/* Botón submit */
+.btn-submit {
+  background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.795rem;
+  padding: 8.7px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0,119,204,0.4);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.btn-submit:hover:not(:disabled),
+.btn-submit:focus:not(:disabled) {
+  background: linear-gradient(90deg, #005fa3 60%, #0099cc 100%);
+  box-shadow: 0 6px 12px rgba(0,95,163,0.6);
+  outline: none;
+}
+
+.btn-submit:disabled {
+  background: grey;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Contenedor para fecha de regreso */
+#returnDateContainer {
+  display: none;
+  flex-basis: 180px;
+  margin-top: 24px;
+  flex-direction: column;
+}
+
+/* Inputs en error */
+form#search-form input.input-error {
+  border-color: #e74c3c !important;
+  background-color: #ffe6e6 !important;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.7rem;
+  margin-top: 2px;
+  min-height: 1.15em;
+}
+
+/* Modales generales */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  color: #222;
+  border-radius: 12px;
+  max-width: 450px;
+  padding: 25.5px 21.25px 17px 21.25px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  text-align: left;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-size: 0.7225rem;
+  outline: none;
+}
+
+.modal-content:focus {
+  outline: 3px solid #00c6ff;
+}
+
+/* Botón para cerrar modal */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5em;
+  color: #0077cc;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Contenedores de resultados */
+#resultados, #hotel-results {
+  max-width: 470.6px;
+  margin: 0 auto 40px auto;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+#resultados div, #hotel-results div {
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Lista aeropuertos en modal */
+.airport-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.airport-list li {
+  margin: 8px 0;
+}
+
+.airport-btn {
+  background: linear-gradient(90deg, #00c6ff 60%, #0077cc 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 8.7px 15.3px;
+  font-size: 0.7225rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 2px 0;
+  transition: background 0.2s;
+}
+
+.airport-btn:hover,
+.airport-btn:focus {
+  background: linear-gradient(90deg, #0077cc 60%, #00c6ff 100%);
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  form#search-form > .row {
+    flex-direction: column;
+  }
+  .button-group {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-feature {
+    max-width: 350px;
+    width: 90%;
+  }
+  .modal-content {
+    max-width: 90vw;
+  }
+  #returnDateContainer {
+    flex-basis: auto;
+    margin-top: 10px;
+  }
+}
