@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
-  <!-- Enlace a CSS con query string para evitar cache -->
+  <!-- Enlace CSS con query string para evitar cache -->
   <link rel="stylesheet" href="styles.css?v=20250731" />
   <!-- FontAwesome CDN para iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pVvuHt7NscgnDzqSc69MBMNOLd9fLLWLU+Q75Rs61f8h2torzgUKDfmq9Sd7pAT+P8xuSb9OxsqT4z7boPp7bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -14,38 +14,38 @@
     <div class="logo-container">
       <div class="logo-box">
         <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
-        <!-- El texto "Metabuscador" se elimina para foco en el logo -->
       </div>
     </div>
 
     <!-- Botones temáticos con iconos FontAwesome -->
     <div class="button-group" role="group" aria-label="Categorías temáticas">
-      <button class="btn-feature" data-theme="arquitectura" type="button" aria-label="Viajes de Arquitectura">
+      <button class="btn-feature" type="button" aria-label="Viajes de Arquitectura">
         <i class="fas fa-landmark fa-3x" aria-hidden="true" style="margin-bottom: 8px; color: #0077cc;"></i>
         Arquitectura
       </button>
-      <button class="btn-feature" data-theme="playas" type="button" aria-label="Viajes a Playas">
+      <button class="btn-feature" type="button" aria-label="Viajes a Playas">
         <i class="fas fa-umbrella-beach fa-3x" aria-hidden="true" style="margin-bottom: 8px; color: #0077cc;"></i>
         Playas
       </button>
-      <button class="btn-feature" data-theme="montanas" type="button" aria-label="Viajes a Montañas">
+      <button class="btn-feature" type="button" aria-label="Viajes a Montañas">
         <i class="fas fa-mountain fa-3x" aria-hidden="true" style="margin-bottom: 8px; color: #0077cc;"></i>
         Montañas
       </button>
-      <button class="btn-feature" data-theme="cultura" type="button" aria-label="Viajes de Cultura">
+      <button class="btn-feature" type="button" aria-label="Viajes de Cultura">
         <i class="fas fa-theater-masks fa-3x" aria-hidden="true" style="margin-bottom: 8px; color: #0077cc;"></i>
         Cultura
       </button>
-      <button class="btn-feature" data-theme="deporte" type="button" aria-label="Viajes de Deporte">
+      <button class="btn-feature" type="button" aria-label="Viajes de Deporte">
         <i class="fas fa-futbol fa-3x" aria-hidden="true" style="margin-bottom: 8px; color: #0077cc;"></i>
         Deporte
       </button>
-      <button class="btn-feature" data-theme="tours" type="button" aria-label="Viajes de Tours">
+      <button class="btn-feature" type="button" aria-label="Viajes de Tours">
         <i class="fas fa-route fa-3x" aria-hidden="true" style="margin-bottom: 8px; color: #0077cc;"></i>
         Tours
       </button>
     </div>
 
+    <!-- Resto del formulario y contenido abajo (igual que antes) -->
     <form id="search-form" novalidate>
       <div class="row">
         <label for="origin">Origen (Código IATA)</label>
