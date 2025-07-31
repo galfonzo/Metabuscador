@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const returnDateContainer = document.getElementById('returnDateContainer');
   const returnDateInput = document.getElementById('returnDate');
   const resultadosDiv = document.getElementById('resultados');
-  const hotelResultsDiv = document.getElementById('hotel-results');
 
   const modalAirports = document.getElementById('modal-airports');
   const modalAirportList = document.getElementById('airport-list');
@@ -76,19 +75,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const insuranceModal = document.getElementById('insurance-modal');
   const btnCloseInsuranceModal = document.getElementById('close-insurance-modal');
 
-  // Modal seguro accesible desde botón visible
-  document.getElementById('solicitar-seguro-btn').addEventListener('click', () => {
-    openModal(insuranceModal);
-    // Prellenar fechas y destino si están disponibles
-    document.getElementById('insured-start-date').value = checkInDateInput.value || '';
-    document.getElementById('insured-end-date').value = (returnDateInput && returnDateInput.value) ? returnDateInput.value : (checkInDateInput.value || '');
-    document.getElementById('insured-country').value = destinationInput.value || '';
+  // Modal seguro accesible desde checkbox
+  const insuranceCheckbox = document.getElementById('quoteInsurance');
+  insuranceCheckbox.addEventListener('change', () => {
+    if (insuranceCheckbox.checked) {
+      // Prellenar datos
+      document.getElementById('insured-country').value = destinationInput.value.trim();
+      document.getElementById('insured-start-date').value = checkInDateInput.value;
+      document.getElementById('insured-end-date').value = returnDateInput.value || checkInDateInput.value;
+      openModal(insuranceModal);
+    } else {
+      closeModal(insuranceModal);
+      // Limpiar cotización
+      document.getElementById('insurance-quote-result').style.display = 'none';
+      document.getElementById('insurance-quote-form').reset();
+    }
   });
 
-  btnCloseInsuranceModal.addEventListener('click', () => closeModal(insuranceModal));
+  btnCloseInsuranceModal.addEventListener('click', () => {
+    insuranceCheckbox.checked = false;
+    closeModal(insuranceModal);
+  });
+
   window.addEventListener('click', e => {
-    if (e.target === insuranceModal) closeModal(insuranceModal);
-    if (e.target === modalAirports) closeModal(modalAirports);
+    if (e.target === insuranceModal) {
+      insuranceCheckbox.checked = false;
+      closeModal(insuranceModal);
+    }
+    if (e.target === modalAirports) {
+      closeModal(modalAirports);
+    }
   });
 
   let lastFocusedElement = null;
