@@ -81,7 +81,7 @@ body {
   padding: 12px 10px;
 }
 
-/* Color y margen para iconos FontAwesome en botones */
+/* Margen y color para iconos FontAwesome */
 .btn-feature i {
   margin-bottom: 8px;
   color: #0077cc;
@@ -93,6 +93,28 @@ body {
   transform: translateY(-6px) scale(1.04);
   box-shadow: 0 12px 25px rgba(0,0,0,0.18);
   border-color: #00c6ff;
+}
+
+/* --- CAMBIO IMPORTANTE: contenedor inputs form en fila --- */
+form#search-form .inputs-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+form#search-form .inputs-row > .row {
+  flex: 1 1 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+form#search-form .inputs-row input[type="text"],
+form#search-form .inputs-row input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Formulario principal */
@@ -303,6 +325,9 @@ form#search-form input.input-error {
 /* Responsive */
 @media (max-width: 700px) {
   form#search-form > .row {
+    flex-direction: column;
+  }
+  form#search-form .inputs-row {
     flex-direction: column;
   }
   .button-group {
