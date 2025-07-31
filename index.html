@@ -2,89 +2,38 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Metabuscador de viajes</title>
+  <title>Metabuscador de Viajes - TuneMyTrip</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
-  <script defer src="app.js"></script>
-  <!-- FontAwesome para iconos (si usas) -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-p0JbV1PRcb7cn+Tx9z8y4D+e01Y8ucP93hvHw4b0f7c6pu0TGxkG8q6O3plfSV+ldhPeP9dq2RWgYG8R+Jrvjw=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
 </head>
 <body>
-  <main>
-    <div class="logo-container">
-      <div class="logo-box">
-        <img src="img/logo-metabuscador.png" alt="Logo Metabuscador" class="logo-img" />
-      </div>
+  <div id="logo-container">
+    <img src="img/tunemytrip-logo.png" alt="TuneMyTrip logo" />
+  </div>
+
+  <form id="search-form" novalidate>
+    <input id="origin" type="text" maxlength="3" placeholder="Origen (IATA)" aria-label="Origen" required />
+    <input id="destination" type="text" maxlength="3" placeholder="Destino (IATA)" aria-label="Destino" required />
+    <input id="checkInDate" type="date" aria-label="Fecha de salida" required />
+
+    <div id="selectHotelContainer">
+      <input id="selectHotel" type="checkbox" />
+      <label for="selectHotel">Incluir hotel</label>
     </div>
 
-    <form id="search-form" novalidate>
-      <div class="inputs-row">
-        <div class="row">
-          <label for="origin">Origen (IATA)</label>
-          <input type="text" id="origin" name="origin" placeholder="Ej. MVD" maxlength="3" autocomplete="off" />
-        </div>
-        <div class="row">
-          <label for="destination">Destino (IATA)</label>
-          <input type="text" id="destination" name="destination" placeholder="Ej. BUE" maxlength="3" autocomplete="off" />
-        </div>
-        <div class="row">
-          <label for="checkInDate">Fecha de salida</label>
-          <input type="date" id="checkInDate" name="checkInDate" />
-        </div>
-      </div>
+    <button type="submit" class="btn-submit" disabled>Buscar</button>
+  </form>
 
-      <div class="checkbox-group">
-        <input type="checkbox" id="selectHotel" name="selectHotel" />
-        <label for="selectHotel">Incluir hotel</label>
-      </div>
+  <div id="returnDateContainer" style="display:none;">
+    <label for="returnDate">Fecha de regreso</label>
+    <input id="returnDate" type="date" aria-label="Fecha de regreso" />
+  </div>
 
-      <div id="returnDateContainer" style="display:none;">
-        <label for="returnDate">Fecha de regreso</label>
-        <input type="date" id="returnDate" name="returnDate" />
-      </div>
+  <div id="resultados"></div>
+  <div id="hotel-results" style="display:none;"></div>
 
-      <div class="checkbox-group">
-        <input type="checkbox" id="insuranceCheckbox" name="insuranceCheckbox" />
-        <label for="insuranceCheckbox">Cotizar seguro de viajero</label>
-      </div>
+  <!-- Aquí iría el resto de modales, scripts, etc., por ejemplo el app.js -->
 
-      <button type="submit" class="btn-submit" disabled>Buscar vuelos</button>
-    </form>
-
-    <div id="resultados"></div>
-
-    <!-- Modal seguro -->
-    <div id="insurance-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" style="display:none;">
-      <div class="modal-content" role="document" tabindex="0">
-        <button id="close-insurance-modal" aria-label="Cerrar modal">&times;</button>
-        <h2>Cotización Seguro de Viaje</h2>
-        <form id="insurance-quote-form" novalidate>
-          <label for="insured-name">Nombre completo</label>
-          <input type="text" id="insured-name" name="insured-name" required />
-
-          <label for="insured-age">Edad</label>
-          <input type="number" id="insured-age" name="insured-age" min="0" max="120" required />
-
-          <label for="insured-country">Destino</label>
-          <input type="text" id="insured-country" name="insured-country" readonly />
-
-          <label for="insured-start-date">Fecha inicio</label>
-          <input type="date" id="insured-start-date" name="insured-start-date" required />
-
-          <label for="insured-end-date">Fecha fin</label>
-          <input type="date" id="insured-end-date" name="insured-end-date" required />
-
-          <button type="submit" class="btn-submit">Calcular cotización</button>
-        </form>
-        <div id="insurance-quote-result" style="margin-top: 12px; display:none;"></div>
-      </div>
-    </div>
-  </main>
+  <script src="app.js"></script>
 </body>
 </html>
