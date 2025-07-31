@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Metabuscador - Búsqueda de vuelos y hoteles</title>
 
-  <!-- Enlace CSS con query string para evitar cache -->
+  <!-- Enlace CSS con query string para evitar caché -->
   <link rel="stylesheet" href="styles.css?v=20250731" />
 
   <!-- FontAwesome CDN para iconos -->
@@ -52,21 +52,25 @@
     </div>
 
     <form id="search-form" novalidate>
-      <div class="row">
-        <label for="origin">Origen (Código IATA)</label>
-        <input type="text" id="origin" name="origin" maxlength="3" required placeholder="Ej: MAD" autocomplete="off" aria-describedby="error-origin" />
-        <div id="error-origin" class="error-message" aria-live="polite"></div>
+      <!-- Contenedor de campos horizontales -->
+      <div class="inputs-row">
+        <div class="row">
+          <label for="origin">Origen (Código IATA)</label>
+          <input type="text" id="origin" name="origin" maxlength="3" required placeholder="Ej: MAD" autocomplete="off" aria-describedby="error-origin" />
+          <div id="error-origin" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="row">
+          <label for="destination">Destino (Código IATA)</label>
+          <input type="text" id="destination" name="destination" maxlength="3" required placeholder="Ej: BCN" autocomplete="off" aria-describedby="error-destination" />
+          <div id="error-destination" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="row">
+          <label for="checkInDate">Fecha de salida</label>
+          <input type="date" id="checkInDate" name="checkInDate" required aria-describedby="error-checkInDate" />
+          <div id="error-checkInDate" class="error-message" aria-live="polite"></div>
+        </div>
       </div>
-      <div class="row">
-        <label for="destination">Destino (Código IATA)</label>
-        <input type="text" id="destination" name="destination" maxlength="3" required placeholder="Ej: BCN" autocomplete="off" aria-describedby="error-destination" />
-        <div id="error-destination" class="error-message" aria-live="polite"></div>
-      </div>
-      <div class="row">
-        <label for="checkInDate">Fecha de salida</label>
-        <input type="date" id="checkInDate" name="checkInDate" required aria-describedby="error-checkInDate" />
-        <div id="error-checkInDate" class="error-message" aria-live="polite"></div>
-      </div>
+
       <div class="checkbox-group">
         <input type="checkbox" id="selectHotel" name="selectHotel" />
         <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
