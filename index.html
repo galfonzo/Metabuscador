@@ -54,7 +54,6 @@
     </div>
 
     <form id="search-form" novalidate>
-      <!-- Contenedor inputs dispuestos horizontalmente -->
       <div class="inputs-row">
         <div class="row">
           <label for="origin">Origen (Código IATA)</label>
@@ -91,6 +90,11 @@
         </div>
       </div>
 
+      <div class="checkbox-group" style="justify-content: center; margin-bottom: 40px;">
+        <input type="checkbox" id="cotizarSeguro" name="cotizarSeguro" />
+        <label for="cotizarSeguro" style="cursor: pointer;">Cotizar seguro de viajero</label>
+      </div>
+
       <div class="checkbox-group">
         <input type="checkbox" id="selectHotel" name="selectHotel" />
         <label for="selectHotel">Seleccionar hotel (ida y vuelta)</label>
@@ -105,19 +109,10 @@
       <button type="submit" class="btn-submit" disabled>Buscar</button>
     </form>
 
-    <button
-      type="button"
-      id="solicitar-seguro-btn"
-      class="btn-feature"
-      style="margin: 35px auto 0 auto; display: block;"
-    >
-      Cotizar seguro de viajero
-    </button>
-
     <section id="resultados" aria-live="polite"></section>
     <section id="hotel-results" aria-live="polite" style="display:none;"></section>
 
-    <!-- Modales sin cambios (puedes agregarlos si los necesitas) -->
+    <!-- Modales aquí pueden ir si las tienes -->
   </main>
   <script src="app.js"></script>
 </body>
