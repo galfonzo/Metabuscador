@@ -11,7 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
-  background-color: #fff9f0; /* Fondo beige crudo muy claro */
+  background-color: #fff9f0; /* Fondo beige crudo */
   color: #222; /* Texto oscuro para buen contraste */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -93,7 +93,7 @@ body {
   object-fit: contain;
 }
 
-/* --- CONTENEDOR DE LOS CAMPOS DEL FORMULARIO EN FILA --- */
+/* --- Contenedor inputs forma fila responsable --- */
 form#search-form .inputs-row {
   display: flex;
   gap: 20px;
@@ -226,8 +226,7 @@ form#search-form input.input-error {
   min-height: 1.15em;
 }
 
-/* Otros estilos para modales, resultados, etc. (sin cambios) */
-/* ... */
+/* Modales, resultados y responsividad omitidos para brevedad, mantener igual que antes */
 
 @media (max-width: 700px) {
   form#search-form > .row {
@@ -246,7 +245,6 @@ form#search-form input.input-error {
     max-width: 350px;
     width: 90%;
   }
-  /* Modales ajustes responsivos */
   .modal-content {
     max-width: 90vw;
   }
