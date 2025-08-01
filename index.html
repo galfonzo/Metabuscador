@@ -1,75 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TuneMyTrip</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TuneMyTrip - Buscador de Viajes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .categoria {
+      display: inline-block;
+      padding: 10px 15px;
+      margin: 5px;
+      border: 1px solid #888;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .categoria.seleccionada {
+      background-color: #007bff;
+      color: white;
+      border-color: #0056b3;
+    }
+    #fecha-vuelta {
+      display: none;
+      margin-left: 10px;
+    }
+    #formulario-seguro {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      max-width: 300px;
+    }
+    #mensajes-usuario {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    #mensajes-usuario.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    #mensajes-usuario.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    button[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
-  <div class="container">
-    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" class="logo">
+  <h1>TuneMyTrip - Buscador de Viajes</h1>
 
-    <form id="buscador-form">
-      <div class="form-row">
-        <input type="text" id="origen" placeholder="Origen" required>
-        <input type="text" id="destino" placeholder="Destino" required>
-        <input type="date" id="fecha" required>
-      </div>
+  <form id="search-form">
+    <div id="mensajes-usuario"></div>
 
-      <div class="form-row checkbox-row">
-        <label><input type="checkbox" id="alojamiento"> Incluir alojamiento</label>
-        <label><input type="checkbox" id="seguro"> Cotizar seguro de viajero</label>
-      </div>
+    <label>
+      <input type="checkbox" id="alojamiento" /> ¿Necesitas alojamiento?
+    </label>
+    <input type="date" id="fecha-vuelta" name="fecha-vuelta" />
 
-      <div class="form-row" id="fecha-vuelta-container" style="display: none;">
-        <input type="date" id="fecha-vuelta" placeholder="Fecha de vuelta">
-      </div>
+    <br /><br />
 
-      <div id="seguro-formulario" style="display: none;">
-        <input type="text" id="edad" placeholder="Edad del viajero">
-        <select id="plan">
-          <option value="">Selecciona un plan</option>
+    <label>
+      <input type="checkbox" id="seguro" /> ¿Quieres agregar seguro de viaje?
+    </label>
+
+    <div id="formulario-seguro">
+      <label>
+        Tipo de seguro:
+        <select id="tipo-seguro" name="tipo-seguro" required>
+          <option value="">Selecciona</option>
           <option value="basico">Básico</option>
           <option value="premium">Premium</option>
         </select>
-      </div>
+      </label>
+    </div>
 
-      <div class="categorias">
-        <button type="button" class="categoria" data-tipo="aventura">
-          <img src="img/aventura.jpg" alt="Aventura">
-          Aventura
-        </button>
-        <button type="button" class="categoria" data-tipo="negocios">
-          <img src="img/negocios.jpg" alt="Negocios">
-          Negocios
-        </button>
-        <button type="button" class="categoria" data-tipo="romantico">
-          <img src="img/romantico.jpg" alt="Escapada Romántica">
-          Escapada Romántica
-        </button>
-        <button type="button" class="categoria" data-tipo="familiar">
-          <img src="img/familiar.jpg" alt="Familiar">
-          Viaje Familiar
-        </button>
-        <button type="button" class="categoria" data-tipo="cultural">
-          <img src="img/cultural.jpg" alt="Cultural">
-          Cultura
-        </button>
-        <button type="button" class="categoria" data-tipo="naturaleza">
-          <img src="img/naturaleza.jpg" alt="Naturaleza">
-          Naturaleza
-        </button>
-      </div>
+    <br /><br />
 
-      <input type="hidden" id="categoria-seleccionada" name="categoria">
-      <button type="submit">Buscar</button>
-    </form>
-  </div>
+    <div>
+      <span>Selecciona una categoría de viaje:</span><br />
+      <div class="categoria" data-categoria="aventura" tabindex="0">Aventura</div>
+      <div class="categoria" data-categoria="cultural" tabindex="0">Cultural</div>
+      <div class="categoria" data-categoria="playa" tabindex="0">Playa</div>
+      <div class="categoria" data-categoria="gastronomico" tabindex="0">Gastronómico</div>
+    </div>
 
-  <script src="app.js"></script>
+    <br />
+
+    <button type="submit">Buscar</button>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const alojamientoCheckbox = document.getElementById("alojamiento");
+      const fechaVueltaInput = document.getElementById("fecha-vuelta");
+      const seguroCheckbox = document.getElementById("seguro");
+      const formularioSeguro = document.getElementById("formulario-seguro");
+      const tipoSeguroSelect = document.getElementById("tipo-seguro");
+      const categorias = document.querySelectorAll(".categoria");
+      const mensajesContenedor = document.getElementById("mensajes-usuario");
+      const form = document.getElementById("search-form");
+
+      function mostrarMensaje(mensaje, tipo) {
+        mensajesContenedor.textContent = mensaje;
+        mensajesContenedor.className = tipo;
+      }
+
+      alojamientoCheckbox.addEventListener("change", function () {
+        fechaVueltaInput.style.display = this.checked ? "inline-block" : "none";
+        if (!this.checked) fechaVueltaInput.value = "";
+      });
+
+      seguroCheckbox.addEventListener("change", function () {
+        formularioSeguro.style.display = this.checked ? "block" : "none";
+        if (!this.checked) tipoSeguroSelect.value = "";
+      });
+
+      categorias.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          categorias.forEach((el) => el.classList.remove("seleccionada"));
+          this.classList.add("seleccionada");
+        });
+        // Permitir selección con teclado
+        btn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        mostrarMensaje("", ""); // limpiar mensajes previos
+
+        // Recopilar datos
+        const datos = {
+          alojamiento: alojamientoCheckbox.checked,
+          fechaVuelta: fechaVueltaInput.value,
+          seguro: seguroCheckbox.checked,
+          tipoSeguro: tipoSeguroSelect.value,
+          categoria:
+            [...categorias].find((el) => el.classList.contains("seleccionada"))?.dataset
+              .categoria || "",
+        };
+
+        // Validaciones
+        if (datos.alojamiento && !datos.fechaVuelta) {
+          mostrarMensaje("Si seleccionas alojamiento, debes indicar la fecha de vuelta.", "error");
+          fechaVueltaInput.focus();
+          return;
+        }
+
+        if (!datos.categoria) {
+          mostrarMensaje("Debes elegir una categoría de viaje.", "error");
+          return;
+        }
+
+        if (datos.seguro && !datos.tipoSeguro) {
+          mostrarMensaje("Si quieres seguro, debes seleccionar el tipo de seguro.", "error");
+          tipoSeguroSelect.focus();
+          return;
+        }
+
+        mostrarMensaje("Enviando búsqueda...", "success");
+
+        // Simulación llamada a backend/API (reemplaza con tu API real)
+        fetch("/api/busqueda", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        })
+          .then((response) => {
+            if (!response.ok)
+              throw new Error("Error en la búsqueda. Por favor intenta más tarde.");
+            return response.json();
+          })
+          .then((data) => {
+            // Datos simulados para resultados - reemplaza por data real de tu API
+            const resultadosSimulados = {
+              hotelResults: [
+                { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
+                { name: "Resort Playa", stars: 5, address: "Av. del Mar 45", price: 220 }
+              ],
+              flightResults: [
+                {
+                  airline: { name: "FlyNow" },
+                  flight: { number: "FN123" },
+                  departure: { airport: "MAD", scheduled: "2025-08-10T10:00:00Z" },
+                  arrival: { airport: "BCN", scheduled: "2025-08-10T12:00:00Z" },
+                  flight_status: "On Time"
+                }
+              ]
+            };
+
+            // Guardar resultados en localStorage para acceder en resultados.html
+            localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
+            localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
+
+            mostrarMensaje("¡Búsqueda realizada con éxito! Redirigiendo a resultados...", "success");
+
+            setTimeout(() => {
+              window.location.href = "resultados.html";
+            }, 1500);
+          })
+          .catch((err) => {
+            mostrarMensaje(err.message || "Ha ocurrido un error inesperado.", "error");
+          });
+      });
+    });
+  </script>
 </body>
-
 </html>
