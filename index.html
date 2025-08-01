@@ -1,134 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Metabuscador TuneMyTrip</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
-  <!-- FontAwesome para íconos -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-papbVZzXTBvENkrhUR8Wz6hS/Vg+pxjZxJ+XGj6vKg9FCDXYTnZb/fS6uV50u3Lrt3bTuk1KxjQHZ9xZ+QK8g=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TuneMyTrip</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <main>
-    <!-- Logo centrado -->
-    <div id="logo-container">
-      <img src="img/TuneMyTrip_logo.png" alt="TuneMyTrip Logo" id="logo" />
-    </div>
+  <header class="logo-header">
+    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" class="main-logo">
+  </header>
 
-    <!-- Formulario -->
-    <form id="search-form" novalidate>
-      <div class="inputs-row">
-        <div class="row">
-          <label for="origin">Origen (IATA)</label>
-          <input type="text" id="origin" name="origin" maxlength="3" placeholder="Ej: MVD" required />
-          <div class="error-message"></div>
-        </div>
-        <div class="row">
-          <label for="destination">Destino (IATA)</label>
-          <input type="text" id="destination" name="destination" maxlength="3" placeholder="Ej: MAD" required />
-          <div class="error-message"></div>
-        </div>
-        <div class="row">
-          <label for="checkInDate">Fecha salida</label>
-          <input type="date" id="checkInDate" name="checkInDate" required />
-          <div class="error-message"></div>
-        </div>
+  <main class="main-content">
+    <form id="formulario-busqueda">
+      <div class="input-group">
+        <input type="text" placeholder="Origen" name="origen" required>
+        <input type="text" placeholder="Destino" name="destino" required>
+        <input type="date" name="fecha" required>
       </div>
 
-      <div id="returnDateContainer" class="row" style="display:none;">
-        <label for="returnDate">Fecha regreso</label>
-        <input type="date" id="returnDate" name="returnDate" />
-        <div class="error-message"></div>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="alojamiento-checkbox"> Incluir alojamiento</label>
+        <label><input type="checkbox" id="seguro-checkbox"> Cotizar seguro de viajero</label>
       </div>
 
-      <div class="checkbox-group" style="justify-content:center; gap:25px;">
-        <label><input type="checkbox" id="selectHotel" /> Reservar hotel</label>
-        <label><input type="checkbox" id="selectInsurance" /> Cotizar seguro de viajero</label>
+      <div id="fecha-vuelta" class="opcional" style="display: none;">
+        <label>Fecha de vuelta: <input type="date" name="fecha-vuelta"></label>
       </div>
 
-      <button type="submit" class="btn-submit" disabled>Buscar vuelos</button>
+      <div id="formulario-seguro" class="opcional" style="display: none;">
+        <label>Edad del viajero: <input type="number" name="edad" min="0"></label>
+        <label>Tipo de seguro:
+          <select name="tipo-seguro">
+            <option value="basico">Básico</option>
+            <option value="completo">Completo</option>
+          </select>
+        </label>
+      </div>
+
+      <button type="submit">Buscar</button>
     </form>
 
-    <!-- Botones temáticos de categorías -->
-    <div class="button-group" aria-label="Categorías de viaje">
-      <button class="btn-feature" data-theme="arquitectura" aria-haspopup="dialog" aria-controls="modal-airports">
-        <i class="fas fa-landmark"></i>
-        Arquitectura
-      </button>
-      <button class="btn-feature" data-theme="playas" aria-haspopup="dialog" aria-controls="modal-airports">
-        <i class="fas fa-umbrella-beach"></i>
-        Playas
-      </button>
-      <button class="btn-feature" data-theme="montanas" aria-haspopup="dialog" aria-controls="modal-airports">
-        <i class="fas fa-mountain"></i>
-        Montañas
-      </button>
-      <button class="btn-feature" data-theme="cultura" aria-haspopup="dialog" aria-controls="modal-airports">
-        <i class="fas fa-theater-masks"></i>
-        Cultura
-      </button>
-      <button class="btn-feature" data-theme="deporte" aria-haspopup="dialog" aria-controls="modal-airports">
-        <i class="fas fa-futbol"></i>
-        Deporte
-      </button>
-      <button class="btn-feature" data-theme="tours" aria-haspopup="dialog" aria-controls="modal-airports">
-        <i class="fas fa-route"></i>
-        Tours
-      </button>
-    </div>
-
-    <!-- Resultados -->
-    <div id="resultados" tabindex="0" aria-live="polite"></div>
-    <div id="hotel-results" tabindex="0" aria-live="polite" style="display:none;"></div>
+    <section id="categorias">
+      <h2>¿Qué tipo de viaje estás buscando?</h2>
+      <div class="categorias-grid">
+        <button class="categoria" data-tipo="aventura">
+          <img src="img/aventura.jpg" alt="Aventura">
+          <span>Aventura</span>
+        </button>
+        <button class="categoria" data-tipo="negocios">
+          <img src="img/negocios.jpg" alt="Negocios">
+          <span>Negocios</span>
+        </button>
+        <button class="categoria" data-tipo="romantico">
+          <img src="img/romantico.jpg" alt="Escapada Romántica">
+          <span>Romántico</span>
+        </button>
+        <button class="categoria" data-tipo="familiar">
+          <img src="img/familiar.jpg" alt="Viaje Familiar">
+          <span>Familiar</span>
+        </button>
+        <button class="categoria" data-tipo="cultural">
+          <img src="img/cultural.jpg" alt="Cultura">
+          <span>Cultura</span>
+        </button>
+        <button class="categoria" data-tipo="naturaleza">
+          <img src="img/naturaleza.jpg" alt="Naturaleza">
+          <span>Naturaleza</span>
+        </button>
+      </div>
+    </section>
   </main>
-
-  <!-- Modal Aeropuertos -->
-  <div id="modal-airports" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-airports-title" tabindex="-1" style="display:none;">
-    <div class="modal-content">
-      <h2 id="modal-airports-title">Selecciona aeropuerto</h2>
-      <button id="close-modal-airports" aria-label="Cerrar modal">✕</button>
-      <ul id="airport-list" tabindex="0"></ul>
-    </div>
-  </div>
-
-  <!-- Modal Seguro -->
-  <div id="insurance-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="insurance-modal-title" tabindex="-1" style="display:none;">
-    <div class="modal-content">
-      <h2 id="insurance-modal-title">Cotización seguro de viajero</h2>
-      <button id="close-insurance-modal" aria-label="Cerrar modal">✕</button>
-      <form id="insurance-quote-form" novalidate>
-        <div>
-          <label for="insured-name">Nombre completo</label>
-          <input type="text" id="insured-name" required />
-        </div>
-        <div>
-          <label for="insured-age">Edad</label>
-          <input type="number" id="insured-age" min="0" max="120" required />
-        </div>
-        <div>
-          <label for="insured-country">Destino</label>
-          <input type="text" id="insured-country" required />
-        </div>
-        <div>
-          <label for="insured-start-date">Fecha inicio</label>
-          <input type="date" id="insured-start-date" required />
-        </div>
-        <div>
-          <label for="insured-end-date">Fecha fin</label>
-          <input type="date" id="insured-end-date" required />
-        </div>
-        <button type="submit" class="btn-submit">Cotizar</button>
-      </form>
-      <div id="insurance-quote-result" style="margin-top:10px; display:none;"></div>
-    </div>
-  </div>
 
   <script src="app.js"></script>
 </body>
+
 </html>
