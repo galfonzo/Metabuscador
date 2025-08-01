@@ -1,28 +1,42 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const alojamientoCheckbox = document.getElementById("alojamiento");
-  const fechaVueltaInput = document.getElementById("fecha-vuelta");
-  const seguroCheckbox = document.getElementById("seguro");
-  const formularioSeguro = document.getElementById("formulario-seguro");
-  const categorias = document.querySelectorAll(".categoria");
+// Esperar a que el DOM esté completamente cargado
+window.addEventListener('DOMContentLoaded', () => {
+  const seguroCheckbox = document.getElementById('seguro');
+  const seguroForm = document.getElementById('formulario-seguro');
+  const alojamientoCheckbox = document.getElementById('alojamiento');
+  const fechaVueltaField = document.getElementById('fecha-vuelta-field');
+  const categoriaButtons = document.querySelectorAll('.categoria-viaje');
 
-  alojamientoCheckbox.addEventListener("change", function () {
-    fechaVueltaInput.style.display = this.checked ? "inline-block" : "none";
+  // Mostrar/ocultar formulario de seguro de viaje
+  seguroCheckbox.addEventListener('change', () => {
+    seguroForm.style.display = seguroCheckbox.checked ? 'block' : 'none';
   });
 
-  seguroCheckbox.addEventListener("change", function () {
-    formularioSeguro.style.display = this.checked ? "block" : "none";
+  // Mostrar/ocultar campo de fecha de vuelta al seleccionar alojamiento
+  alojamientoCheckbox.addEventListener('change', () => {
+    fechaVueltaField.style.display = alojamientoCheckbox.checked ? 'block' : 'none';
   });
 
-  categorias.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      categorias.forEach((el) => el.classList.remove("seleccionada"));
-      this.classList.add("seleccionada");
+  // Manejar selección de categoría de viaje
+  categoriaButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const categoriaSeleccionada = button.dataset.categoria;
+      categoriaButtons.forEach(btn => btn.classList.remove('seleccionada'));
+      button.classList.add('seleccionada');
+
+      // Guardar la categoría seleccionada para el formulario
+      document.getElementById('categoria').value = categoriaSeleccionada;
     });
   });
 
-  document.getElementById("search-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    // Aquí se podría implementar la lógica para enviar la búsqueda
-    alert("Búsqueda enviada correctamente");
+  // Evitar envío si faltan campos obligatorios
+  document.getElementById('formulario-busqueda').addEventListener('submit', e => {
+    const origen = document.getElementById('origen').value;
+    const destino = document.getElementById('destino').value;
+    const fecha = document.getElementById('fecha').value;
+
+    if (!origen || !destino || !fecha) {
+      e.preventDefault();
+      alert('Por favor, completa todos los campos obligatorios.');
+    }
   });
 });
