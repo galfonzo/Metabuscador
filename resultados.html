@@ -1,224 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip - Buscador de Viajes</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+<meta charset="UTF-8" />
+<title>Resultados de Búsqueda - Metabuscador</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0f1e33; /* color oscuro del isotipo */
+    background-image: url('img/mapamundi.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+    backdrop-filter: brightness(0.6);
+    padding: 32px 12px;
+    font-size: 0.8rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2 {
+    text-align: center;
+    color: #00c6ff;
+    text-shadow: 0 0 12px rgba(0,198,255,0.7);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  #results-container {
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+    background: rgba(0,0,0,0.82);
+    border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    overflow-y: auto;
+    min-height: 120px;
+    max-height: 70vh;
+  }
+  .section-title {
+    font-size: 1.07rem;
+    margin-bottom: 12px;
+    color: #00aaff;
+    border-bottom: 1px solid #00aaff44;
+    padding-bottom: 3px;
+    font-weight: 600;
+    text-align: left;
+    margin-top: 25px;
+  }
+  .result-item {
+    border-bottom: 1px solid #00c6ff99;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    font-size: 0.86rem;
+    word-break: break-word;
+  }
+  .result-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .empty-result {
+    text-align: center;
+    color: #aaa;
+    margin: 60px 0 40px 0;
+    font-style: italic;
+  }
+  .back-link {
+    display: inline-block;
+    margin: 26px auto 0 auto;
+    padding: 10px 18px;
+    background: #0077cc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,119,204,0.3);
+    transition: background 0.25s;
+    text-align: center;
+    cursor: pointer;
+  }
+  .back-link:hover,
+  .back-link:focus {
+    background: #005fa3;
+    outline: none;
+  }
+  @media (max-width: 600px) {
+    #results-container {
+      padding: 14px 3px;
+      max-height: none;
     }
-    .categoria {
-      display: inline-block;
-      padding: 10px 15px;
-      margin: 5px;
-      border: 1px solid #888;
-      border-radius: 5px;
-      cursor: pointer;
-      user-select: none;
+    h1, h2 {
+      font-size: 1rem;
     }
-    .categoria.seleccionada {
-      background-color: #007bff;
-      color: white;
-      border-color: #0056b3;
-    }
-    #fecha-vuelta {
-      display: none;
-      margin-left: 10px;
-    }
-    #formulario-seguro {
-      display: none;
-      margin-top: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      max-width: 300px;
-    }
-    #mensajes-usuario {
-      margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 4px;
-    }
-    #mensajes-usuario.error {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-    #mensajes-usuario.success {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-    button[type="submit"] {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <h1>TuneMyTrip - Buscador de Viajes</h1>
+<main>
+  <h1>Resultados de tu búsqueda</h1>
+  <div id="results-container" aria-live="polite"></div>
+  <div style="text-align:center;">
+    <a href="index.html" class="back-link" role="button" aria-label="Volver a búsqueda inicial">↶ Nueva búsqueda</a>
+  </div>
+</main>
 
-  <form id="search-form">
-    <div id="mensajes-usuario"></div>
+<script>
+  function formatDateTime(dtStr) {
+    if (!dtStr) return '-';
+    const dt = new Date(dtStr);
+    if (!isNaN(dt)) {
+      return dt.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
+    }
+    return dtStr;
+  }
 
-    <label>
-      <input type="checkbox" id="alojamiento" /> ¿Necesitas alojamiento?
-    </label>
-    <input type="date" id="fecha-vuelta" name="fecha-vuelta" />
+  const resultsContainer = document.getElementById('results-container');
 
-    <br /><br />
+  // Redirección si no hay datos en localStorage
+  const hotelJson = localStorage.getItem('hotelResults');
+  const vueloJson = localStorage.getItem('flightResults');
 
-    <label>
-      <input type="checkbox" id="seguro" /> ¿Quieres agregar seguro de viaje?
-    </label>
+  if (!hotelJson && !vueloJson) {
+    alert("No hay datos de búsqueda disponibles. Serás redirigido a la página inicial.");
+    window.location.href = "index.html";
+  }
 
-    <div id="formulario-seguro">
-      <label>
-        Tipo de seguro:
-        <select id="tipo-seguro" name="tipo-seguro" required>
-          <option value="">Selecciona</option>
-          <option value="basico">Básico</option>
-          <option value="premium">Premium</option>
-        </select>
-      </label>
-    </div>
+  let contenidoHTML = "";
 
-    <br /><br />
+  let hotelData = [];
+  try {
+    hotelData = hotelJson ? JSON.parse(hotelJson) : [];
+  } catch (e) {
+    contenidoHTML += `<p class="empty-result">Error al cargar datos de hoteles. Por favor, inténtalo de nuevo.</p>`;
+  }
 
-    <div>
-      <span>Selecciona una categoría de viaje:</span><br />
-      <div class="categoria" data-categoria="aventura" tabindex="0">Aventura</div>
-      <div class="categoria" data-categoria="cultural" tabindex="0">Cultural</div>
-      <div class="categoria" data-categoria="playa" tabindex="0">Playa</div>
-      <div class="categoria" data-categoria="gastronomico" tabindex="0">Gastronómico</div>
-    </div>
+  if (hotelData.length > 0) {
+    contenidoHTML += `<h2 class="section-title">Hoteles disponibles</h2>`;
+    contenidoHTML += hotelData.map(hotel =>
+      `<div class="result-item" tabindex="0">
+        <strong>${hotel.name || 'Hotel desconocido'}</strong><br>
+        Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
+        Dirección: ${hotel.address || '-'}<br>
+        Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
+      </div>`).join('');
+  }
 
-    <br />
+  let vueloData = [];
+  try {
+    vueloData = vueloJson ? JSON.parse(vueloJson) : [];
+  } catch (e) {
+    contenidoHTML += `<p class="empty-result">Error al cargar datos de vuelos. Por favor, inténtalo de nuevo.</p>`;
+  }
 
-    <button type="submit">Buscar</button>
-  </form>
+  if (vueloData.length > 0) {
+    contenidoHTML += `<h2 class="section-title">Vuelos encontrados</h2>`;
+    contenidoHTML += vueloData.map(flight =>
+      `<div class="result-item" tabindex="0">
+        <strong>${(flight.airline && flight.airline.name) || 'Aerolínea desconocida'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
+        Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
+        Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
+        Estado: ${flight.flight_status || '-'}
+      </div>`).join('');
+  }
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const alojamientoCheckbox = document.getElementById("alojamiento");
-      const fechaVueltaInput = document.getElementById("fecha-vuelta");
-      const seguroCheckbox = document.getElementById("seguro");
-      const formularioSeguro = document.getElementById("formulario-seguro");
-      const tipoSeguroSelect = document.getElementById("tipo-seguro");
-      const categorias = document.querySelectorAll(".categoria");
-      const mensajesContenedor = document.getElementById("mensajes-usuario");
-      const form = document.getElementById("search-form");
+  if (!contenidoHTML){
+    contenidoHTML = `<p class="empty-result">No se encontraron resultados o los datos fueron mal pasados.<br>Por favor, realiza una nueva búsqueda.</p>`;
+  }
 
-      function mostrarMensaje(mensaje, tipo) {
-        mensajesContenedor.textContent = mensaje;
-        mensajesContenedor.className = tipo;
-      }
+  resultsContainer.innerHTML = contenidoHTML;
 
-      alojamientoCheckbox.addEventListener("change", function () {
-        fechaVueltaInput.style.display = this.checked ? "inline-block" : "none";
-        if (!this.checked) fechaVueltaInput.value = "";
-      });
-
-      seguroCheckbox.addEventListener("change", function () {
-        formularioSeguro.style.display = this.checked ? "block" : "none";
-        if (!this.checked) tipoSeguroSelect.value = "";
-      });
-
-      categorias.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          categorias.forEach((el) => el.classList.remove("seleccionada"));
-          this.classList.add("seleccionada");
-        });
-        // Permitir selección con teclado
-        btn.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            this.click();
-          }
-        });
-      });
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        mostrarMensaje("", ""); // limpiar mensajes previos
-
-        // Recopilar datos
-        const datos = {
-          alojamiento: alojamientoCheckbox.checked,
-          fechaVuelta: fechaVueltaInput.value,
-          seguro: seguroCheckbox.checked,
-          tipoSeguro: tipoSeguroSelect.value,
-          categoria:
-            [...categorias].find((el) => el.classList.contains("seleccionada"))?.dataset
-              .categoria || "",
-        };
-
-        // Validaciones
-        if (datos.alojamiento && !datos.fechaVuelta) {
-          mostrarMensaje("Si seleccionas alojamiento, debes indicar la fecha de vuelta.", "error");
-          fechaVueltaInput.focus();
-          return;
-        }
-
-        if (!datos.categoria) {
-          mostrarMensaje("Debes elegir una categoría de viaje.", "error");
-          return;
-        }
-
-        if (datos.seguro && !datos.tipoSeguro) {
-          mostrarMensaje("Si quieres seguro, debes seleccionar el tipo de seguro.", "error");
-          tipoSeguroSelect.focus();
-          return;
-        }
-
-        mostrarMensaje("Enviando búsqueda...", "success");
-
-        // Simulación llamada a backend/API (reemplaza con tu API real)
-        fetch("/api/busqueda", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(datos),
-        })
-          .then((response) => {
-            if (!response.ok)
-              throw new Error("Error en la búsqueda. Por favor intenta más tarde.");
-            return response.json();
-          })
-          .then((data) => {
-            // Datos simulados para resultados - reemplaza por data real de tu API
-            const resultadosSimulados = {
-              hotelResults: [
-                { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
-                { name: "Resort Playa", stars: 5, address: "Av. del Mar 45", price: 220 }
-              ],
-              flightResults: [
-                {
-                  airline: { name: "FlyNow" },
-                  flight: { number: "FN123" },
-                  departure: { airport: "MAD", scheduled: "2025-08-10T10:00:00Z" },
-                  arrival: { airport: "BCN", scheduled: "2025-08-10T12:00:00Z" },
-                  flight_status: "On Time"
-                }
-              ]
-            };
-
-            // Guardar resultados en localStorage para acceder en resultados.html
-            localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
-            localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
-
-            mostrarMensaje("¡Búsqueda realizada con éxito! Redirigiendo a resultados...", "success");
-
-            setTimeout(() => {
-              window.location.href = "resultados.html";
-            }, 1500);
-          })
-          .catch((err) => {
-            mostrarMensaje(err.message || "Ha ocurrido un error inesperado.", "error");
-          });
-      });
-    });
-  </script>
+  // Limpiar localStorage al volver a búsqueda
+  document.querySelector('.back-link').addEventListener('click', function () {
+    localStorage.removeItem('hotelResults');
+    localStorage.removeItem('flightResults');
+  });
+</script>
 </body>
 </html>
