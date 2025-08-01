@@ -3,144 +3,439 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip</title>
+  <title>TuneMyTrip - Buscador Avanzado</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+    /* RESET */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0; min-height: 100vh; background: #0f1e33;
-      font-family: 'Open Sans', Arial, sans-serif; color: #fff;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 0 8px 44px 8px;
+      margin: 0;
+      min-height: 100vh;
+      background-color: #0f1e33;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px 15px 40px 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    header { width: 100%; max-width: 370px; margin: 30px auto 20px auto; text-align: center;}
-    header img { max-width: 240px; height: auto; filter: drop-shadow(0 0 10px #0fd6fd); }
-    form {
-      background: rgba(0,0,0,0.73);
-      padding: 24px 20px 20px 20px;
-      border-radius: 18px;
-      box-shadow: 0 7px 32px #0ab6e635;
+
+    /* LOGO */
+    header {
       width: 100%;
-      max-width: 520px;
+      max-width: 380px;
+      text-align: center;
+      margin-bottom: 30px;
     }
-    fieldset { border: none; padding: 0; margin: 0 0 15px 0;}
-    legend {
-      color: #6fdefa; font-weight: 700; font-size: 1.06rem;
-      margin-bottom: 7px; letter-spacing: 0.4px;}
-    label { display: block; margin-top: 15px; font-weight: 600; color: #aee3fa;}
-    .row-fields { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;}
-    .row-fields label { margin-top: 0; margin-right: 5px;}
-    input[type="text"], input[type="date"] {
-      padding: 8px 10px; font-size: 1rem;
-      border-radius: 8px; border: 1.6px solid #127fc6;
-      background: #112948; color: #fff; margin-bottom: 6px;
+    header img {
+      max-width: 250px;
+      height: auto;
+      filter: drop-shadow(0 0 8px rgba(0, 198, 255, 0.8));
+      display: inline-block;
     }
+
+    /* FORM */
+    form {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px 25px 25px 25px;
+      border-radius: 16px;
+      box-shadow: 0 9px 35px #007fff50;
+      width: 100%;
+      max-width: 570px;
+      box-sizing: border-box;
+    }
+
+    /* Labels */
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #abcffb;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    /* Inputs in row */
+    .row-inputs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: nowrap;
+      margin-bottom: 14px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .row-inputs > div {
+      flex: 1 1 33%;
+      min-width: 0;
+    }
+
+    /* Inputs */
+    input[type=text], input[type=date] {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1.5px solid #3585cc;
+      background: #122948;
+      color: white;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      font-family: 'Open Sans', Arial, sans-serif;
+    }
+
+    input[type=text]:focus, input[type=date]:focus {
+      border-color: #3bc9ff;
+      outline: none;
+    }
+
     input[type="checkbox"] {
-      vertical-align: middle; margin-right: 8px; accent-color: #00c6ff;
+      accent-color: #00c6ff;
+      cursor: pointer;
+      vertical-align: middle;
+      margin-right: 8px;
     }
-    #fecha-vuelta { margin-left: 10px;}
-    .input-error { border-color: #fd5f4f !important; background: #320f1F !important;}
+
+    /* Error style */
+    .input-error {
+      border-color: #ff5a5a !important;
+      background-color: #3a1a1a !important;
+    }
+
+    /* Fecha vuelta */
+    #fecha-vuelta {
+      margin-left: 8px;
+      width: 100%;
+      margin-top: 6px;
+      display: none;
+    }
+
+    /* Seguro */
     #formulario-seguro {
-      display: none; border: 1.1px solid #00c6ff; border-radius: 10px;
-      background: #0d284c; padding: 10px 8px 7px 9px; margin-top: 8px; max-width: 210px;
+      margin: 12px 0 18px 0;
+      background-color: #10325e;
+      padding: 15px 13px 12px 13px;
+      border-radius: 10px;
+      border: 1px solid #00c6ff;
+      max-width: 260px;
+      display: none;
     }
-    #tipo-seguro { width: 98%;padding: 6px; border: 1px solid #3976be; border-radius: 5px; background: #17395f; color: #fff; font-size: 1rem;}
-    #tipo-seguro.input-error { border-color: #fd5f4f; background-color: #320f1F;}
-    /* Categorías visuales */
-    #categorias { display: flex; flex-wrap: wrap; gap: 13px; justify-content: center; margin: 17px 0 7px 0;}
+
+    #tipo-seguro {
+      width: 100%;
+      padding: 7px 11px;
+      border-radius: 5px;
+      border: 1px solid #3976be;
+      background-color: #17395f;
+      color: white;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+      font-family: 'Open Sans', Arial, sans-serif;
+    }
+
+    #tipo-seguro:disabled {
+      background-color: #1f3d67;
+      color: #88b5e2;
+      cursor: not-allowed;
+    }
+
+    /* Categorías con imágenes */
+    #categorias {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 17px;
+      justify-content: center;
+      margin-top: 14px;
+      margin-bottom: 20px;
+    }
+
     .categoria-btn {
-      position: relative; width: 94px; height: 94px;
-      border: 3px solid #0099ff; border-radius: 12px; overflow: hidden;
-      cursor: pointer; user-select: none; background: #061931;
-      box-shadow: 0 5px 18px #0099ff33; display: flex; align-items: flex-end;
-      justify-content: center; outline-offset: 2px; transition: box-shadow 0.21s, border-color 0.19s;
+      position: relative;
+      width: 115px;
+      height: 115px;
+      border: 3px solid #0099ff;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+      background: #031b39;
+      box-shadow: 0 5px 26px #007fff55;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline-offset: 3px;
+      outline: none;
+      flex-shrink: 0;
     }
     .categoria-btn img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      border-radius: 12px; filter: brightness(0.77); pointer-events: none; transition: filter 0.22s;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.75);
+      pointer-events: none;
+      border-radius: 16px;
+      transition: filter 0.25s ease;
+      user-select: none;
     }
-    .categoria-btn.selected { border-color: #fff; box-shadow: 0 0 20px #00fff877; }
-    .categoria-btn.selected img { filter: brightness(1);}
-    .categoria-btn span { position: relative; color: #fff; font-weight: 700; font-size: 0.98rem; padding: 7px 5px 5px 5px; z-index: 2;
-      width: 100%; text-align: center; text-shadow: 0 0 9px #003747cc;background: linear-gradient(transparent 65%, #027390 99%);}
-    /* Destinos lista */
+    .categoria-btn.selected {
+      border-color: #00c9ff;
+      box-shadow: 0 0 30px #00c9ffcc;
+      z-index: 2;
+    }
+    .categoria-btn.selected img {
+      filter: brightness(1);
+    }
+    .categoria-btn span {
+      position: relative;
+      color: #e2f8ff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 9px 7px 6px 7px;
+      z-index: 3;
+      text-align: center;
+      text-shadow: 0 0 9px #003954bb;
+      user-select: none;
+      width: 100%;
+      background: linear-gradient(transparent 62%, #02769d 94%);
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+    }
+    .categoria-btn:focus {
+      outline: 3px solid #00c6ff;
+      outline-offset: 3px;
+      z-index: 5;
+    }
+
+    /* Destinos desplegables */
     #destinos-lista {
-      background: rgba(0, 109, 185, 0.79); box-shadow: 0 7px 19px #00d3ff55;
-      border-radius: 11px; width: 96%; max-width: 380px; padding: 9px 13px;
-      color: #fff; font-size: 0.96rem; display: none; margin: 0 auto 11px auto;
+      background: rgba(0, 109, 185, 0.82);
+      box-shadow: 0 8px 26px #00d3ff88;
+      border-radius: 16px;
+      width: 96%;
+      max-width: 480px;
+      padding: 16px 22px;
+      color: white;
+      font-size: 1rem;
+      display: none;
+      margin: 0 auto 10px auto;
+      user-select: none;
+      scroll-behavior: smooth;
     }
-    #destinos-lista ul { list-style: none; margin: 0; padding: 0;}
+
+    #destinos-lista ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
     #destinos-lista li {
-      background: rgba(255,255,255,.10); margin: 4px 0; border-radius: 7px;
-      padding: 7px 13px; cursor: pointer; font-weight: 600; transition: background 0.18s, border-color 0.18s;
-      border: 1.2px solid transparent; color: #c1fcff;
+      background: rgba(255 255 255 / 0.15);
+      margin: 7px 0;
+      border-radius: 9px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.27s ease, border-color 0.27s ease;
+      border: 1.5px solid transparent;
+      color: #e0f7ff;
+      user-select: none;
     }
-    #destinos-lista li.selected, #destinos-lista li:hover, #destinos-lista li:focus {
-      background:rgba(255,255,255,.22);border-color:#00e4ff;outline: none; color: #00374a;
+
+    #destinos-lista li.selected, 
+    #destinos-lista li:hover, 
+    #destinos-lista li:focus {
+      background-color: rgba(255 255 255 / 0.38);
+      border-color: #00d3ff;
+      color: #03294c;
+      outline: none;
     }
-    #mensajes-usuario {margin-bottom:11px;padding:8px 12px;border-radius:6px;font-weight:bold;font-size:1rem;min-height:25px;display:none;}
-    #mensajes-usuario.error {background:#fd5f4f13;color:#ffd2cf;border:1px solid #fd5f4f77;display:block;}
-    #mensajes-usuario.success {background:#29ffb813;color:#1df392;border:1px solid #19d7a9;display:block;}
-    button[type="submit"] {margin-top:16px;width:100%;padding:12px 0;font-size:1.09rem;font-weight:600;color:#fff;background:linear-gradient(90deg,#007bff 70%,#0fd6fd 100%);
-      border:none;border-radius:30px;cursor:pointer;box-shadow:0 6px 16px #00abee75;transition:background 0.17s;}
-    button[type="submit"]:hover,button[type="submit"]:focus{background:linear-gradient(90deg,#009efd 60%,#26ffe6 100%);outline:none;}
-    @media (max-width: 540px) {.categoria-btn{width:70px;height:70px;}#destinos-lista{max-width:99vw;}}
+
+    /* Mensajes */
+    #mensajes-usuario {
+      margin-bottom: 18px;
+      padding: 12px 15px;
+      border-radius: 7px;
+      font-weight: 700;
+      font-size: 1.08rem;
+      min-height: 32px;
+      display: none;
+      letter-spacing: 1px;
+    }
+
+    #mensajes-usuario.error {
+      background-color: #ff525233;
+      color: #ff3232;
+      border: 1.5px solid #ff3233cc;
+      display: block;
+      user-select: none;
+    }
+
+    #mensajes-usuario.success {
+      background-color: #2dee7733;
+      color: #0bd80b;
+      border: 1.5px solid #0bd80bcc;
+      display: block;
+      user-select: none;
+    }
+
+    /* Submit button */
+    button[type="submit"] {
+      margin-top: 18px;
+      width: 100%;
+      padding: 15px 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #007bff 70%, #0fd6fd 100%);
+      border: none;
+      border-radius: 32px;
+      cursor: pointer;
+      box-shadow: 0 6px 22px #00abeea90;
+      transition: background-color 0.25s ease;
+      user-select: none;
+    }
+
+    button[type="submit"]:hover, button[type="submit"]:focus {
+      background: linear-gradient(90deg, #009efd 60%, #26ffe6 100%);
+      outline: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .row-inputs {
+        flex-wrap: wrap;
+      }
+      .row-inputs > div {
+        flex: 1 1 100%;
+        margin-bottom: 12px;
+      }
+      #categorias {
+        gap: 14px;
+        justify-content: center;
+      }
+      .categoria-btn {
+        width: 95px;
+        height: 95px;
+      }
+    }
+    @media (max-width: 440px) {
+      #destinos-lista {
+        max-width: 98vw;
+        padding: 14px 16px;
+      }
+      button[type="submit"] {
+        font-size: 1.08rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
+  <header aria-label="Logotipo TuneMyTrip">
     <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
   </header>
-  <form id="search-form" autocomplete="off" novalidate>
-    <div id="mensajes-usuario"></div>
-    <fieldset>
-      <legend>Datos básicos</legend>
-      <div class="row-fields">
-        <label for="origen">Origen:</label>
+
+  <form id="search-form" autocomplete="off" novalidate aria-label="Formulario de búsqueda de viaje">
+    <div id="mensajes-usuario" role="alert" aria-live="assertive"></div>
+
+    <!-- Origen, Destino, Fecha Ida en línea -->
+    <div class="row-inputs">
+      <div>
+        <label for="origen">Origen</label>
         <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
       </div>
-      <div class="row-fields">
-        <label for="destino">Destino:</label>
-        <input type="text" id="destino" name="destino" placeholder="Ciudad de llegada" required autocomplete="off" />
+      <div>
+        <label for="destino">Destino</label>
+        <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
       </div>
-    </fieldset>
-    <fieldset>
-      <legend>Fechas de viaje</legend>
-      <div class="row-fields">
-        <label for="fecha-ida">Ida:</label>
+      <div>
+        <label for="fecha-ida">Fecha ida</label>
         <input type="date" id="fecha-ida" name="fecha-ida" required />
-        <label><input type="checkbox" id="alojamiento" />Alojamiento</label>
-        <input type="date" id="fecha-vuelta" name="fecha-vuelta" placeholder="Vuelta" style="display:none;" />
       </div>
-      <div class="row-fields">
-        <label><input type="checkbox" id="seguro" />Seguro de viaje</label>
-      </div>
-      <div id="formulario-seguro">
-        <label for="tipo-seguro">Tipo de seguro:</label>
-        <select id="tipo-seguro" name="tipo-seguro" disabled>
+    </div>
+
+    <!-- Alojamiento y fecha vuelta -->
+    <div style="margin-bottom:14px;">
+      <label>
+        <input type="checkbox" id="alojamiento" aria-controls="fecha-vuelta" aria-expanded="false" />
+        ¿Necesitas alojamiento?
+      </label>
+      <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" style="display:none;" />
+    </div>
+
+    <!-- Seguro -->
+    <div style="margin-bottom:10px;">
+      <label>
+        <input type="checkbox" id="seguro" aria-controls="formulario-seguro" aria-expanded="false" />
+        ¿Quieres agregar seguro de viaje?
+      </label>
+      <div id="formulario-seguro" aria-hidden="true">
+        <label for="tipo-seguro" style="color:#aee3fa; font-weight: 600;user-select: none;">Tipo de seguro:</label>
+        <select id="tipo-seguro" name="tipo-seguro" disabled aria-required="true">
           <option value="">Selecciona</option>
           <option value="basico">Básico</option>
           <option value="premium">Premium</option>
         </select>
       </div>
-    </fieldset>
-    <label style="color:#f6ff;">Selecciona tipo de viaje:</label>
-    <div id="categorias" aria-label="Categorías de viaje">
-      <div class="categoria-btn" tabindex="0" data-categoria="aventura"><img src="img/categorias/aventura.jpg" alt="" /><span>Aventura</span></div>
-      <div class="categoria-btn" tabindex="0" data-categoria="cultural"><img src="img/categorias/cultural.jpg" alt="" /><span>Cultural</span></div>
-      <div class="categoria-btn" tabindex="0" data-categoria="playa"><img src="img/categorias/playa.jpg" alt="" /><span>Playa</span></div>
-      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico"><img src="img/categorias/gastronomico.jpg" alt="" /><span>Gastronómico</span></div>
     </div>
-    <div id="destinos-lista"></div>
-    <button type="submit">Buscar</button>
+
+    <!-- Categorías con imágenes y funcionalidad -->
+    <label style="color:#f6ff; font-weight: 600;">Selecciona tipo de viaje</label>
+    <div id="categorias" role="list" aria-label="Categorías de viaje">
+      <div class="categoria-btn" tabindex="0" data-categoria="aventura" role="listitem" aria-pressed="false" aria-label="Categoría aventura">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=60" alt="Imagen categoría aventura" />
+        <span>Aventura</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="cultural" role="listitem" aria-pressed="false" aria-label="Categoría cultural">
+        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=400&q=60" alt="Imagen categoría cultural" />
+        <span>Cultural</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="playa" role="listitem" aria-pressed="false" aria-label="Categoría playa">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=60" alt="Imagen categoría playa" />
+        <span>Playa</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico" role="listitem" aria-pressed="false" aria-label="Categoría gastronómico">
+        <img src="https://images.unsplash.com/photo-1542144612-bc1a87e03e2f?auto=format&fit=crop&w=400&q=60" alt="Imagen categoría gastronómico" />
+        <span>Gastronómico</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo" role="listitem" aria-pressed="false" aria-label="Categoría ecoturismo">
+        <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=60" alt="Imagen categoría ecoturismo" />
+        <span>Ecoturismo</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="lujo" role="listitem" aria-pressed="false" aria-label="Categoría lujo">
+        <img src="https://images.unsplash.com/photo-1505765052623-6228cadf0482?auto=format&fit=crop&w=400&q=60" alt="Imagen categoría lujo" />
+        <span>Lujo</span>
+      </div>
+    </div>
+
+    <!-- Lista dinámica destinos -->
+    <div id="destinos-lista" aria-live="polite" aria-label="Lista de destinos posibles"></div>
+
+    <!-- Submit -->
+    <button type="submit" aria-label="Buscar viajes">Buscar</button>
   </form>
+
   <script>
-    // --- Categorías y destinos ---
+    // Datos destinos por categoría
     const destinosPorCategoria = {
       aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
       cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
       playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
-      gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"]
+      gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
+      ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Parque Nacional Torres del Paine", "Islas Malvinas"],
+      lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"]
     };
+
+    // Elementos
     const categoriaBtns = document.querySelectorAll('.categoria-btn');
     const destinosDiv = document.getElementById('destinos-lista');
     let categoriaSeleccionada = "";
@@ -149,42 +444,57 @@
     function resetCategorias() {
       categoriaBtns.forEach(btn => {
         btn.classList.remove('selected');
-        btn.setAttribute('aria-pressed','false');
+        btn.setAttribute('aria-pressed', 'false');
       });
-      destinosDiv.style.display = 'none'; destinosDiv.innerHTML = "";
+      destinosDiv.style.display = 'none';
+      destinosDiv.innerHTML = "";
       destinoSeleccionado = "";
     }
+
     function mostrarDestinos(cat) {
       const destinos = destinosPorCategoria[cat] || [];
       if(destinos.length) {
         destinosDiv.style.display = "block";
         destinosDiv.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join("")}</ul>`;
         destinosDiv.querySelectorAll('li').forEach(li => {
-          li.addEventListener('click',function(){ 
-            destinosDiv.querySelectorAll('li').forEach(item=>item.classList.remove('selected'));
-            this.classList.add('selected'); destinoSeleccionado = this.textContent; 
+          li.addEventListener('click', function() {
+            destinosDiv.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
+            this.classList.add('selected');
+            destinoSeleccionado = this.textContent;
           });
-          li.addEventListener('keydown',function(e){
-            if(e.key=="Enter"||e.key==" "){ e.preventDefault(); this.click();}
+          li.addEventListener('keydown', function(e) {
+            if(e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              this.click();
+            }
           });
         });
-      } else { destinosDiv.style.display = "none"; destinosDiv.innerHTML = ""; }
+      } else {
+        destinosDiv.style.display = "none";
+        destinosDiv.innerHTML = "";
+        destinoSeleccionado = "";
+      }
     }
+
+    // Categorias interacción
     categoriaBtns.forEach(btn => {
-      btn.addEventListener('click', function(){
+      btn.addEventListener('click', function() {
         resetCategorias();
         this.classList.add('selected');
-        this.setAttribute('aria-pressed','true');
+        this.setAttribute('aria-pressed', 'true');
         categoriaSeleccionada = this.dataset.categoria;
         mostrarDestinos(categoriaSeleccionada);
         document.getElementById('mensajes-usuario').style.display = 'none';
       });
-      btn.addEventListener('keydown', function(e){
-        if(e.key === "Enter" || e.key === " ") { e.preventDefault(); this.click(); }
+      btn.addEventListener('keydown', function(e) {
+        if(e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          this.click();
+        }
       });
     });
 
-    // Formularios y validaciones clave
+    // Form validation and interaction
     const alojamientoCheckbox = document.getElementById("alojamiento");
     const fechaVueltaInput = document.getElementById("fecha-vuelta");
     const seguroCheckbox = document.getElementById("seguro");
@@ -202,66 +512,107 @@
       if(mensaje) mensajesContenedor.style.display = 'block';
       else mensajesContenedor.style.display = 'none';
     }
-    alojamientoCheckbox.addEventListener("change", function(){
-      fechaVueltaInput.style.display = this.checked ? "inline-block":"none";
-      if(!this.checked) fechaVueltaInput.value = "";
-      fechaVueltaInput.classList.remove("input-error");
-      mostrarMensaje("", "");
+
+    alojamientoCheckbox.addEventListener("change", function() {
+      const show = this.checked;
+      fechaVueltaInput.style.display = show ? "inline-block" : "none";
+      this.setAttribute('aria-expanded', show);
+      if (!show) {
+        fechaVueltaInput.value = "";
+        fechaVueltaInput.classList.remove("input-error");
+        mostrarMensaje("", "");
+      }
     });
-    seguroCheckbox.addEventListener("change", function () {
-      formularioSeguro.style.display = this.checked ? "block" : "none";
-      tipoSeguroSelect.disabled = !this.checked;
-      if (!this.checked) {
+
+    seguroCheckbox.addEventListener("change", function() {
+      const show = this.checked;
+      formularioSeguro.style.display = show ? "block" : "none";
+      tipoSeguroSelect.disabled = !show;
+      this.setAttribute('aria-expanded', show);
+      if (!show) {
         tipoSeguroSelect.value = "";
         tipoSeguroSelect.classList.remove("input-error");
         mostrarMensaje("", "");
       }
     });
-    fechaVueltaInput.addEventListener("input", function(){
-      if(alojamientoCheckbox.checked && !fechaVueltaInput.value){
-        fechaVueltaInput.classList.add("input-error");
+
+    fechaVueltaInput.addEventListener("input", function() {
+      if (alojamientoCheckbox.checked && !this.value) {
+        this.classList.add("input-error");
         mostrarMensaje("Debes seleccionar fecha de vuelta si necesitas alojamiento.", "error");
       } else {
-        fechaVueltaInput.classList.remove("input-error");
+        this.classList.remove("input-error");
         mostrarMensaje("", "");
       }
     });
-    tipoSeguroSelect.addEventListener("change", function(){
-      if(seguroCheckbox.checked && !tipoSeguroSelect.value){
-        tipoSeguroSelect.classList.add("input-error");
+
+    tipoSeguroSelect.addEventListener("change", function() {
+      if(seguroCheckbox.checked && !this.value){
+        this.classList.add("input-error");
         mostrarMensaje("Selecciona el tipo de seguro.", "error");
       } else {
-        tipoSeguroSelect.classList.remove("input-error");
+        this.classList.remove("input-error");
         mostrarMensaje("", "");
       }
     });
-    [origenInput,destinoInput,fechaIdaInput].forEach(inp=>{
-      inp.addEventListener("input",function(){
-        if(this.value.trim() === ""){
+
+    [origenInput, destinoInput, fechaIdaInput].forEach(inp => {
+      inp.addEventListener("input", function() {
+        if (this.value.trim() === "") {
           this.classList.add("input-error");
-          mostrarMensaje("Completa los campos de origen, destino y la fecha de ida.","error");
+          mostrarMensaje("Completa los campos de origen, destino y fecha de ida.", "error");
         } else {
-          this.classList.remove("input-error"); mostrarMensaje("","");
+          this.classList.remove("input-error");
+          mostrarMensaje("", "");
         }
       });
     });
 
-    form.addEventListener("submit", function (e) {
+    // Envío y validaciones finales
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
-      mostrarMensaje("", '');
+      mostrarMensaje("", "");
       fechaVueltaInput.classList.remove("input-error");
       tipoSeguroSelect.classList.remove("input-error");
-      [origenInput,destinoInput,fechaIdaInput].forEach(inp=>inp.classList.remove("input-error"));
-      // Validaciones obligatorias
-      if(!origenInput.value.trim()){ origenInput.classList.add("input-error"); mostrarMensaje("Indica ciudad de salida.","error"); origenInput.focus(); return;}
-      if(!destinoInput.value.trim()){ destinoInput.classList.add("input-error"); mostrarMensaje("Indica ciudad de llegada.","error"); destinoInput.focus(); return;}
-      if(!fechaIdaInput.value){ fechaIdaInput.classList.add("input-error"); mostrarMensaje("Indica la fecha de ida.","error"); fechaIdaInput.focus(); return;}
-      if(alojamientoCheckbox.checked && !fechaVueltaInput.value){ fechaVueltaInput.classList.add("input-error"); mostrarMensaje("Indica la fecha de vuelta si quieres alojamiento.","error"); fechaVueltaInput.focus(); return;}
-      if (!categoriaSeleccionada){ mostrarMensaje("Selecciona una categoría de viaje.","error"); return; }
-      if (seguroCheckbox.checked && !tipoSeguroSelect.value){ tipoSeguroSelect.classList.add("input-error"); mostrarMensaje("Selecciona tipo de seguro.","error"); tipoSeguroSelect.focus(); return; }
+      [origenInput, destinoInput, fechaIdaInput].forEach(inp => inp.classList.remove("input-error"));
+
+      if (!origenInput.value.trim()) {
+        origenInput.classList.add("input-error");
+        mostrarMensaje("Indica ciudad de salida.", "error");
+        origenInput.focus();
+        return;
+      }
+      if (!destinoInput.value.trim()) {
+        destinoInput.classList.add("input-error");
+        mostrarMensaje("Indica ciudad de llegada.", "error");
+        destinoInput.focus();
+        return;
+      }
+      if (!fechaIdaInput.value) {
+        fechaIdaInput.classList.add("input-error");
+        mostrarMensaje("Indica la fecha de ida.", "error");
+        fechaIdaInput.focus();
+        return;
+      }
+      if (alojamientoCheckbox.checked && !fechaVueltaInput.value) {
+        fechaVueltaInput.classList.add("input-error");
+        mostrarMensaje("Indica la fecha de vuelta si quieres alojamiento.", "error");
+        fechaVueltaInput.focus();
+        return;
+      }
+      if (!categoriaSeleccionada) {
+        mostrarMensaje("Selecciona una categoría de viaje.", "error");
+        return;
+      }
+      if (seguroCheckbox.checked && !tipoSeguroSelect.value) {
+        tipoSeguroSelect.classList.add("input-error");
+        mostrarMensaje("Selecciona tipo de seguro.", "error");
+        tipoSeguroSelect.focus();
+        return;
+      }
+
       mostrarMensaje("Enviando búsqueda, por favor espera...", "success");
 
-      // Guardar todos los datos ingresados, incluyendo el destino sugerido seleccionado (si hay uno)
       const userData = {
         origen: origenInput.value.trim(),
         destino: destinoInput.value.trim(),
@@ -275,28 +626,25 @@
       };
       localStorage.setItem('userData', JSON.stringify(userData));
 
-      // Simulación resultados...
-      setTimeout(function(){
-        const resultadosSimulados = {
-          hotelResults: [
-            { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
-            { name: "Resort Playa", stars: 5, address: "Av. del Mar 45", price: 220 }
-          ],
-          flightResults: [
-            {
-              airline: { name: "FlyNow" },
-              flight: { number: "FN123" },
-              departure: { airport: origenInput.value, scheduled: fechaIdaInput.value+"T09:30:00Z" },
-              arrival: { airport: destinoInput.value, scheduled: (fechaVueltaInput.value || fechaIdaInput.value)+"T12:10:00Z" },
-              flight_status: "On Time"
-            }
-          ]
-        };
-        localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
-        localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
-        mostrarMensaje("¡Búsqueda realizada con éxito! Redirigiendo a resultados...", "success");
-        setTimeout(() => window.location.href = "resultados.html", 1300);
-      }, 1050);
+      const resultadosSimulados = {
+        hotelResults: [
+          { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
+          { name: "Resort Playa", stars: 5, address: "Av. del Mar 45", price: 220 }
+        ],
+        flightResults: [
+          {
+            airline: { name: "FlyNow" },
+            flight: { number: "FN123" },
+            departure: { airport: origenInput.value, scheduled: fechaIdaInput.value + "T09:00:00Z" },
+            arrival: { airport: destinoInput.value, scheduled: (fechaVueltaInput.value || fechaIdaInput.value) + "T12:15:00Z" },
+            flight_status: "On Time"
+          }
+        ]
+      };
+      localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
+      localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
+
+      setTimeout(() => window.location.href = "resultados.html", 1300);
     });
   </script>
 </body>
