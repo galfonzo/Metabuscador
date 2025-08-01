@@ -1,37 +1,72 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip</title>
-  <style>
-    /* Fondo que se funde con el color oscuro del logo */
-    body {
-      margin: 0;
-      height: 100vh;
-      background-color: #0f1e33; /* color oscuro del isotipo */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Open Sans', Arial, sans-serif;
-    }
-
-    header {
-      text-align: center;
-    }
-
-    header img {
-      max-width: 250px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      filter: drop-shadow(0 0 5px rgba(0,198,255,0.7));
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
-  </header>
-</body>
-</html>
+<style>
+.categorias-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  margin: 25px 0 10px 0;
+}
+.categoria-btn {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border: 3px solid #007bff;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  text-align: center;
+  background: #fff;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  box-shadow: 0 5px 16px #007bff22;
+}
+.categoria-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.categoria-btn span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 4px 4px 4px;
+  background: linear-gradient(transparent, #007bffdd 92%);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.08rem;
+  text-shadow: 0 1px 8px #222a;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.categoria-btn.selected {
+  border-color: #0056b3;
+  box-shadow: 0 8px 24px #007bff55;
+}
+.destinos-lista {
+  display: none;
+  margin: 10px auto 28px auto;
+  padding: 0;
+  max-width: 460px;
+  text-align: left;
+}
+.destinos-lista ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.destinos-lista li {
+  background: #f7f9fc;
+  margin-bottom: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.destinos-lista li:hover { background: #e1f0ff; }
+</style>
