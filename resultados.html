@@ -31,42 +31,59 @@
   }
   main {
     width: 100%;
-    max-width: 650px;
-    padding: 20px 0 0 0;
+    max-width: 680px;
+    padding: 23px 0 0 0;
   }
   h1 {
     text-align: center;
     color: #00c6ff;
     font-size: 1.29rem;
-    margin: 0 0 20px 0;
+    margin: 0 0 15px 0;
     font-weight: 700;
-    letter-spacing: 1.7px;
-    text-shadow: 0 0 14px #0fd6fd44;
+    letter-spacing: 1.3px;
+    text-shadow: 0 0 12px #0fd6fd44;
     padding-top: 2px;
   }
-  #results-container {
-    background: rgba(0,0,0,0.81);
+  #datos-personalizados, #results-container {
+    background: rgba(0,0,0,0.83);
     border-radius: 13px;
-    padding: 28px 22px;
-    box-shadow: 0 7px 28px #00c6ff25;
+    padding: 19px 21px 13px 21px;
+    box-shadow: 0 7px 28px #00c6ff27;
     margin-bottom: 18px;
-    min-height: 90px;
-    font-size: 1rem;
+    font-size: 1.04rem;
+  }
+  #datos-personalizados { margin-bottom: 24px; }
+  .datos-row, .datos-tipo {
+    margin: 3px 0 7px 0;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+  }
+  .dato-label {
+    display: inline-block;
+    font-weight: 700;
+    color: #00c6ff;
+    width: 110px;
+    min-width: 90px;
+  }
+  .valor {
+    color: #eafffa;
+    margin-left: 3px;
+    font-weight: 600;
   }
   .section-title {
     color: #00aaff;
-    margin: 23px 0 13px 0;
-    font-size: 1.05rem;
+    margin: 18px 0 9px 0;
+    font-size: 1.04rem;
     font-weight: bold;
     border-bottom: 1.5px solid #00aaff62;
-    padding-bottom: 5px;
+    padding-bottom: 4.5px;
     letter-spacing: 1px;
     text-align: left;
   }
   .result-item {
     border-bottom: 1px solid #00c6ff77;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    margin-bottom: 13px;
+    padding-bottom: 8px;
     word-break: break-word;
     font-size: 0.99rem;
     padding-left: 4px;
@@ -78,7 +95,7 @@
     text-align: center;
     color: #fff9;
     font-style: italic;
-    margin: 58px 0 34px 0;
+    margin: 48px 0 28px 0;
     font-size: 1rem;
   }
   .back-link {
@@ -92,7 +109,7 @@
     font-weight: bold;
     font-size: 1.02rem;
     box-shadow: 0 4px 16px #00c6ff2a;
-    transition: background 0.27s;
+    transition: background 0.22s;
     text-align: center;
     cursor: pointer;
   }
@@ -103,8 +120,9 @@
     color: #031d3b;
   }
   @media (max-width: 520px) {
-    #results-container, main { padding-left: 0; padding-right: 0; }
+    #datos-personalizados, #results-container, main { padding:8px;}
     header img { max-width: 85vw;}
+    .dato-label { min-width: 60px; width: 27vw;}
   }
 </style>
 </head>
@@ -114,17 +132,46 @@
   </header>
   <main>
     <h1>Resultados de tu búsqueda</h1>
+    <div id="datos-personalizados" aria-label="Resumen de tu búsqueda"></div>
     <div id="results-container" aria-live="polite"></div>
     <div style="text-align:center;">
       <a href="index.html" class="back-link" onclick="localStorage.clear()">↶ Nueva búsqueda</a>
     </div>
   </main>
   <script>
-    function formatDateTime(dtStr) {
+    function formatDate(dtStr) {
       if (!dtStr) return '-';
       const dt = new Date(dtStr);
-      return isNaN(dt) ? dtStr : dt.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
+      return isNaN(dt) ? dtStr : dt.toLocaleDateString('es-ES');
     }
+    // Recuperar datos personalizados del usuario
+    let userData = {};
+    try {
+      userData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : {};
+    } catch { userData = {}; }
+
+    // Mostrar los datos principales ingresados por el usuario:
+    const datosDiv = document.getElementById('datos-personalizados');
+    let datosHTML = "";
+    if (Object.keys(userData).length > 0) {
+      datosHTML += `<div class="datos-row"><span class="dato-label">Origen:</span><span class="valor">${userData.origen || '-'}</span></div>`;
+      datosHTML += `<div class="datos-row"><span class="dato-label">Destino:</span><span class="valor">${userData.destino || '-'}</span></div>`;
+      datosHTML += `<div class="datos-row"><span class="dato-label">Fecha ida:</span><span class="valor">${userData.fechaIda ? formatDate(userData.fechaIda) : '-'}</span></div>`;
+      if(userData.fechaVuelta)
+        datosHTML += `<div class="datos-row"><span class="dato-label">Vuelta:</span><span class="valor">${formatDate(userData.fechaVuelta)}</span></div>`;
+      datosHTML += `<div class="datos-row"><span class="dato-label">Categoría:</span><span class="valor">${userData.categoria ? userData.categoria.charAt(0).toUpperCase() + userData.categoria.slice(1) : '-'}</span></div>`;
+      if(userData.destinoSeleccionado)
+        datosHTML += `<div class="datos-row"><span class="dato-label">Destino sugerido:</span><span class="valor">${userData.destinoSeleccionado}</span></div>`;
+      datosHTML += `<div class="datos-row"><span class="dato-label">Alojamiento:</span><span class="valor">${userData.alojamiento ? 'Sí' : 'No'}</span></div>`;
+      datosHTML += `<div class="datos-row"><span class="dato-label">Seguro:</span><span class="valor">${userData.seguro ? 'Sí' : 'No'}</span></div>`;
+      if(userData.tipoSeguro)
+        datosHTML += `<div class="datos-row"><span class="dato-label">Tipo seguro:</span><span class="valor">${userData.tipoSeguro.charAt(0).toUpperCase()+userData.tipoSeguro.slice(1)}</span></div>`;
+    } else {
+      datosHTML = "<div class='empty-result'>No se almacenaron detalles de tu búsqueda.<br>Realiza una nueva búsqueda.</div>";
+    }
+    datosDiv.innerHTML = datosHTML;
+
+    // RESULTADOS (HOTEL Y VUELO)
     const resultsContainer = document.getElementById('results-container');
     const hotelJson = localStorage.getItem('hotelResults');
     const vueloJson = localStorage.getItem('flightResults');
@@ -153,8 +200,8 @@
         html += vueloData.map(flight=>`
           <div class="result-item">
             <strong>${(flight.airline && flight.airline.name) || '-'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
-            Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
-            Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
+            Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${flight.departure && flight.departure.scheduled ? new Date(flight.departure.scheduled).toLocaleString('es-ES') : '-'}<br>
+            Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${flight.arrival && flight.arrival.scheduled ? new Date(flight.arrival.scheduled).toLocaleString('es-ES'): '-'}<br>
             Estado: ${flight.flight_status || '-'}
           </div>
         `).join('');
