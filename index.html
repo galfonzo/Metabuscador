@@ -11,18 +11,15 @@
       min-height: 100vh;
       background-color: #0f1e33;
       font-family: 'Open Sans', Arial, sans-serif;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      color: #fff; display: flex; flex-direction: column; align-items: center;
       padding: 0 8px 36px 8px;
+      background-image: none !important;
     }
     header {
       width: 100%;
       max-width: 360px;
       text-align: center;
-      margin-top: 26px;
-      margin-bottom: 20px;
+      margin: 32px 0 24px 0;
     }
     header img {
       max-width: 250px;
@@ -31,40 +28,56 @@
       display: inline-block;
     }
     form {
-      background: rgba(0,0,0,0.68);
-      padding: 30px 24px 26px 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 36px #005c8a29;
+      background: rgba(0,0,0,0.7);
+      padding: 24px 20px 20px 20px;
+      border-radius: 17px;
+      box-shadow: 0 7px 30px #007fff28;
       width: 100%;
-      max-width: 500px;
+      max-width: 520px;
       margin-bottom: 30px;
+      margin-top: 7px;
+    }
+    fieldset {
+      border: none;
+      padding: 0; margin: 0 0 12px 0;
+    }
+    legend {
+      color: #80d8ff;
+      font-weight: 600;
+      font-size: 1.04rem;
+      margin-bottom: 7px;
+      letter-spacing: 0.5px;
     }
     label {
       display: block;
-      margin: 18px 0 7px 0;
+      margin-top: 17px;
       font-weight: 600;
-      color: #aee3fa;
+      color: #90e3ff;
+      letter-spacing: 0.3px;
     }
-    input[type="checkbox"] {
-      vertical-align: middle;
-      margin-right: 8px;
-      accent-color: #00c6ff;
+    .row-fields {
+      display: flex; gap: 9px; margin-bottom: 8px; flex-wrap: wrap;
     }
-    input[type="date"] {
-      margin-top: 7px;
-      padding: 8px 10px;
-      width: 62%;
-      border-radius: 8px;
-      border: 1px solid #3d85bb;
-      background: #112C47;
+    .row-fields label { margin-top: 0; margin-right: 5px;}
+    input[type="text"], input[type="date"] {
+      padding: 8px 10px; font-size: 1rem;
+      border-radius: 8px; border: 1px solid #328dc6;
+      background: #12294b;
       color: #fff;
-      font-size: 1.07rem;
-      transition: border-color 0.3s;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+    }
+    input[type="text"]:focus, input[type="date"]:focus,
+    select:focus {
+      outline: 2px solid #00c6ff; outline-offset: 1.7px; border-color: #00d3fd;
     }
     .input-error {
       border-color: #fd5f4f !important;
       background-color: #320f1F !important;
+    }
+    input[type="checkbox"] {
+      vertical-align: middle;
+      margin-right: 7px;
+      accent-color: #00c6ff;
     }
     #formulario-seguro {
       display: none;
@@ -72,12 +85,12 @@
       border: 1px solid #00c6ff;
       border-radius: 10px;
       background: #10325e;
-      margin-bottom: 11px;
+      margin-bottom: 9px;
       margin-top: 7px;
       max-width: 260px;
     }
     #tipo-seguro {
-      width: 98%;
+      width: 100%;
       padding: 6px;
       border-radius: 5px;
       border: 1px solid #3976be;
@@ -85,159 +98,58 @@
       color: #fff;
       font-size: 1rem;
     }
-    #tipo-seguro.input-error {
-      border-color: #fd5f4f;
-      background-color: #320f1F;
-    }
+    label[for="tipo-seguro"] { color: #b9edff;}
+    #tipo-seguro.input-error { border-color: #fd5f4f; background-color: #320f1F;}
+    #fecha-vuelta { margin-left: 10px;}
+    #fecha-vuelta[style*="none"] { display: none!important; }
 
-    /* Categorías */
-    #categorias {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      justify-content: center;
-      max-width: 690px;
-      margin: 20px 0 14px 0;
-    }
+    /* Categorías con imagen */
+    #categorias { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin: 20px 0 9px 0;}
     .categoria-btn {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      border: 3px solid #0099ff;
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      user-select: none;
-      background: #032a4b;
-      box-shadow: 0 5px 20px #007fff45;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative; width: 105px; height: 105px;
+      border: 3px solid #0099ff; border-radius: 13px; overflow: hidden;
+      cursor: pointer; user-select: none; background: #032a4b;
+      box-shadow: 0 5px 20px #007fff55; display: flex; align-items: flex-end;
+      justify-content: center; transition: border-color 0.3s, box-shadow 0.3s;
       outline-offset: 2px;
-      margin-bottom: 7px;
     }
-    .categoria-btn:hover,
-    .categoria-btn:focus {
-      border-color: #00d3ff;
-      box-shadow: 0 8px 25px #00d3ff88;
-      outline: none;
-    }
-    .categoria-btn.selected {
-      border-color: #fff;
-      box-shadow: 0 0 30px #0099ffa0;
-    }
+    .categoria-btn:hover,.categoria-btn:focus { border-color: #00d3ff; box-shadow:0 8px 25px #00d3ff88; outline: none;}
+    .categoria-btn.selected { border-color: #fff; box-shadow:0 0 30px #0099ffa0;}
     .categoria-btn img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.76);
-      pointer-events: none;
-      border-radius: 16px;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; filter: brightness(0.74); pointer-events: none; border-radius: 13px;
       transition: filter 0.2s;
     }
-    .categoria-btn.selected img {
-      filter: brightness(1);
-    }
+    .categoria-btn.selected img { filter: brightness(1);}
     .categoria-btn span {
-      position: relative;
-      color: #fff;
-      font-weight: 700;
-      font-size: 1.08rem;
-      padding: 8px 8px 6px 8px;
-      z-index: 2;
-      text-shadow: 0 0 9px #002845bb;
-      user-select: none;
-      background: linear-gradient(transparent 65%, #02649a 92%);
-      width: 100%;
-      text-align: center;
+      position: relative; color: #fff; font-weight: 700; font-size: 1.04rem;
+      padding: 7px 5px 6px 5px; z-index: 2; text-shadow: 0 0 9px #002845bb;
+      width: 100%; text-align: center; background: linear-gradient(transparent 60%, #02649a 100%);
     }
 
     /* Destinos desplegables */
     #destinos-lista {
-      background: rgba(0, 109, 185, 0.78);
-      box-shadow: 0 7px 26px #00d3ff88;
-      border-radius: 13px;
-      width: 100%;
-      max-width: 430px;
-      padding: 14px 18px;
-      color: white;
-      font-size: 0.98rem;
-      display: none;
-      margin: 0 auto 11px auto;
+      background: rgba(0, 109, 185, 0.86); box-shadow:0 7px 24px #00d3ff77;
+      border-radius: 12px; width: 94%; max-width: 408px;
+      padding: 11px 18px; color: #fff; font-size: 0.98rem; display: none; margin: 0 auto 10px auto;
     }
-    #destinos-lista ul {
-      list-style: none;
-      margin: 0; padding: 0;
-    }
+    #destinos-lista ul { list-style: none; margin: 0; padding: 0;}
     #destinos-lista li {
-      background: rgba(255 255 255 / 0.12);
-      margin: 6px 0;
-      border-radius: 8px;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.18s, border-color 0.18s;
-      border: 1.5px solid transparent;
-      color: #dbf4ff;
+      background: rgba(255 255 255/.13); margin: 6px 0; border-radius: 7px;
+      padding: 7px 12px; cursor: pointer; font-weight: 600; transition: background 0.18s, border-color 0.18s;
+      border: 1.5px solid transparent; color: #bdf7ff;
     }
-    #destinos-lista li:hover,
-    #destinos-lista li:focus {
-      background-color: rgba(255 255 255 / 0.31);
-      border-color: #00d3ff;
-      outline: none;
-      color: #031d3b;
-    }
-
-    /* Mensajes usuario */
-    #mensajes-usuario {
-      margin-bottom: 14px;
-      padding: 10px 12px;
-      border-radius: 7px;
-      font-weight: bold;
-      font-size: 1rem;
-      min-height: 30px;
-      display: none;
-      letter-spacing: 1px;
-    }
-    #mensajes-usuario.error {
-      background-color: #fd5f4f13;
-      color: #ffd2cf;
-      border: 1px solid #fd5f4f88;
-      display: block;
-    }
-    #mensajes-usuario.success {
-      background-color: #37ffa229;
-      color: #1df392;
-      border: 1px solid #19d7a9;
-      display: block;
-    }
-    button[type="submit"] {
-      margin-top: 19px;
-      width: 100%;
-      padding: 13px 0;
-      font-size: 1.18rem;
-      font-weight: 600;
-      color: #fff;
-      background: linear-gradient(90deg, #007bff 70%, #0fd6fd 100%);
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 6px 18px #00abeea9;
-      letter-spacing: 0.7px;
-      transition: background 0.19s;
-    }
-    button[type="submit"]:hover,
-    button[type="submit"]:focus {
-      background: linear-gradient(90deg, #009efd 60%, #26ffe6 100%);
-      outline: none;
-    }
+    #destinos-lista li:hover, #destinos-lista li:focus {background:rgba(255 255 255/.29);border-color:#00d3ff;outline:none;color:#011729;}
+    #mensajes-usuario {margin-bottom: 14px; padding:8px 12px; border-radius: 6px; font-weight: bold; font-size: 1rem; min-height: 27px; display: none;}
+    #mensajes-usuario.error {background:#fd5f4f15;color:#ffd2cf;border:1px solid #fd5f4f88;display:block;}
+    #mensajes-usuario.success {background:#29ffb813;color:#1df392;border:1px solid #19d7a9;display:block;}
+    button[type="submit"] {margin-top: 14px;width:100%;padding:12px 0;font-size:1.13rem;font-weight:600;color:#fff;
+      background:linear-gradient(90deg,#007bff 70%,#0fd6fd 100%);border:none;border-radius:30px;cursor:pointer;box-shadow:0 6px 16px #00abee99;
+      transition: background 0.2s;}
+    button[type="submit"]:hover,button[type="submit"]:focus{background:linear-gradient(90deg,#009efd 60%,#26ffe6 100%);outline:none;}
     @media (max-width: 540px) {
-      .categoria-btn { width: 101px; height: 101px;}
-      #destinos-lista { max-width: 99vw; padding: 8px 6vw; }
-      form { padding-left: 7vw; padding-right: 7vw;}
+      .categoria-btn {width:86px;height:86px;}#destinos-lista{max-width:97vw;padding:7px 3vw;}.row-fields{gap:3px;}
+      form {padding-left: 3vw; padding-right: 3vw;}
     }
   </style>
 </head>
@@ -248,35 +160,46 @@
 
   <form id="search-form" autocomplete="off" novalidate>
     <div id="mensajes-usuario"></div>
-
-    <label>
-      <input type="checkbox" id="alojamiento" />
-      ¿Necesitas alojamiento?
-    </label>
-    <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" style="display:none;" />
-
-    <label>
-      <input type="checkbox" id="seguro" />
-      ¿Quieres agregar seguro de viaje?
-    </label>
-    <div id="formulario-seguro" aria-label="Formulario de seguro de viaje">
-      <label for="tipo-seguro" style="color:#aee3fa;">Tipo de seguro:</label>
-      <select id="tipo-seguro" name="tipo-seguro" aria-required="true" disabled>
-        <option value="">Selecciona</option>
-        <option value="basico">Básico</option>
-        <option value="premium">Premium</option>
-      </select>
-    </div>
+    <fieldset>
+      <legend>Datos básicos</legend>
+      <div class="row-fields">
+        <label for="origen">Origen:</label>
+        <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
+      </div>
+      <div class="row-fields">
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino" placeholder="Ciudad de llegada" required autocomplete="off" />
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Fechas de viaje</legend>
+      <div class="row-fields">
+        <label for="fecha-ida">Ida:</label>
+        <input type="date" id="fecha-ida" name="fecha-ida" required />
+        <label><input type="checkbox" id="alojamiento" />Alojamiento</label>
+        <input type="date" id="fecha-vuelta" name="fecha-vuelta" placeholder="Vuelta" style="display:none;" />
+      </div>
+      <div class="row-fields">
+        <label><input type="checkbox" id="seguro" />Seguro de viaje</label>
+      </div>
+      <div id="formulario-seguro">
+        <label for="tipo-seguro">Tipo de seguro:</label>
+        <select id="tipo-seguro" name="tipo-seguro" disabled>
+          <option value="">Selecciona</option>
+          <option value="basico">Básico</option>
+          <option value="premium">Premium</option>
+        </select>
+      </div>
+    </fieldset>
 
     <label style="color:#f6ff;">Selecciona tipo de viaje:</label>
-    <div id="categorias" role="list" aria-label="Categorías de viaje">
-      <div class="categoria-btn" tabindex="0" data-categoria="aventura" aria-pressed="false" role="listitem"><img src="img/categorias/aventura.jpg" alt="" /><span>Aventura</span></div>
-      <div class="categoria-btn" tabindex="0" data-categoria="cultural" aria-pressed="false" role="listitem"><img src="img/categorias/cultural.jpg" alt="" /><span>Cultural</span></div>
-      <div class="categoria-btn" tabindex="0" data-categoria="playa" aria-pressed="false" role="listitem"><img src="img/categorias/playa.jpg" alt="" /><span>Playa</span></div>
-      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico" aria-pressed="false" role="listitem"><img src="img/categorias/gastronomico.jpg" alt="" /><span>Gastronómico</span></div>
+    <div id="categorias" aria-label="Categorías de viaje">
+      <div class="categoria-btn" tabindex="0" data-categoria="aventura"><img src="img/categorias/aventura.jpg" alt="" /><span>Aventura</span></div>
+      <div class="categoria-btn" tabindex="0" data-categoria="cultural"><img src="img/categorias/cultural.jpg" alt="" /><span>Cultural</span></div>
+      <div class="categoria-btn" tabindex="0" data-categoria="playa"><img src="img/categorias/playa.jpg" alt="" /><span>Playa</span></div>
+      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico"><img src="img/categorias/gastronomico.jpg" alt="" /><span>Gastronómico</span></div>
     </div>
     <div id="destinos-lista"></div>
-
     <button type="submit">Buscar</button>
   </form>
   <script>
@@ -306,12 +229,6 @@
         destinosDiv.style.display = "none";
         destinosDiv.innerHTML = "";
       }
-      // Permitir seleccionar un destino (puedes expandir lógica si es necesario)
-      destinosDiv.querySelectorAll("li").forEach(li => {
-        li.addEventListener("click", () => {
-          // Aquí puedes manejar qué pasa con el destino seleccionado si lo necesitas
-        });
-      });
     }
     categoriaBtns.forEach(btn => {
       btn.addEventListener('click', function(){
@@ -327,7 +244,7 @@
       });
     });
 
-    // --- lógica de formulario, validaciones dinámicas y submit ---
+    // Formularios y validaciones clave
     const alojamientoCheckbox = document.getElementById("alojamiento");
     const fechaVueltaInput = document.getElementById("fecha-vuelta");
     const seguroCheckbox = document.getElementById("seguro");
@@ -335,6 +252,9 @@
     const tipoSeguroSelect = document.getElementById("tipo-seguro");
     const mensajesContenedor = document.getElementById("mensajes-usuario");
     const form = document.getElementById("search-form");
+    const origenInput = document.getElementById("origen");
+    const destinoInput = document.getElementById("destino");
+    const fechaIdaInput = document.getElementById("fecha-ida");
 
     function mostrarMensaje(mensaje, tipo) {
       mensajesContenedor.textContent = mensaje;
@@ -380,39 +300,35 @@
       }
     });
 
+    // Validaciones en vivo campos texto
+    [origenInput,destinoInput,fechaIdaInput].forEach(inp=>{
+      inp.addEventListener("input",function(){
+        if(this.value.trim() === ""){
+          this.classList.add("input-error");
+          mostrarMensaje("Completa los campos de origen y destino y la fecha de ida.","error");
+        } else {
+          this.classList.remove("input-error"); mostrarMensaje("","");
+        }
+      });
+    });
+
     // --- Handle form submit ---
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       mostrarMensaje("", '');
       fechaVueltaInput.classList.remove("input-error");
       tipoSeguroSelect.classList.remove("input-error");
-
-      const alojamiento = alojamientoCheckbox.checked;
-      const fechaVuelta = fechaVueltaInput.value.trim();
-      const seguro = seguroCheckbox.checked;
-      const tipoSeguro = tipoSeguroSelect.value;
-      // Usar variable global de categoría seleccionada
-      if (alojamiento && !fechaVuelta) {
-        fechaVueltaInput.classList.add("input-error");
-        mostrarMensaje("Por favor, indica la fecha de vuelta porque elegiste alojamiento.", "error");
-        fechaVueltaInput.focus();
-        return;
-      }
-      if (!categoriaSeleccionada) {
-        mostrarMensaje("Debes seleccionar una categoría de viaje.", "error");
-        return;
-      }
-      if (seguro && !tipoSeguro) {
-        tipoSeguroSelect.classList.add("input-error");
-        mostrarMensaje("Selecciona un tipo de seguro o desmarca la opción de seguro.", "error");
-        tipoSeguroSelect.focus();
-        return;
-      }
+      [origenInput,destinoInput,fechaIdaInput].forEach(inp=>inp.classList.remove("input-error"));
+      // Validaciones obligatorias
+      if(!origenInput.value.trim()){ origenInput.classList.add("input-error"); mostrarMensaje("Indica ciudad de salida.","error"); origenInput.focus(); return;}
+      if(!destinoInput.value.trim()){ destinoInput.classList.add("input-error"); mostrarMensaje("Indica ciudad de llegada.","error"); destinoInput.focus(); return;}
+      if(!fechaIdaInput.value){ fechaIdaInput.classList.add("input-error"); mostrarMensaje("Indica la fecha de ida.","error"); fechaIdaInput.focus(); return;}
+      if(alojamientoCheckbox.checked && !fechaVueltaInput.value){ fechaVueltaInput.classList.add("input-error"); mostrarMensaje("Indica la fecha de vuelta si quieres alojamiento.","error"); fechaVueltaInput.focus(); return;}
+      if (!categoriaSeleccionada){ mostrarMensaje("Selecciona una categoría de viaje.","error"); return; }
+      if (seguroCheckbox.checked && !tipoSeguroSelect.value){ tipoSeguroSelect.classList.add("input-error"); mostrarMensaje("Selecciona tipo de seguro.","error"); tipoSeguroSelect.focus(); return; }
       mostrarMensaje("Enviando búsqueda, por favor espera...", "success");
-
-      // Simulación resultados de API/Backend
+      // Simulación resultados...
       setTimeout(function(){
-        // Puedes reemplazar estos datos por los reales si tienes backend disponible
         const resultadosSimulados = {
           hotelResults: [
             { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
@@ -422,8 +338,8 @@
             {
               airline: { name: "FlyNow" },
               flight: { number: "FN123" },
-              departure: { airport: "MAD", scheduled: "2025-08-10T10:00:00Z" },
-              arrival: { airport: "BCN", scheduled: "2025-08-10T12:00:00Z" },
+              departure: { airport: origenInput.value, scheduled: fechaIdaInput.value+"T09:30:00Z" },
+              arrival: { airport: destinoInput.value, scheduled: (fechaVueltaInput.value || fechaIdaInput.value)+"T12:10:00Z" },
               flight_status: "On Time"
             }
           ]
@@ -431,8 +347,8 @@
         localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
         localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
         mostrarMensaje("¡Búsqueda realizada con éxito! Redirigiendo a resultados...", "success");
-        setTimeout(() => window.location.href = "resultados.html", 1200);
-      }, 1200);
+        setTimeout(() => window.location.href = "resultados.html", 1300);
+      }, 1100);
     });
   </script>
 </body>
