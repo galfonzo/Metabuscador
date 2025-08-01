@@ -1,72 +1,242 @@
-<style>
-.categorias-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  justify-content: center;
-  margin: 25px 0 10px 0;
-}
-.categoria-btn {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  border: 3px solid #007bff;
-  border-radius: 15px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: box-shadow 0.3s, border-color 0.3s;
-  text-align: center;
-  background: #fff;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  box-shadow: 0 5px 16px #007bff22;
-}
-.categoria-btn img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s;
-}
-.categoria-btn span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 4px 4px 4px;
-  background: linear-gradient(transparent, #007bffdd 92%);
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.08rem;
-  text-shadow: 0 1px 8px #222a;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-.categoria-btn.selected {
-  border-color: #0056b3;
-  box-shadow: 0 8px 24px #007bff55;
-}
-.destinos-lista {
-  display: none;
-  margin: 10px auto 28px auto;
-  padding: 0;
-  max-width: 460px;
-  text-align: left;
-}
-.destinos-lista ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.destinos-lista li {
-  background: #f7f9fc;
-  margin-bottom: 6px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  color: #007bff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.destinos-lista li:hover { background: #e1f0ff; }
-</style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TuneMyTrip - Categorías de Viaje</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #0f1e33; /* fondo oscuro para fundirse con logo */
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px 40px 10px;
+    }
+
+    /* Header con logo */
+    header {
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    header img {
+      max-width: 250px;
+      height: auto;
+      filter: drop-shadow(0 0 8px rgba(0,198,255,0.8));
+      display: inline-block;
+    }
+
+    /* Contenedor de categorías */
+    #categorias {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+      max-width: 780px;
+      width: 100%;
+      margin-bottom: 28px;
+    }
+
+    /* Botones con imágenes */
+    .categoria-btn {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border: 3px solid #0099ff;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+      background: #032a4b;
+      box-shadow: 0 5px 20px #007fff55;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline-offset: 3px;
+    }
+    .categoria-btn:hover,
+    .categoria-btn:focus {
+      border-color: #00d3ff;
+      box-shadow: 0 8px 28px #00d3ffcc;
+      outline: none;
+    }
+    .categoria-btn.selected {
+      border-color: #00aaff;
+      box-shadow: 0 0 24px #00aaffcc;
+    }
+    .categoria-btn img {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.75);
+      transition: filter 0.3s ease;
+      pointer-events: none; /* no interferir con clic */
+      border-radius: 20px;
+    }
+    .categoria-btn.selected img {
+      filter: brightness(1);
+    }
+    .categoria-btn span {
+      position: relative;
+      color: #e0f7ff;
+      font-weight: 700;
+      font-size: 1.12rem;
+      padding: 8px 10px;
+      z-index: 2;
+      text-shadow: 0 0 7px #004e7cbb;
+      user-select: none;
+    }
+
+    /* Contenedor listado destinos */
+    #destinos-lista {
+      background: rgba(0, 109, 185, 0.85);
+      box-shadow: 0 10px 30px rgba(0, 155, 255, 0.7);
+      border-radius: 15px;
+      width: 100%;
+      max-width: 500px;
+      padding: 18px 28px;
+      color: white;
+      font-size: 1rem;
+      display: none;
+      user-select: none;
+    }
+    #destinos-lista ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #destinos-lista li {
+      background: rgba(255 255 255 / 0.15);
+      margin: 6px 0;
+      border-radius: 8px;
+      padding: 9px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.22s ease;
+      border: 1.5px solid transparent;
+    }
+    #destinos-lista li:hover,
+    #destinos-lista li:focus {
+      background-color: rgba(255 255 255 / 0.35);
+      outline: none;
+      border-color: #00d3ff;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .categoria-btn {
+        width: 120px;
+        height: 120px;
+      }
+      #destinos-lista {
+        padding: 15px 22px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
+  </header>
+
+  <main role="main" aria-label="Categorías y destinos de viaje">
+    <section id="categorias" role="list" aria-label="Categorías de viaje">
+      <div class="categoria-btn" tabindex="0" data-categoria="aventura" aria-pressed="false" role="listitem" aria-label="Categoría Aventura">
+        <img src="img/categorias/aventura.jpg" alt="" aria-hidden="true" />
+        <span>Aventura</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="cultural" aria-pressed="false" role="listitem" aria-label="Categoría Cultural">
+        <img src="img/categorias/cultural.jpg" alt="" aria-hidden="true" />
+        <span>Cultural</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="playa" aria-pressed="false" role="listitem" aria-label="Categoría Playa">
+        <img src="img/categorias/playa.jpg" alt="" aria-hidden="true" />
+        <span>Playa</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico" aria-pressed="false" role="listitem" aria-label="Categoría Gastronómico">
+        <img src="img/categorias/gastronomico.jpg" alt="" aria-hidden="true" />
+        <span>Gastronómico</span>
+      </div>
+    </section>
+
+    <section id="destinos-lista" aria-live="polite" aria-label="Lista de destinos"></section>
+  </main>
+
+  <script>
+    (function(){
+      const destinosPorCategoria = {
+        aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
+        cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
+        playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
+        gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"]
+      };
+
+      const categoriaBtns = document.querySelectorAll('.categoria-btn');
+      const destinosLista = document.getElementById('destinos-lista');
+
+      function resetCategorias() {
+        categoriaBtns.forEach(btn => {
+          btn.classList.remove('selected');
+          btn.setAttribute('aria-pressed', 'false');
+        });
+      }
+
+      function mostrarDestinos(cat) {
+        const destinos = destinosPorCategoria[cat] || [];
+        if(destinos.length === 0) {
+          destinosLista.style.display = "none";
+          destinosLista.innerHTML = "";
+          return;
+        }
+        const listItems = destinos.map(destino =>
+          `<li tabindex="0">${destino}</li>`
+        ).join("");
+        destinosLista.innerHTML = `<ul>${listItems}</ul>`;
+        destinosLista.style.display = "block";
+
+        // Añadir interacción simple para cada destino
+        const items = destinosLista.querySelectorAll('li');
+        items.forEach(item => {
+          item.addEventListener('click', () => {
+            alert('Has seleccionado el destino: '+item.textContent);
+          });
+          item.addEventListener('keydown', e => {
+            if(e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              item.click();
+            }
+          });
+        });
+      }
+
+      categoriaBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          resetCategorias();
+          btn.classList.add('selected');
+          btn.setAttribute('aria-pressed', 'true');
+          mostrarDestinos(btn.dataset.categoria);
+        });
+        btn.addEventListener('keydown', (e) => {
+          if(e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            btn.click();
+          }
+        });
+      });
+
+      // Opcional: Seleccionar la primera categoría al cargar página
+      //categoriaBtns[0].click();
+    })();
+  </script>
+</body>
+</html>
