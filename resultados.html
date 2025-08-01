@@ -2,13 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<title>Resultados de Búsqueda - Metabuscador</title>
+<title>Resultados de Búsqueda - TuneMyTrip</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
   body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #0f1e33; /* color oscuro del isotipo */
+    font-family: 'Open Sans', Arial, sans-serif;
+    background-color: #0f1e33;
     background-image: url('img/mapamundi.png');
     background-repeat: no-repeat;
     background-position: center center;
@@ -16,70 +17,83 @@
     background-size: cover;
     color: #fff;
     min-height: 100vh;
-    backdrop-filter: brightness(0.6);
-    padding: 32px 12px;
-    font-size: 0.8rem;
+    backdrop-filter: brightness(0.65);
+    padding: 25px 12px;
+    font-size: 0.9rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2 {
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  header img {
+    max-width: 180px;
+    height: auto;
+  }
+  h1 {
     text-align: center;
     color: #00c6ff;
-    text-shadow: 0 0 12px rgba(0,198,255,0.7);
-    margin-top: 0;
-    margin-bottom: 1rem;
+    text-shadow: 0 0 12px rgba(0,198,255,0.75);
+    margin: 0 0 25px 0;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
   #results-container {
     max-width: 900px;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 30px auto;
     background: rgba(0,0,0,0.82);
     border-radius: 12px;
-    padding: 24px 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    padding: 28px 25px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.45);
     overflow-y: auto;
-    min-height: 120px;
+    min-height: 130px;
     max-height: 70vh;
+    font-size: 0.95rem;
   }
   .section-title {
-    font-size: 1.07rem;
-    margin-bottom: 12px;
+    font-size: 1.15rem;
+    margin-bottom: 15px;
     color: #00aaff;
     border-bottom: 1px solid #00aaff44;
-    padding-bottom: 3px;
+    padding-bottom: 5px;
     font-weight: 600;
     text-align: left;
-    margin-top: 25px;
+    margin-top: 30px;
   }
   .result-item {
     border-bottom: 1px solid #00c6ff99;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    font-size: 0.86rem;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
     word-break: break-word;
+    outline: none;
   }
   .result-item:last-child {
     border-bottom: none;
     margin-bottom: 0;
   }
+  .result-item:focus {
+    outline: 3px solid #3399ff;
+    border-radius: 6px;
+    background-color: #00408055;
+  }
   .empty-result {
     text-align: center;
     color: #aaa;
-    margin: 60px 0 40px 0;
+    margin: 80px 0 50px 0;
     font-style: italic;
   }
   .back-link {
     display: inline-block;
-    margin: 26px auto 0 auto;
-    padding: 10px 18px;
+    margin: 0 auto;
+    padding: 12px 24px;
     background: #0077cc;
     color: #fff;
     text-decoration: none;
-    border-radius: 7px;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0,119,204,0.3);
-    transition: background 0.25s;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 3px 12px rgba(0,119,204,0.35);
+    transition: background 0.25s ease;
     text-align: center;
     cursor: pointer;
   }
@@ -90,94 +104,105 @@
   }
   @media (max-width: 600px) {
     #results-container {
-      padding: 14px 3px;
+      padding: 18px 10px;
       max-height: none;
     }
-    h1, h2 {
-      font-size: 1rem;
+    h1 {
+      font-size: 1.3rem;
+    }
+    .section-title {
+      font-size: 1.04rem;
+      margin-top: 20px;
     }
   }
 </style>
 </head>
 <body>
-<main>
-  <h1>Resultados de tu búsqueda</h1>
-  <div id="results-container" aria-live="polite"></div>
-  <div style="text-align:center;">
-    <a href="index.html" class="back-link" role="button" aria-label="Volver a búsqueda inicial">↶ Nueva búsqueda</a>
-  </div>
-</main>
+  <header>
+    <img src="img/tunemytrip-logo.png" alt="Logo TuneMyTrip" />
+  </header>
 
-<script>
-  function formatDateTime(dtStr) {
-    if (!dtStr) return '-';
-    const dt = new Date(dtStr);
-    if (!isNaN(dt)) {
-      return dt.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
+  <main>
+    <h1>Resultados de tu búsqueda</h1>
+    <div id="results-container" aria-live="polite" aria-label="Resultados de búsqueda"></div>
+    <div style="text-align:center; margin-top: 20px;">
+      <a href="index.html" class="back-link" role="button" aria-label="Volver a búsqueda inicial">↶ Nueva búsqueda</a>
+    </div>
+  </main>
+
+  <script>
+    // Formatear fecha y hora para visualización local en español
+    function formatDateTime(dtStr) {
+      if (!dtStr) return '-';
+      const dt = new Date(dtStr);
+      if (!isNaN(dt)) {
+        return dt.toLocaleString('es-ES', {dateStyle:'short', timeStyle:'short'});
+      }
+      return dtStr;
     }
-    return dtStr;
-  }
 
-  const resultsContainer = document.getElementById('results-container');
+    const resultsContainer = document.getElementById('results-container');
 
-  // Redirección si no hay datos en localStorage
-  const hotelJson = localStorage.getItem('hotelResults');
-  const vueloJson = localStorage.getItem('flightResults');
+    // Validar localStorage y redirigir si no hay datos
+    const hotelJson = localStorage.getItem('hotelResults');
+    const vueloJson = localStorage.getItem('flightResults');
 
-  if (!hotelJson && !vueloJson) {
-    alert("No hay datos de búsqueda disponibles. Serás redirigido a la página inicial.");
-    window.location.href = "index.html";
-  }
+    if (!hotelJson && !vueloJson) {
+      alert("No hay datos de búsqueda disponibles. Serás redirigido a la página inicial.");
+      window.location.href = "index.html";
+    }
 
-  let contenidoHTML = "";
+    let contenidoHTML = "";
 
-  let hotelData = [];
-  try {
-    hotelData = hotelJson ? JSON.parse(hotelJson) : [];
-  } catch (e) {
-    contenidoHTML += `<p class="empty-result">Error al cargar datos de hoteles. Por favor, inténtalo de nuevo.</p>`;
-  }
+    // Cargar datos de hotel
+    let hotelData = [];
+    try {
+      hotelData = hotelJson ? JSON.parse(hotelJson) : [];
+    } catch {
+      contenidoHTML += `<p class="empty-result">Error al cargar datos de hoteles. Por favor, inténtalo de nuevo.</p>`;
+    }
 
-  if (hotelData.length > 0) {
-    contenidoHTML += `<h2 class="section-title">Hoteles disponibles</h2>`;
-    contenidoHTML += hotelData.map(hotel =>
-      `<div class="result-item" tabindex="0">
-        <strong>${hotel.name || 'Hotel desconocido'}</strong><br>
-        Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
-        Dirección: ${hotel.address || '-'}<br>
-        Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
-      </div>`).join('');
-  }
+    if (hotelData.length > 0) {
+      contenidoHTML += `<h2 class="section-title">Hoteles disponibles</h2>`;
+      contenidoHTML += hotelData.map(hotel =>
+        `<div class="result-item" tabindex="0" role="article" aria-label="Hotel ${hotel.name || 'desconocido'}">
+          <strong>${hotel.name || 'Hotel desconocido'}</strong><br>
+          Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
+          Dirección: ${hotel.address || '-'}<br>
+          Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
+        </div>`).join('');
+    }
 
-  let vueloData = [];
-  try {
-    vueloData = vueloJson ? JSON.parse(vueloJson) : [];
-  } catch (e) {
-    contenidoHTML += `<p class="empty-result">Error al cargar datos de vuelos. Por favor, inténtalo de nuevo.</p>`;
-  }
+    // Cargar datos de vuelos
+    let vueloData = [];
+    try {
+      vueloData = vueloJson ? JSON.parse(vueloJson) : [];
+    } catch {
+      contenidoHTML += `<p class="empty-result">Error al cargar datos de vuelos. Por favor, inténtalo de nuevo.</p>`;
+    }
 
-  if (vueloData.length > 0) {
-    contenidoHTML += `<h2 class="section-title">Vuelos encontrados</h2>`;
-    contenidoHTML += vueloData.map(flight =>
-      `<div class="result-item" tabindex="0">
-        <strong>${(flight.airline && flight.airline.name) || 'Aerolínea desconocida'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
-        Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
-        Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
-        Estado: ${flight.flight_status || '-'}
-      </div>`).join('');
-  }
+    if (vueloData.length > 0) {
+      contenidoHTML += `<h2 class="section-title">Vuelos encontrados</h2>`;
+      contenidoHTML += vueloData.map(flight =>
+        `<div class="result-item" tabindex="0" role="article" aria-label="Vuelo de ${(flight.airline && flight.airline.name) || 'aerolínea desconocida'} número ${(flight.flight && flight.flight.number) || '-'}">
+          <strong>${(flight.airline && flight.airline.name) || 'Aerolínea desconocida'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
+          Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
+          Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
+          Estado: ${flight.flight_status || '-'}
+        </div>`).join('');
+    }
 
-  if (!contenidoHTML){
-    contenidoHTML = `<p class="empty-result">No se encontraron resultados o los datos fueron mal pasados.<br>Por favor, realiza una nueva búsqueda.</p>`;
-  }
+    if (!contenidoHTML) {
+      contenidoHTML = `<p class="empty-result">No se encontraron resultados o los datos fueron mal pasados.<br>Por favor, realiza una nueva búsqueda.</p>`;
+    }
 
-  resultsContainer.innerHTML = contenidoHTML;
+    resultsContainer.innerHTML = contenidoHTML;
 
-  // Limpiar localStorage al volver a búsqueda
-  document.querySelector('.back-link').addEventListener('click', function () {
-    localStorage.removeItem('hotelResults');
-    localStorage.removeItem('flightResults');
-  });
-</script>
+    // Limpiar localStorage al volver a búsqueda
+    document.querySelector('.back-link').addEventListener('click', function () {
+      localStorage.removeItem('hotelResults');
+      localStorage.removeItem('flightResults');
+    });
+  </script>
 </body>
 </html>
