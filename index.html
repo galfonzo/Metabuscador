@@ -1,64 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Metabuscador</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="header">
-    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" class="logo">
+  <header>
+    <img src="img/logo-metabuscador.png" alt="TuneMyTrip" class="logo" />
   </header>
 
-  <main class="main-container">
+  <main class="contenedor-formulario">
     <form id="search-form">
-      <div class="input-group">
-        <input type="text" id="origen" placeholder="Origen" required>
-        <input type="text" id="destino" placeholder="Destino" required>
-        <input type="date" id="fecha" required>
+      <div class="grupo-campos">
+        <input type="text" id="origen" placeholder="Origen" required />
+        <input type="text" id="destino" placeholder="Destino" required />
+        <input type="date" id="fecha" required />
+        <label class="checkbox-label">
+          <input type="checkbox" id="alojamiento" /> Incluir alojamiento
+        </label>
+        <input type="date" id="fecha-vuelta" style="display: none" />
+        <label class="checkbox-label">
+          <input type="checkbox" id="seguro" /> Cotizar seguro de viajero
+        </label>
       </div>
 
-      <div class="checkbox-group">
-        <label><input type="checkbox" id="alojamiento"> Incluir alojamiento</label>
-        <input type="date" id="fecha-vuelta" style="display: none;">
-
-        <label><input type="checkbox" id="seguro"> Cotizar seguro de viajero</label>
+      <div id="formulario-seguro" style="display: none">
+        <input type="number" placeholder="Edad del viajero" required />
+        <select>
+          <option>Destino</option>
+          <option>América</option>
+          <option>Europa</option>
+          <option>Asia</option>
+        </select>
       </div>
 
-      <div id="formulario-seguro" style="display: none;">
-        <label>Edad del viajero: <input type="number" min="0" id="edad-viajero"></label><br>
-        <label>País de residencia: <input type="text" id="pais-residencia"></label>
-      </div>
-
-      <div class="categorias">
-        <button type="button" class="categoria" data-categoria="Aventura">
-          <img src="https://cdn-icons-png.flaticon.com/512/861/861295.png" alt="Aventura">
-          Aventura
+      <div class="categorias-viaje">
+        <button type="button" class="categoria" data-tipo="aventura">
+          <img src="img/aventura.png" alt="Aventura" /> Aventura
         </button>
-        <button type="button" class="categoria" data-categoria="Negocios">
-          <img src="https://cdn-icons-png.flaticon.com/512/3063/3063826.png" alt="Negocios">
-          Negocios
+        <button type="button" class="categoria" data-tipo="negocios">
+          <img src="img/negocios.png" alt="Negocios" /> Negocios
         </button>
-        <button type="button" class="categoria" data-categoria="Escapada romántica">
-          <img src="https://cdn-icons-png.flaticon.com/512/2622/2622797.png" alt="Romántica">
-          Escapada romántica
+        <button type="button" class="categoria" data-tipo="romantica">
+          <img src="img/romantica.png" alt="Romántica" /> Escapada romántica
         </button>
-        <button type="button" class="categoria" data-categoria="Viaje familiar">
-          <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Familiar">
-          Viaje familiar
+        <button type="button" class="categoria" data-tipo="familiar">
+          <img src="img/familiar.png" alt="Familiar" /> Viaje familiar
         </button>
-        <button type="button" class="categoria" data-categoria="Cultura">
-          <img src="https://cdn-icons-png.flaticon.com/512/681/681392.png" alt="Cultura">
-          Cultura
+        <button type="button" class="categoria" data-tipo="cultura">
+          <img src="img/cultura.png" alt="Cultura" /> Cultura
         </button>
-        <button type="button" class="categoria" data-categoria="Naturaleza">
-          <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Naturaleza">
-          Naturaleza
+        <button type="button" class="categoria" data-tipo="naturaleza">
+          <img src="img/naturaleza.png" alt="Naturaleza" /> Naturaleza
         </button>
       </div>
 
-      <button type="submit" class="btn-buscar">Buscar</button>
+      <button type="submit">Buscar</button>
     </form>
   </main>
 
