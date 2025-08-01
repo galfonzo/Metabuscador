@@ -7,157 +7,89 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     body {
-      margin: 0;
-      min-height: 100vh;
-      background-color: #0f1e33;
-      font-family: 'Open Sans', Arial, sans-serif;
-      color: #fff; display: flex; flex-direction: column; align-items: center;
-      padding: 0 8px 36px 8px;
-      background-image: none !important;
+      margin: 0; min-height: 100vh; background: #0f1e33;
+      font-family: 'Open Sans', Arial, sans-serif; color: #fff;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 8px 44px 8px;
     }
-    header {
-      width: 100%;
-      max-width: 360px;
-      text-align: center;
-      margin: 32px 0 24px 0;
-    }
-    header img {
-      max-width: 250px;
-      height: auto;
-      filter: drop-shadow(0 0 8px rgba(0,198,255,0.8));
-      display: inline-block;
-    }
+    header { width: 100%; max-width: 370px; margin: 30px auto 20px auto; text-align: center;}
+    header img { max-width: 240px; height: auto; filter: drop-shadow(0 0 10px #0fd6fd); }
     form {
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.73);
       padding: 24px 20px 20px 20px;
-      border-radius: 17px;
-      box-shadow: 0 7px 30px #007fff28;
+      border-radius: 18px;
+      box-shadow: 0 7px 32px #0ab6e635;
       width: 100%;
       max-width: 520px;
-      margin-bottom: 30px;
-      margin-top: 7px;
     }
-    fieldset {
-      border: none;
-      padding: 0; margin: 0 0 12px 0;
-    }
+    fieldset { border: none; padding: 0; margin: 0 0 15px 0;}
     legend {
-      color: #80d8ff;
-      font-weight: 600;
-      font-size: 1.04rem;
-      margin-bottom: 7px;
-      letter-spacing: 0.5px;
-    }
-    label {
-      display: block;
-      margin-top: 17px;
-      font-weight: 600;
-      color: #90e3ff;
-      letter-spacing: 0.3px;
-    }
-    .row-fields {
-      display: flex; gap: 9px; margin-bottom: 8px; flex-wrap: wrap;
-    }
+      color: #6fdefa; font-weight: 700; font-size: 1.06rem;
+      margin-bottom: 7px; letter-spacing: 0.4px;}
+    label { display: block; margin-top: 15px; font-weight: 600; color: #aee3fa;}
+    .row-fields { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;}
     .row-fields label { margin-top: 0; margin-right: 5px;}
     input[type="text"], input[type="date"] {
       padding: 8px 10px; font-size: 1rem;
-      border-radius: 8px; border: 1px solid #328dc6;
-      background: #12294b;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    input[type="text"]:focus, input[type="date"]:focus,
-    select:focus {
-      outline: 2px solid #00c6ff; outline-offset: 1.7px; border-color: #00d3fd;
-    }
-    .input-error {
-      border-color: #fd5f4f !important;
-      background-color: #320f1F !important;
+      border-radius: 8px; border: 1.6px solid #127fc6;
+      background: #112948; color: #fff; margin-bottom: 6px;
     }
     input[type="checkbox"] {
-      vertical-align: middle;
-      margin-right: 7px;
-      accent-color: #00c6ff;
+      vertical-align: middle; margin-right: 8px; accent-color: #00c6ff;
     }
-    #formulario-seguro {
-      display: none;
-      padding: 11px 10px 8px 10px;
-      border: 1px solid #00c6ff;
-      border-radius: 10px;
-      background: #10325e;
-      margin-bottom: 9px;
-      margin-top: 7px;
-      max-width: 260px;
-    }
-    #tipo-seguro {
-      width: 100%;
-      padding: 6px;
-      border-radius: 5px;
-      border: 1px solid #3976be;
-      background: #17395f;
-      color: #fff;
-      font-size: 1rem;
-    }
-    label[for="tipo-seguro"] { color: #b9edff;}
-    #tipo-seguro.input-error { border-color: #fd5f4f; background-color: #320f1F;}
     #fecha-vuelta { margin-left: 10px;}
-    #fecha-vuelta[style*="none"] { display: none!important; }
-
-    /* Categorías con imagen */
-    #categorias { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin: 20px 0 9px 0;}
+    .input-error { border-color: #fd5f4f !important; background: #320f1F !important;}
+    #formulario-seguro {
+      display: none; border: 1.1px solid #00c6ff; border-radius: 10px;
+      background: #0d284c; padding: 10px 8px 7px 9px; margin-top: 8px; max-width: 210px;
+    }
+    #tipo-seguro { width: 98%;padding: 6px; border: 1px solid #3976be; border-radius: 5px; background: #17395f; color: #fff; font-size: 1rem;}
+    #tipo-seguro.input-error { border-color: #fd5f4f; background-color: #320f1F;}
+    /* Categorías visuales */
+    #categorias { display: flex; flex-wrap: wrap; gap: 13px; justify-content: center; margin: 17px 0 7px 0;}
     .categoria-btn {
-      position: relative; width: 105px; height: 105px;
-      border: 3px solid #0099ff; border-radius: 13px; overflow: hidden;
-      cursor: pointer; user-select: none; background: #032a4b;
-      box-shadow: 0 5px 20px #007fff55; display: flex; align-items: flex-end;
-      justify-content: center; transition: border-color 0.3s, box-shadow 0.3s;
-      outline-offset: 2px;
+      position: relative; width: 94px; height: 94px;
+      border: 3px solid #0099ff; border-radius: 12px; overflow: hidden;
+      cursor: pointer; user-select: none; background: #061931;
+      box-shadow: 0 5px 18px #0099ff33; display: flex; align-items: flex-end;
+      justify-content: center; outline-offset: 2px; transition: box-shadow 0.21s, border-color 0.19s;
     }
-    .categoria-btn:hover,.categoria-btn:focus { border-color: #00d3ff; box-shadow:0 8px 25px #00d3ff88; outline: none;}
-    .categoria-btn.selected { border-color: #fff; box-shadow:0 0 30px #0099ffa0;}
     .categoria-btn img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; filter: brightness(0.74); pointer-events: none; border-radius: 13px;
-      transition: filter 0.2s;
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      border-radius: 12px; filter: brightness(0.77); pointer-events: none; transition: filter 0.22s;
     }
+    .categoria-btn.selected { border-color: #fff; box-shadow: 0 0 20px #00fff877; }
     .categoria-btn.selected img { filter: brightness(1);}
-    .categoria-btn span {
-      position: relative; color: #fff; font-weight: 700; font-size: 1.04rem;
-      padding: 7px 5px 6px 5px; z-index: 2; text-shadow: 0 0 9px #002845bb;
-      width: 100%; text-align: center; background: linear-gradient(transparent 60%, #02649a 100%);
-    }
-
-    /* Destinos desplegables */
+    .categoria-btn span { position: relative; color: #fff; font-weight: 700; font-size: 0.98rem; padding: 7px 5px 5px 5px; z-index: 2;
+      width: 100%; text-align: center; text-shadow: 0 0 9px #003747cc;background: linear-gradient(transparent 65%, #027390 99%);}
+    /* Destinos lista */
     #destinos-lista {
-      background: rgba(0, 109, 185, 0.86); box-shadow:0 7px 24px #00d3ff77;
-      border-radius: 12px; width: 94%; max-width: 408px;
-      padding: 11px 18px; color: #fff; font-size: 0.98rem; display: none; margin: 0 auto 10px auto;
+      background: rgba(0, 109, 185, 0.79); box-shadow: 0 7px 19px #00d3ff55;
+      border-radius: 11px; width: 96%; max-width: 380px; padding: 9px 13px;
+      color: #fff; font-size: 0.96rem; display: none; margin: 0 auto 11px auto;
     }
     #destinos-lista ul { list-style: none; margin: 0; padding: 0;}
     #destinos-lista li {
-      background: rgba(255 255 255/.13); margin: 6px 0; border-radius: 7px;
-      padding: 7px 12px; cursor: pointer; font-weight: 600; transition: background 0.18s, border-color 0.18s;
-      border: 1.5px solid transparent; color: #bdf7ff;
+      background: rgba(255,255,255,.10); margin: 4px 0; border-radius: 7px;
+      padding: 7px 13px; cursor: pointer; font-weight: 600; transition: background 0.18s, border-color 0.18s;
+      border: 1.2px solid transparent; color: #c1fcff;
     }
-    #destinos-lista li:hover, #destinos-lista li:focus {background:rgba(255 255 255/.29);border-color:#00d3ff;outline:none;color:#011729;}
-    #mensajes-usuario {margin-bottom: 14px; padding:8px 12px; border-radius: 6px; font-weight: bold; font-size: 1rem; min-height: 27px; display: none;}
-    #mensajes-usuario.error {background:#fd5f4f15;color:#ffd2cf;border:1px solid #fd5f4f88;display:block;}
+    #destinos-lista li.selected, #destinos-lista li:hover, #destinos-lista li:focus {
+      background:rgba(255,255,255,.22);border-color:#00e4ff;outline: none; color: #00374a;
+    }
+    #mensajes-usuario {margin-bottom:11px;padding:8px 12px;border-radius:6px;font-weight:bold;font-size:1rem;min-height:25px;display:none;}
+    #mensajes-usuario.error {background:#fd5f4f13;color:#ffd2cf;border:1px solid #fd5f4f77;display:block;}
     #mensajes-usuario.success {background:#29ffb813;color:#1df392;border:1px solid #19d7a9;display:block;}
-    button[type="submit"] {margin-top: 14px;width:100%;padding:12px 0;font-size:1.13rem;font-weight:600;color:#fff;
-      background:linear-gradient(90deg,#007bff 70%,#0fd6fd 100%);border:none;border-radius:30px;cursor:pointer;box-shadow:0 6px 16px #00abee99;
-      transition: background 0.2s;}
+    button[type="submit"] {margin-top:16px;width:100%;padding:12px 0;font-size:1.09rem;font-weight:600;color:#fff;background:linear-gradient(90deg,#007bff 70%,#0fd6fd 100%);
+      border:none;border-radius:30px;cursor:pointer;box-shadow:0 6px 16px #00abee75;transition:background 0.17s;}
     button[type="submit"]:hover,button[type="submit"]:focus{background:linear-gradient(90deg,#009efd 60%,#26ffe6 100%);outline:none;}
-    @media (max-width: 540px) {
-      .categoria-btn {width:86px;height:86px;}#destinos-lista{max-width:97vw;padding:7px 3vw;}.row-fields{gap:3px;}
-      form {padding-left: 3vw; padding-right: 3vw;}
-    }
+    @media (max-width: 540px) {.categoria-btn{width:70px;height:70px;}#destinos-lista{max-width:99vw;}}
   </style>
 </head>
 <body>
   <header>
     <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
   </header>
-
   <form id="search-form" autocomplete="off" novalidate>
     <div id="mensajes-usuario"></div>
     <fieldset>
@@ -191,7 +123,6 @@
         </select>
       </div>
     </fieldset>
-
     <label style="color:#f6ff;">Selecciona tipo de viaje:</label>
     <div id="categorias" aria-label="Categorías de viaje">
       <div class="categoria-btn" tabindex="0" data-categoria="aventura"><img src="img/categorias/aventura.jpg" alt="" /><span>Aventura</span></div>
@@ -213,22 +144,31 @@
     const categoriaBtns = document.querySelectorAll('.categoria-btn');
     const destinosDiv = document.getElementById('destinos-lista');
     let categoriaSeleccionada = "";
+    let destinoSeleccionado = "";
 
     function resetCategorias() {
       categoriaBtns.forEach(btn => {
         btn.classList.remove('selected');
         btn.setAttribute('aria-pressed','false');
       });
+      destinosDiv.style.display = 'none'; destinosDiv.innerHTML = "";
+      destinoSeleccionado = "";
     }
     function mostrarDestinos(cat) {
       const destinos = destinosPorCategoria[cat] || [];
       if(destinos.length) {
         destinosDiv.style.display = "block";
         destinosDiv.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join("")}</ul>`;
-      } else {
-        destinosDiv.style.display = "none";
-        destinosDiv.innerHTML = "";
-      }
+        destinosDiv.querySelectorAll('li').forEach(li => {
+          li.addEventListener('click',function(){ 
+            destinosDiv.querySelectorAll('li').forEach(item=>item.classList.remove('selected'));
+            this.classList.add('selected'); destinoSeleccionado = this.textContent; 
+          });
+          li.addEventListener('keydown',function(e){
+            if(e.key=="Enter"||e.key==" "){ e.preventDefault(); this.click();}
+          });
+        });
+      } else { destinosDiv.style.display = "none"; destinosDiv.innerHTML = ""; }
     }
     categoriaBtns.forEach(btn => {
       btn.addEventListener('click', function(){
@@ -262,14 +202,12 @@
       if(mensaje) mensajesContenedor.style.display = 'block';
       else mensajesContenedor.style.display = 'none';
     }
-
     alojamientoCheckbox.addEventListener("change", function(){
       fechaVueltaInput.style.display = this.checked ? "inline-block":"none";
       if(!this.checked) fechaVueltaInput.value = "";
       fechaVueltaInput.classList.remove("input-error");
       mostrarMensaje("", "");
     });
-
     seguroCheckbox.addEventListener("change", function () {
       formularioSeguro.style.display = this.checked ? "block" : "none";
       tipoSeguroSelect.disabled = !this.checked;
@@ -279,7 +217,6 @@
         mostrarMensaje("", "");
       }
     });
-
     fechaVueltaInput.addEventListener("input", function(){
       if(alojamientoCheckbox.checked && !fechaVueltaInput.value){
         fechaVueltaInput.classList.add("input-error");
@@ -289,7 +226,6 @@
         mostrarMensaje("", "");
       }
     });
-
     tipoSeguroSelect.addEventListener("change", function(){
       if(seguroCheckbox.checked && !tipoSeguroSelect.value){
         tipoSeguroSelect.classList.add("input-error");
@@ -299,20 +235,17 @@
         mostrarMensaje("", "");
       }
     });
-
-    // Validaciones en vivo campos texto
     [origenInput,destinoInput,fechaIdaInput].forEach(inp=>{
       inp.addEventListener("input",function(){
         if(this.value.trim() === ""){
           this.classList.add("input-error");
-          mostrarMensaje("Completa los campos de origen y destino y la fecha de ida.","error");
+          mostrarMensaje("Completa los campos de origen, destino y la fecha de ida.","error");
         } else {
           this.classList.remove("input-error"); mostrarMensaje("","");
         }
       });
     });
 
-    // --- Handle form submit ---
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       mostrarMensaje("", '');
@@ -327,6 +260,21 @@
       if (!categoriaSeleccionada){ mostrarMensaje("Selecciona una categoría de viaje.","error"); return; }
       if (seguroCheckbox.checked && !tipoSeguroSelect.value){ tipoSeguroSelect.classList.add("input-error"); mostrarMensaje("Selecciona tipo de seguro.","error"); tipoSeguroSelect.focus(); return; }
       mostrarMensaje("Enviando búsqueda, por favor espera...", "success");
+
+      // Guardar todos los datos ingresados, incluyendo el destino sugerido seleccionado (si hay uno)
+      const userData = {
+        origen: origenInput.value.trim(),
+        destino: destinoInput.value.trim(),
+        fechaIda: fechaIdaInput.value,
+        fechaVuelta: fechaVueltaInput.value || "",
+        alojamiento: alojamientoCheckbox.checked,
+        seguro: seguroCheckbox.checked,
+        tipoSeguro: tipoSeguroSelect.value,
+        categoria: categoriaSeleccionada,
+        destinoSeleccionado: destinoSeleccionado
+      };
+      localStorage.setItem('userData', JSON.stringify(userData));
+
       // Simulación resultados...
       setTimeout(function(){
         const resultadosSimulados = {
@@ -348,7 +296,7 @@
         localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
         mostrarMensaje("¡Búsqueda realizada con éxito! Redirigiendo a resultados...", "success");
         setTimeout(() => window.location.href = "resultados.html", 1300);
-      }, 1100);
+      }, 1050);
     });
   </script>
 </body>
