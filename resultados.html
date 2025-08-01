@@ -7,7 +7,8 @@
 <style>
   body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #0f1e33; /* color oscuro del isotipo */
     background-image: url('img/mapamundi.png');
     background-repeat: no-repeat;
     background-position: center center;
@@ -17,7 +18,7 @@
     min-height: 100vh;
     backdrop-filter: brightness(0.6);
     padding: 32px 12px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -28,34 +29,34 @@
     margin-top: 0;
     margin-bottom: 1rem;
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   #results-container {
     max-width: 900px;
     margin: 0 auto 20px auto;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.82);
     border-radius: 12px;
     padding: 24px 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     overflow-y: auto;
-    min-height: 140px;
-    max-height: 75vh;
+    min-height: 120px;
+    max-height: 70vh;
   }
   .section-title {
-    font-size: 1.1rem;
-    margin-bottom: 14px;
+    font-size: 1.07rem;
+    margin-bottom: 12px;
     color: #00aaff;
-    border-bottom: 2px solid #00aaff88;
-    padding-bottom: 6px;
+    border-bottom: 1px solid #00aaff44;
+    padding-bottom: 3px;
     font-weight: 600;
     text-align: left;
-    margin-top: 28px;
+    margin-top: 25px;
   }
   .result-item {
-    border-bottom: 1px solid #00c6ffbb;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
-    font-size: 0.95rem;
+    border-bottom: 1px solid #00c6ff99;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    font-size: 0.86rem;
     word-break: break-word;
   }
   .result-item:last-child {
@@ -65,20 +66,20 @@
   .empty-result {
     text-align: center;
     color: #aaa;
-    margin: 70px 0 50px 0;
+    margin: 60px 0 40px 0;
     font-style: italic;
   }
   .back-link {
     display: inline-block;
-    margin: 28px auto 0 auto;
-    padding: 12px 22px;
+    margin: 26px auto 0 auto;
+    padding: 10px 18px;
     background: #0077cc;
     color: #fff;
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: 700;
-    box-shadow: 0 3px 12px rgba(0,119,204,0.4);
-    transition: background 0.3s;
+    border-radius: 7px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,119,204,0.3);
+    transition: background 0.25s;
     text-align: center;
     cursor: pointer;
   }
@@ -89,11 +90,11 @@
   }
   @media (max-width: 600px) {
     #results-container {
-      padding: 18px 10px;
+      padding: 14px 3px;
       max-height: none;
     }
     h1, h2 {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 </style>
@@ -101,12 +102,11 @@
 <body>
 <main>
   <h1>Resultados de tu búsqueda</h1>
-  <div id="results-container" tabindex="0" aria-live="polite" aria-relevant="additions"></div>
+  <div id="results-container"></div>
   <div style="text-align:center;">
     <a href="index.html" class="back-link" role="button" aria-label="Volver a búsqueda inicial">↶ Nueva búsqueda</a>
   </div>
 </main>
-
 <script>
   function formatDateTime(dtStr) {
     if (!dtStr) return '-';
@@ -116,22 +116,19 @@
     }
     return dtStr;
   }
-
   const resultsContainer = document.getElementById('results-container');
-  let contenidoHTML = '';
+  let contenidoHTML = "";
 
   let hotelData = [];
   try {
     const hotelJson = localStorage.getItem('hotelResults');
     hotelData = hotelJson ? JSON.parse(hotelJson) : [];
-  } catch {
-    hotelData = [];
-  }
+  } catch {hotelData = [];}
 
   if (hotelData.length > 0) {
     contenidoHTML += `<h2 class="section-title">Hoteles disponibles</h2>`;
     contenidoHTML += hotelData.map(hotel =>
-      `<div class="result-item" tabindex="0">
+      `<div class="result-item">
         <strong>${hotel.name || 'Hotel desconocido'}</strong><br>
         Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
         Dirección: ${hotel.address || '-'}<br>
@@ -143,14 +140,12 @@
   try {
     const vueloJson = localStorage.getItem('flightResults');
     vueloData = vueloJson ? JSON.parse(vueloJson) : [];
-  } catch {
-    vueloData = [];
-  }
+  } catch {vueloData = [];}
 
   if (vueloData.length > 0) {
     contenidoHTML += `<h2 class="section-title">Vuelos encontrados</h2>`;
     contenidoHTML += vueloData.map(flight =>
-      `<div class="result-item" tabindex="0">
+      `<div class="result-item">
         <strong>${(flight.airline && flight.airline.name) || 'Aerolínea desconocida'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
         Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${formatDateTime(flight.departure && flight.departure.scheduled)}<br>
         Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${formatDateTime(flight.arrival && flight.arrival.scheduled)}<br>
