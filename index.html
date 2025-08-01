@@ -9,70 +9,65 @@
 </head>
 
 <body>
-  <header class="logo-header">
-    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" class="main-logo">
-  </header>
+  <div class="container">
+    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" class="logo">
 
-  <main class="main-content">
-    <form id="formulario-busqueda">
-      <div class="input-group">
-        <input type="text" placeholder="Origen" name="origen" required>
-        <input type="text" placeholder="Destino" name="destino" required>
-        <input type="date" name="fecha" required>
+    <form id="buscador-form">
+      <div class="form-row">
+        <input type="text" id="origen" placeholder="Origen" required>
+        <input type="text" id="destino" placeholder="Destino" required>
+        <input type="date" id="fecha" required>
       </div>
 
-      <div class="checkbox-group">
-        <label><input type="checkbox" id="alojamiento-checkbox"> Incluir alojamiento</label>
-        <label><input type="checkbox" id="seguro-checkbox"> Cotizar seguro de viajero</label>
+      <div class="form-row checkbox-row">
+        <label><input type="checkbox" id="alojamiento"> Incluir alojamiento</label>
+        <label><input type="checkbox" id="seguro"> Cotizar seguro de viajero</label>
       </div>
 
-      <div id="fecha-vuelta" class="opcional" style="display: none;">
-        <label>Fecha de vuelta: <input type="date" name="fecha-vuelta"></label>
+      <div class="form-row" id="fecha-vuelta-container" style="display: none;">
+        <input type="date" id="fecha-vuelta" placeholder="Fecha de vuelta">
       </div>
 
-      <div id="formulario-seguro" class="opcional" style="display: none;">
-        <label>Edad del viajero: <input type="number" name="edad" min="0"></label>
-        <label>Tipo de seguro:
-          <select name="tipo-seguro">
-            <option value="basico">Básico</option>
-            <option value="completo">Completo</option>
-          </select>
-        </label>
+      <div id="seguro-formulario" style="display: none;">
+        <input type="text" id="edad" placeholder="Edad del viajero">
+        <select id="plan">
+          <option value="">Selecciona un plan</option>
+          <option value="basico">Básico</option>
+          <option value="premium">Premium</option>
+        </select>
       </div>
 
+      <div class="categorias">
+        <button type="button" class="categoria" data-tipo="aventura">
+          <img src="img/aventura.jpg" alt="Aventura">
+          Aventura
+        </button>
+        <button type="button" class="categoria" data-tipo="negocios">
+          <img src="img/negocios.jpg" alt="Negocios">
+          Negocios
+        </button>
+        <button type="button" class="categoria" data-tipo="romantico">
+          <img src="img/romantico.jpg" alt="Escapada Romántica">
+          Escapada Romántica
+        </button>
+        <button type="button" class="categoria" data-tipo="familiar">
+          <img src="img/familiar.jpg" alt="Familiar">
+          Viaje Familiar
+        </button>
+        <button type="button" class="categoria" data-tipo="cultural">
+          <img src="img/cultural.jpg" alt="Cultural">
+          Cultura
+        </button>
+        <button type="button" class="categoria" data-tipo="naturaleza">
+          <img src="img/naturaleza.jpg" alt="Naturaleza">
+          Naturaleza
+        </button>
+      </div>
+
+      <input type="hidden" id="categoria-seleccionada" name="categoria">
       <button type="submit">Buscar</button>
     </form>
-
-    <section id="categorias">
-      <h2>¿Qué tipo de viaje estás buscando?</h2>
-      <div class="categorias-grid">
-        <button class="categoria" data-tipo="aventura">
-          <img src="img/aventura.jpg" alt="Aventura">
-          <span>Aventura</span>
-        </button>
-        <button class="categoria" data-tipo="negocios">
-          <img src="img/negocios.jpg" alt="Negocios">
-          <span>Negocios</span>
-        </button>
-        <button class="categoria" data-tipo="romantico">
-          <img src="img/romantico.jpg" alt="Escapada Romántica">
-          <span>Romántico</span>
-        </button>
-        <button class="categoria" data-tipo="familiar">
-          <img src="img/familiar.jpg" alt="Viaje Familiar">
-          <span>Familiar</span>
-        </button>
-        <button class="categoria" data-tipo="cultural">
-          <img src="img/cultural.jpg" alt="Cultura">
-          <span>Cultura</span>
-        </button>
-        <button class="categoria" data-tipo="naturaleza">
-          <img src="img/naturaleza.jpg" alt="Naturaleza">
-          <span>Naturaleza</span>
-        </button>
-      </div>
-    </section>
-  </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
