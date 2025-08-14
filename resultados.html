@@ -1,215 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Resultados — TuneMyTrip</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background-color: #0f1e33;
-    font-family: 'Open Sans', Arial, sans-serif;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 8px 36px 8px;
-  }
-  header {
-    width: 100%;
-    max-width: 360px;
-    text-align: center;
-    margin: 32px 0 16px 0;
-  }
-  header img {
-    max-width: 250px;
-    height: auto;
-    filter: drop-shadow(0 0 8px rgba(0,198,255,0.8));
-    display: inline-block;
-  }
-  main {
-    width: 100%;
-    max-width: 680px;
-    padding: 23px 0 0 0;
-  }
-  h1 {
-    text-align: center;
-    color: #00c6ff;
-    font-size: 1.29rem;
-    margin: 0 0 15px 0;
-    font-weight: 700;
-    letter-spacing: 1.3px;
-    text-shadow: 0 0 12px #0fd6fd44;
-    padding-top: 2px;
-  }
-  #datos-personalizados, #results-container {
-    background: rgba(0,0,0,0.83);
-    border-radius: 13px;
-    padding: 19px 21px 13px 21px;
-    box-shadow: 0 7px 28px #00c6ff27;
-    margin-bottom: 18px;
-    font-size: 1.04rem;
-  }
-  #datos-personalizados { margin-bottom: 24px; }
-  .datos-row, .datos-tipo {
-    margin: 3px 0 7px 0;
-    line-height: 1.6;
-    letter-spacing: 0.03em;
-  }
-  .dato-label {
-    display: inline-block;
-    font-weight: 700;
-    color: #00c6ff;
-    width: 110px;
-    min-width: 90px;
-  }
-  .valor {
-    color: #eafffa;
-    margin-left: 3px;
-    font-weight: 600;
-  }
-  .section-title {
-    color: #00aaff;
-    margin: 18px 0 9px 0;
-    font-size: 1.04rem;
-    font-weight: bold;
-    border-bottom: 1.5px solid #00aaff62;
-    padding-bottom: 4.5px;
-    letter-spacing: 1px;
-    text-align: left;
-  }
-  .result-item {
-    border-bottom: 1px solid #00c6ff77;
-    margin-bottom: 13px;
-    padding-bottom: 8px;
-    word-break: break-word;
-    font-size: 0.99rem;
-    padding-left: 4px;
-  }
-  .result-item:last-child {
-    border-bottom: none;
-  }
-  .empty-result {
-    text-align: center;
-    color: #fff9;
-    font-style: italic;
-    margin: 48px 0 28px 0;
-    font-size: 1rem;
-  }
-  .back-link {
-    display: inline-block;
-    margin: 22px auto 0 auto;
-    padding: 11px 25px;
-    background: #0077cc;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 9px;
-    font-weight: bold;
-    font-size: 1.02rem;
-    box-shadow: 0 4px 16px #00c6ff2a;
-    transition: background 0.22s;
-    text-align: center;
-    cursor: pointer;
-  }
-  .back-link:hover,
-  .back-link:focus {
-    background: #00c6ff;
-    outline: none;
-    color: #031d3b;
-  }
-  @media (max-width: 520px) {
-    #datos-personalizados, #results-container, main { padding:8px;}
-    header img { max-width: 85vw;}
-    .dato-label { min-width: 60px; width: 27vw;}
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resultados — TuneMyTrip</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #0f1e33;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 12px 40px 12px;
+    }
+    header {
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      margin: 32px 0 18px 0;
+    }
+    header img {
+      max-width: 250px;
+      height: auto;
+      filter: drop-shadow(0 0 8px rgba(0,198,255,0.8));
+      display: inline-block;
+      user-select: none;
+    }
+    main {
+      width: 100%;
+      max-width: 700px;
+      padding-top: 12px;
+    }
+    h1 {
+      text-align: center;
+      color: #00c6ff;
+      font-size: 1.32rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-shadow: 0 0 14px #0fd6fd44;
+    }
+    #datos-personalizados, #results-container {
+      background: rgba(0,0,0,0.85);
+      border-radius: 14px;
+      padding: 20px 24px 18px 24px;
+      box-shadow: 0 9px 32px #00c6ff44;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      user-select: none;
+    }
+    #datos-personalizados {
+      margin-bottom: 28px;
+    }
+    .datos-row {
+      margin: 6px 0;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      word-break: break-word;
+    }
+    .dato-label {
+      font-weight: 700;
+      color: #00c6ff;
+      display: inline-block;
+      width: 125px;
+      min-width: 110px;
+    }
+    .valor {
+      font-weight: 600;
+      color: #eafffa;
+      margin-left: 4px;
+    }
+    .section-title {
+      color: #00aaff;
+      margin: 20px 0 12px 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      border-bottom: 1.7px solid #00aaff66;
+      padding-bottom: 6px;
+      letter-spacing: 1.1px;
+      text-align: left;
+    }
+    .result-item {
+      border-bottom: 1.2px solid #00c6ff77;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      word-break: break-word;
+      font-size: 1rem;
+      padding-left: 6px;
+    }
+    .result-item:last-child {
+      border-bottom: none;
+    }
+    .empty-result {
+      text-align: center;
+      font-style: italic;
+      color: #ffffffa2;
+      margin: 55px 0 28px 0;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+    .back-link {
+      display: inline-block;
+      margin: 26px auto 0 auto;
+      padding: 12px 32px;
+      background: #0077cc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 11px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 18px #00c6ff33;
+      transition: background-color 0.26s;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .back-link:hover,
+    .back-link:focus {
+      background: #00c6ff;
+      outline: none;
+      color: #031d3b;
+    }
+    @media (max-width: 560px) {
+      main, #datos-personalizados, #results-container {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .dato-label {
+        min-width: 90px;
+        width: 32vw;
+      }
+      header img {
+        max-width: 90vw;
+      }
+      .back-link {
+        padding: 11px 18px;
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
   </header>
+
   <main>
     <h1>Resultados de tu búsqueda</h1>
-    <div id="datos-personalizados" aria-label="Resumen de tu búsqueda"></div>
-    <div id="results-container" aria-live="polite"></div>
+
+    <section id="datos-personalizados" aria-label="Resumen de los datos ingresados por el usuario">
+      <!-- Datos del usuario mostrados aquí dinámicamente -->
+    </section>
+
+    <section id="results-container" aria-live="polite" aria-label="Resultados de búsqueda">
+      <!-- Resultados de hoteles y vuelos aquí -->
+    </section>
+
     <div style="text-align:center;">
-      <a href="index.html" class="back-link" onclick="localStorage.clear()">↶ Nueva búsqueda</a>
+      <a href="index.html" class="back-link" onclick="localStorage.clear()" aria-label="Nueva búsqueda">↶ Nueva búsqueda</a>
     </div>
   </main>
+
   <script>
+    // Función para formatear fechas a formato local español adecuado
     function formatDate(dtStr) {
       if (!dtStr) return '-';
       const dt = new Date(dtStr);
-      return isNaN(dt) ? dtStr : dt.toLocaleDateString('es-ES');
+      return isNaN(dt) ? dtStr : dt.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: 'numeric'});
     }
-    // Recuperar datos personalizados del usuario
+
+    // Recuperar datos del usuario guardados en localStorage
     let userData = {};
     try {
       userData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : {};
-    } catch { userData = {}; }
+    } catch {
+      userData = {};
+    }
 
-    // Mostrar los datos principales ingresados por el usuario:
+    // Mostrar datos personalizados
     const datosDiv = document.getElementById('datos-personalizados');
     let datosHTML = "";
     if (Object.keys(userData).length > 0) {
       datosHTML += `<div class="datos-row"><span class="dato-label">Origen:</span><span class="valor">${userData.origen || '-'}</span></div>`;
       datosHTML += `<div class="datos-row"><span class="dato-label">Destino:</span><span class="valor">${userData.destino || '-'}</span></div>`;
       datosHTML += `<div class="datos-row"><span class="dato-label">Fecha ida:</span><span class="valor">${userData.fechaIda ? formatDate(userData.fechaIda) : '-'}</span></div>`;
-      if(userData.fechaVuelta)
-        datosHTML += `<div class="datos-row"><span class="dato-label">Vuelta:</span><span class="valor">${formatDate(userData.fechaVuelta)}</span></div>`;
+      if (userData.fechaVuelta) {
+        datosHTML += `<div class="datos-row"><span class="dato-label">Fecha vuelta:</span><span class="valor">${formatDate(userData.fechaVuelta)}</span></div>`;
+      }
       datosHTML += `<div class="datos-row"><span class="dato-label">Categoría:</span><span class="valor">${userData.categoria ? userData.categoria.charAt(0).toUpperCase() + userData.categoria.slice(1) : '-'}</span></div>`;
-      if(userData.destinoSeleccionado)
+      if(userData.destinoSeleccionado) {
         datosHTML += `<div class="datos-row"><span class="dato-label">Destino sugerido:</span><span class="valor">${userData.destinoSeleccionado}</span></div>`;
+      }
       datosHTML += `<div class="datos-row"><span class="dato-label">Alojamiento:</span><span class="valor">${userData.alojamiento ? 'Sí' : 'No'}</span></div>`;
-      datosHTML += `<div class="datos-row"><span class="dato-label">Seguro:</span><span class="valor">${userData.seguro ? 'Sí' : 'No'}</span></div>`;
-      if(userData.tipoSeguro)
-        datosHTML += `<div class="datos-row"><span class="dato-label">Tipo seguro:</span><span class="valor">${userData.tipoSeguro.charAt(0).toUpperCase()+userData.tipoSeguro.slice(1)}</span></div>`;
+      datosHTML += `<div class="datos-row"><span class="dato-label">Seguro de viaje:</span><span class="valor">${userData.seguro ? 'Sí' : 'No'}</span></div>`;
+      if(userData.tipoSeguro) {
+        datosHTML += `<div class="datos-row"><span class="dato-label">Tipo de seguro:</span><span class="valor">${userData.tipoSeguro.charAt(0).toUpperCase() + userData.tipoSeguro.slice(1)}</span></div>`;
+      }
     } else {
-      datosHTML = "<div class='empty-result'>No se almacenaron detalles de tu búsqueda.<br>Realiza una nueva búsqueda.</div>";
+      datosHTML = `<div class="empty-result">No se encontraron detalles de búsqueda.<br>Por favor, realiza una nueva búsqueda.</div>`;
     }
     datosDiv.innerHTML = datosHTML;
 
-    // RESULTADOS (HOTEL Y VUELO)
+    // Mostrar resultados de hoteles y vuelos
     const resultsContainer = document.getElementById('results-container');
     const hotelJson = localStorage.getItem('hotelResults');
     const vueloJson = localStorage.getItem('flightResults');
+
     if (!hotelJson && !vueloJson) {
-      resultsContainer.innerHTML = '<p class="empty-result">No hay resultados recientes.<br>Por favor, realiza una nueva búsqueda.</p>';
-      setTimeout(()=>{window.location.href="index.html"}, 1700);
+      resultsContainer.innerHTML = `<p class="empty-result">No hay resultados recientes.<br>Por favor, realiza una nueva búsqueda.</p>`;
+      setTimeout(() => { window.location.href = "index.html"; }, 1700);
     } else {
       let html = "";
       let hotelData = [];
       try { hotelData = hotelJson ? JSON.parse(hotelJson) : []; } catch {}
-      if(hotelData.length>0){
+      if(hotelData.length > 0) {
         html += `<div class="section-title">Hoteles disponibles</div>`;
-        html += hotelData.map(hotel=>`
+        html += hotelData.map(hotel => `
           <div class="result-item">
-            <strong>${hotel.name||'-'}</strong><br>
-            Categoría: ${hotel.stars ? hotel.stars+' estrellas':'-'}<br>
-            Dirección: ${hotel.address||'-'}<br>
-            Precio estimado: ${hotel.price? hotel.price+' USD':'-'}
+            <strong>${hotel.name || '-'}</strong><br>
+            Categoría: ${hotel.stars ? hotel.stars + ' estrellas' : '-'}<br>
+            Dirección: ${hotel.address || '-'}<br>
+            Precio estimado: ${hotel.price ? hotel.price + ' USD' : '-'}
           </div>
         `).join('');
       }
       let vueloData = [];
-      try { vueloData = vueloJson ? JSON.parse(vueloJson): [];} catch{}
-      if(vueloData.length > 0){
+      try { vueloData = vueloJson ? JSON.parse(vueloJson) : []; } catch {}
+      if(vueloData.length > 0) {
         html += `<div class="section-title">Vuelos encontrados</div>`;
-        html += vueloData.map(flight=>`
+        html += vueloData.map(flight => `
           <div class="result-item">
             <strong>${(flight.airline && flight.airline.name) || '-'} - Vuelo ${(flight.flight && flight.flight.number) || '-'}</strong><br>
-            Salida: ${(flight.departure && flight.departure.airport) || '-'} a las ${flight.departure && flight.departure.scheduled ? new Date(flight.departure.scheduled).toLocaleString('es-ES') : '-'}<br>
-            Llegada: ${(flight.arrival && flight.arrival.airport) || '-'} a las ${flight.arrival && flight.arrival.scheduled ? new Date(flight.arrival.scheduled).toLocaleString('es-ES'): '-'}<br>
-            Estado: ${flight.flight_status || '-'}
-          </div>
-        `).join('');
-      }
-      if(!html)
-        html = `<p class="empty-result">No se encontraron resultados con tu búsqueda.<br>Por favor, intenta nuevamente.</p>`;
-      resultsContainer.innerHTML = html;
-    }
-  </script>
-</body>
-</html>
+            Salida: ${(flight.depart
