@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip - Mejorado con Animaciones y Tooltips</title>
+  <title>TuneMyTrip - Buscador Mejorado y Reorganizado</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -17,6 +18,7 @@
       justify-content: center;
       padding: 30px 10px 40px 10px;
     }
+
     .container {
       display: flex;
       align-items: flex-start;
@@ -30,24 +32,28 @@
       box-sizing: border-box;
       flex-wrap: wrap;
     }
+
     .logo-container {
       flex: 0 0 auto;
       display: flex;
       align-items: center;
       height: 120px;
     }
+
     .logo-container img {
       max-height: 100px;
       max-width: 220px;
       filter: drop-shadow(0 0 8px rgba(0,198,255,0.8));
       user-select: none;
     }
+
     form {
       flex: 1 1 600px;
       display: flex;
       flex-direction: column;
       align-items: stretch;
     }
+
     label {
       display: block;
       margin-bottom: 6px;
@@ -56,19 +62,157 @@
       font-size: 1rem;
       user-select: none;
     }
+
+    /* Primera fila: Origen, Destino, Fecha Ida */
     .row-inputs {
       display: flex;
-      gap: 20px;
+      gap: 18px;
       flex-wrap: nowrap;
-      margin-bottom: 18px;
-      align-items: end;
+      margin-bottom: 8px;
+      align-items: flex-end;
       justify-content: flex-start;
     }
     .row-inputs > div {
-      flex: 1 1 33%;
-      min-width: 0;
+      flex: 1 1 auto;
+      min-width: 160px;
       position: relative;
     }
+
+    /* Segunda fila: alojamiento y seguro en línea */
+    .row-aloj-seguro {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 16px;
+      flex-wrap: nowrap;
+    }
+    .alojamiento-block {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1 1 260px;
+      min-width: 200px;
+    }
+    .alojamiento-block label {
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .alojamiento-block input[type="date"] {
+      margin-left: 8px;
+      flex-grow: 1;
+      max-width: 180px;
+      display: inline-block !important;
+    }
+
+    .seguro-block {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      flex: 1 1 280px;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .checkbox-label {
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Campo tipo seguro */
+    #formulario-seguro {
+      margin: 0;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      display: flex !important;
+      flex-direction: column;
+      max-width: 160px;
+      position: relative;
+    }
+    #tipo-seguro {
+      margin-top: 4px;
+      width: 100%;
+      padding: 7px 11px;
+      border-radius: 5px;
+      border: 1px solid #3976be;
+      background: #17395f;
+      color: white;
+      font-size: 1rem;
+      font-family: 'Open Sans', Arial, sans-serif;
+      transition: border-color 0.3s;
+    }
+    #tipo-seguro:disabled {
+      background: #283f67;
+      color: #93b7db;
+      cursor: not-allowed;
+    }
+
+    /* Botón ayuda (tooltip) */
+    .help-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #007bbfcc;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0;
+      transition: background-color 0.2s;
+    }
+    .help-btn:hover, .help-btn:focus {
+      background-color: #00c6ff;
+      outline: none;
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      right: 6px;
+      background: #0284c7cc;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      width: max-content;
+      max-width: 260px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      user-select: none;
+      z-index: 999;
+      white-space: normal;
+    }
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      right: 10px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: #0284c7cc transparent transparent transparent;
+    }
+    .tooltip.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     input[type="text"], input[type="date"] {
       width: 100%;
       padding: 10px 13px;
@@ -101,95 +245,14 @@
       25%, 75% { transform: translateX(-6px); }
       50% { transform: translateX(6px); }
     }
+
     #fecha-vuelta {
       margin-left: 10px;
       width: 100%;
       margin-top: 4px;
       display: none;
     }
-    #formulario-seguro {
-      margin: 12px 0 18px 0;
-      background: #10325e;
-      padding: 15px 13px 9px 13px;
-      border-radius: 10px;
-      border: 1px solid #00c6ff;
-      max-width: 260px;
-      display: none;
-      position: relative;
-    }
-    #tipo-seguro {
-      width: 100%;
-      padding: 7px 11px;
-      border-radius: 5px;
-      border: 1px solid #3976be;
-      background: #17395f;
-      color: white;
-      font-size: 1rem;
-      font-family: 'Open Sans', Arial, sans-serif;
-      transition: border-color 0.3s;
-    }
-    #tipo-seguro:disabled {
-      background: #283f67;
-      color: #93b7db;
-      cursor: not-allowed;
-    }
-    /* Tooltip para ayuda */
-    .help-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #007bbfcc;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      padding: 0;
-      transition: background-color 0.2s;
-    }
-    .help-btn:hover, .help-btn:focus {
-      background-color: #00c6ff;
-      outline: none;
-    }
-    .tooltip {
-      position: absolute;
-      bottom: 100%;
-      right: 6px;
-      background: #0284c7cc;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      width: max-content;
-      max-width: 260px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      user-select: none;
-      z-index: 999;
-      white-space: normal;
-    }
-    .tooltip::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      right: 10px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: #0284c7cc transparent transparent transparent;
-    }
-    .tooltip.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
+
     #categorias {
       display: flex;
       gap: 20px;
@@ -201,6 +264,7 @@
       padding-bottom: 6px;
       scroll-behavior: smooth;
     }
+
     .categoria-btn {
       position: relative;
       width: 120px;
@@ -218,8 +282,8 @@
       transition: border-color 0.3s, box-shadow 0.3s, transform 0.25s ease;
       outline: none;
       flex-shrink: 0;
-      /* Para animación suave */
     }
+
     .categoria-btn img {
       position: absolute;
       inset: 0;
@@ -232,15 +296,22 @@
       transition: filter 0.25s ease;
       user-select: none;
     }
-    .categoria-btn.selected, .categoria-btn:hover, .categoria-btn:focus {
+
+    .categoria-btn.selected,
+    .categoria-btn:hover,
+    .categoria-btn:focus {
       border-color: #00cfff;
       box-shadow: 0 0 30px #00cfffcc;
       transform: scale(1.06);
       z-index: 10;
     }
-    .categoria-btn.selected img, .categoria-btn:hover img, .categoria-btn:focus img {
+
+    .categoria-btn.selected img,
+    .categoria-btn:hover img,
+    .categoria-btn:focus img {
       filter: brightness(1);
     }
+
     .categoria-btn span {
       position: relative;
       color: #e2f8ff;
@@ -261,6 +332,7 @@
       outline-offset: 3px;
       z-index: 12;
     }
+
     #destinos-lista {
       background: rgba(0, 109, 185, 0.83);
       box-shadow: 0 7px 21px #00d3ff55;
@@ -274,6 +346,7 @@
       margin: 0 auto 10px auto;
       user-select: none;
     }
+
     #destinos-lista ul {
       list-style: none;
       margin: 0;
@@ -281,6 +354,7 @@
       max-height: 155px;
       overflow-y: auto;
     }
+
     #destinos-lista li {
       background: rgba(255 255 255 / 0.15);
       margin: 7px 0;
@@ -294,6 +368,7 @@
       user-select: none;
       transform-origin: center center;
     }
+
     #destinos-lista li.selected,
     #destinos-lista li:hover,
     #destinos-lista li:focus {
@@ -304,6 +379,7 @@
       transform: scale(1.02);
       font-weight: 700;
     }
+
     #mensajes-usuario {
       margin-bottom: 18px;
       padding: 12px 15px;
@@ -317,6 +393,7 @@
       transition: opacity 0.35s ease;
       user-select: none;
     }
+
     #mensajes-usuario.error {
       background-color: #ff525233;
       color: #ff3232;
@@ -324,6 +401,7 @@
       display: block;
       opacity: 1;
     }
+
     #mensajes-usuario.success {
       background-color: #2dee7733;
       color: #0bd80b;
@@ -331,6 +409,7 @@
       display: block;
       opacity: 1;
     }
+
     button[type="submit"] {
       margin-top: 19px;
       width: 100%;
@@ -346,11 +425,13 @@
       transition: background-color 0.27s, box-shadow 0.22s, transform 0.16s ease;
       user-select: none;
     }
-    button[type="submit"]:hover, button[type="submit"]:focus {
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
       background: linear-gradient(90deg, #009efd 70%, #26ffe6 100%);
       outline: none;
       transform: scale(1.03);
     }
+
     @media (max-width: 950px) {
       .container {
         flex-direction: column;
@@ -379,6 +460,20 @@
         flex: 1 1 100%;
         margin-bottom: 12px;
       }
+      .row-aloj-seguro {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .alojamiento-block, .seguro-block {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+      .alojamiento-block input[type="date"] {
+        max-width: 100%;
+      }
+      #formulario-seguro {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -391,7 +486,7 @@
   <form id="search-form" aria-label="Formulario de búsqueda de viaje" autocomplete="off" novalidate>
     <div id="mensajes-usuario" role="alert" aria-live="assertive"></div>
 
-    <!-- ORIGEN, DESTINO, FECHA IDA en línea -->
+    <!-- Primera fila: Origen, Destino, Fecha Ida -->
     <div class="row-inputs">
       <div>
         <label for="origen">Origen</label>
@@ -407,45 +502,40 @@
       </div>
     </div>
 
-    <!-- Alojamiento y fecha vuelta -->
-    <div style="margin-bottom:14px; position: relative;">
-      <label>
-        <input type="checkbox" id="alojamiento" aria-controls="fecha-vuelta" aria-expanded="false" />
-        ¿Necesitas alojamiento?
-      </label>
-      <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" style="display:none;" />
-    </div>
-
-    <!-- Seguro -->
-    <div style="margin-bottom:10px; position: relative;">
-      <label style="position: relative; padding-right: 28px; display: flex; align-items: center; gap: 6px;">
-        <input type="checkbox" id="seguro" aria-controls="formulario-seguro" aria-expanded="false" />
-        ¿Quieres agregar seguro de viaje?
-        <button class="help-btn" aria-describedby="tooltip-seguro" tabindex="-1" aria-label="Ayuda tipo de seguro">?</button>
-      </label>
-
-      <div id="formulario-seguro" aria-hidden="true">
-        <label for="tipo-seguro" style="color:#aee3fa; font-weight: 600;user-select: none; position: relative; padding-right: 26px; display: inline-block;">
-          Tipo de seguro:
-          <button class="help-btn" aria-describedby="tooltip-tipo-seguro" tabindex="-1" aria-label="Ayuda sobre tipo de seguro">?</button>
+    <!-- Segunda fila: alojamiento y seguro -->
+    <div class="row-aloj-seguro">
+      <div class="alojamiento-block">
+        <label for="alojamiento" class="checkbox-label">
+          <input type="checkbox" id="alojamiento" aria-controls="fecha-vuelta" aria-expanded="false" />
+          ¿Necesitas alojamiento?
         </label>
-        <select id="tipo-seguro" name="tipo-seguro" disabled aria-required="true">
-          <option value="">Selecciona</option>
-          <option value="basico">Básico</option>
-          <option value="premium">Premium</option>
-        </select>
+        <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" style="display:none;" />
+      </div>
 
-        <div role="tooltip" id="tooltip-seguro" class="tooltip hidden">
-          Marca esta casilla si deseas agregar un seguro que cubre imprevistos durante el viaje.
-        </div>
-        <div role="tooltip" id="tooltip-tipo-seguro" class="tooltip hidden">
-          El tipo <strong>Básico</strong> cubre lo esencial, <strong>Premium</strong> incluye cobertura extra como cancelaciones y asistencia.
+      <div class="seguro-block">
+        <label for="seguro" class="checkbox-label">
+          <input type="checkbox" id="seguro" aria-controls="formulario-seguro" aria-expanded="false" />
+          ¿Quieres agregar seguro de viaje?
+        </label>
+        <div id="formulario-seguro" aria-hidden="true">
+          <label for="tipo-seguro" class="tipo-seguro-label" style="position: relative;">
+            Tipo de seguro:
+            <button class="help-btn" aria-describedby="tooltip-tipo-seguro" tabindex="-1" aria-label="Ayuda sobre tipo de seguro">?</button>
+          </label>
+          <select id="tipo-seguro" name="tipo-seguro" disabled aria-required="true">
+            <option value="">Selecciona</option>
+            <option value="basico">Básico</option>
+            <option value="premium">Premium</option>
+          </select>
+          <div role="tooltip" id="tooltip-tipo-seguro" class="tooltip hidden">
+            El tipo <strong>Básico</strong> cubre lo esencial, <strong>Premium</strong> incluye cobertura extra como cancelaciones y asistencia.
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Categorías con imágenes horizontal -->
-    <label style="color:#f6ff; font-weight: 600;">Selecciona tipo de viaje</label>
+    <!-- Categorías con imágenes -->
+    <label style="color:#f6ff; font-weight: 600; margin-top: 14px;">Selecciona tipo de viaje</label>
     <div id="categorias" role="list" aria-label="Categorías de viaje">
       <div class="categoria-btn" tabindex="0" data-categoria="aventura" role="listitem" aria-pressed="false" aria-label="Categoría aventura">
         <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría aventura" loading="lazy" />
