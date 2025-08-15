@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip — Formulario Uniforme y Barra Horizontal</title>
+  <title>TuneMyTrip — Formulario Horizontal Uniforme con Funcionalidad Completa</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
@@ -17,7 +17,7 @@
     }
 
     .page-wrapper {
-      padding-top: 4.6rem; /* 3 líneas de espacio */
+      padding-top: 4.6rem; /* Espacio de 3 líneas hacia abajo */
     }
 
     .dashboard-bar {
@@ -34,6 +34,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
+      flex-wrap: wrap;
     }
 
     .dashboard-bar .logo {
@@ -45,7 +46,7 @@
     }
 
     .dashboard-bar img {
-      height: 102px;
+      height: 102px; /* 50% más grande */
       user-select: none;
     }
 
@@ -53,25 +54,26 @@
       flex: 1 1 auto;
     }
 
+    /* Agrupación y uniformidad */
     .form-row {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
-      justify-content: flex-start;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       min-height: 64px;
+      flex-wrap: wrap;
     }
 
-    /* Agrupar origen y su botón para alinearlos juntos */
+    /* Grupo para botón y origen: con altura y alineación */
     .origin-group {
       display: flex;
       align-items: center;
       min-width: 230px;
       gap: 6px;
-      margin-bottom: 12px;
       flex-shrink: 0;
     }
 
+    /* Botón idéntico en altura */
     .origin-button-container {
       width: 40px;
       height: 40px;
@@ -84,6 +86,7 @@
       cursor: pointer;
       user-select: none;
       transition: background-color 0.25s ease;
+      flex-shrink: 0;
     }
     .origin-button-container:hover {
       background-color: #0056b3;
@@ -98,6 +101,7 @@
       transform: rotate(180deg);
     }
 
+    /* Grupo input con label */
     .input-group {
       display: flex;
       flex-direction: column;
@@ -105,13 +109,16 @@
       min-width: 165px;
       margin-bottom: 12px;
     }
+
     label {
       font-size: 0.9rem;
       font-weight: 600;
       color: #444;
       margin-bottom: 6px;
       user-select: none;
+      display: block;
     }
+
     input[type="text"],
     input[type="date"],
     select {
@@ -126,6 +133,7 @@
       box-sizing: border-box;
       transition: border-color 0.25s;
     }
+
     input[type="text"]:focus,
     input[type="date"]:focus,
     select:focus {
@@ -133,6 +141,7 @@
       border-color: #007bff;
       box-shadow: 0 0 6px #7ab8ffaa;
     }
+
     input.input-error,
     select.input-error {
       border-color: #dc3545 !important;
@@ -146,21 +155,24 @@
       margin-left: 12px;
       margin-bottom: 12px;
     }
+
     #fecha-vuelta-container label {
       font-weight: 600;
       margin-bottom: 6px;
       user-select: none;
       color: #444;
+      display: block;
     }
 
     .form-checkbox-row {
       display: flex;
       align-items: center;
       gap: 20px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       min-width: 280px;
       margin-bottom: 12px;
     }
+
     .form-checkbox-row label {
       cursor: pointer;
       user-select: none;
@@ -171,11 +183,13 @@
       align-items: center;
       gap: 6px;
     }
+
     input[type="checkbox"] {
       width: 18px;
       height: 18px;
       cursor: pointer;
     }
+
     #formulario-seguro {
       display: none;
       background: #e9ecef;
@@ -183,6 +197,7 @@
       border-radius: 6px;
       margin-left: 8px;
     }
+
     #tipo-seguro {
       width: 140px;
       padding: 6px 10px;
@@ -193,6 +208,7 @@
       font-size: 1rem;
       margin-top: 3px;
     }
+
     #tipo-seguro:disabled {
       background: #283f67;
       color: #93b7db;
@@ -214,6 +230,7 @@
       margin-bottom: 12px;
       min-width: 150px;
     }
+
     button[type="submit"]:hover,
     button[type="submit"]:focus {
       background-color: #0056b3;
@@ -237,6 +254,7 @@
       box-shadow: 0 6px 24px #007bff22;
       padding: 20px 38px;
     }
+
     #categorias {
       display: flex;
       gap: 22px;
@@ -246,6 +264,7 @@
       flex: 1 1 800px;
       min-width: 800px;
     }
+
     .categoria-btn {
       position: relative;
       width: 130px;
@@ -267,6 +286,7 @@
       flex-shrink: 0;
       padding: 10px 6px;
     }
+
     .categoria-btn svg {
       width: 42px;
       height: 42px;
@@ -274,15 +294,18 @@
       transition: fill 0.28s;
       user-select: none;
     }
+
     .categoria-btn.selected {
       border-color: #0056b3;
       box-shadow: 0 0 36px #0056b3cc;
       transform: scale(1.12);
       z-index: 1;
     }
+
     .categoria-btn.selected svg {
       fill: #003d80;
     }
+
     .categoria-btn span {
       position: relative;
       color: #000;
@@ -292,11 +315,13 @@
       user-select: none;
       width: 100%;
     }
+
     .categoria-btn:focus-visible {
       outline: 3px solid #007bff;
       outline-offset: 3px;
       z-index: 33;
     }
+
     #destinos-lista {
       background: #e9ecef;
       box-shadow: 0 7px 21px #007bff55;
@@ -312,6 +337,7 @@
       height: 220px;
       overflow-y: auto;
     }
+
     #destinos-lista ul {
       list-style: none;
       margin: 0;
@@ -319,6 +345,7 @@
       max-height: 168px;
       overflow-y: auto;
     }
+
     #destinos-lista li {
       background: rgba(0 0 0 / 0.07);
       margin: 9px 0;
@@ -331,6 +358,7 @@
       user-select: none;
       transition: background 0.24s, border-color 0.24s, transform 0.22s ease;
     }
+
     #destinos-lista li.selected,
     #destinos-lista li:hover,
     #destinos-lista li:focus {
@@ -341,7 +369,8 @@
       transform: scale(1.05);
       font-weight: 700;
     }
-    /* Responsive adjustments */
+
+    /* Responsive */
     @media (max-width: 900px) {
       .dashboard-bar,
       .categorias-bar {
@@ -353,7 +382,7 @@
         flex-wrap: wrap;
       }
       .form-row > div,
-      .origin-wrapper {
+      .origin-group {
         max-width: 100%;
         margin-right: 0;
       }
@@ -402,7 +431,7 @@
         <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
       </div>
       <form id="search-form" autocomplete="off" novalidate style="flex:1;">
-        <div class="form-row">
+        <div class="form-row" aria-label="Formulario de búsqueda">
           <div class="origin-group">
             <div class="origin-button-container" id="toggle-trip-type" title="Ida y Vuelta" tabindex="0" role="button" aria-pressed="false" aria-label="Alternar viaje de ida y vuelta">
               <svg class="up" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 14l5-5 5 5z"/></svg>
@@ -410,28 +439,28 @@
             </div>
             <div class="input-group">
               <label for="origen">Origen</label>
-              <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
+              <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" aria-required="true" />
             </div>
           </div>
           <div class="input-group" id="destino-group">
             <label for="destino">Destino</label>
-            <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
+            <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" aria-required="true" />
           </div>
           <div class="input-group" id="fecha-ida-group">
             <label for="fecha-ida">Fecha ida</label>
-            <input type="date" id="fecha-ida" name="fecha-ida" required />
+            <input type="date" id="fecha-ida" name="fecha-ida" required aria-required="true" />
           </div>
           <div class="input-group" id="fecha-vuelta-container">
             <label for="fecha-vuelta">Fecha vuelta</label>
             <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" />
           </div>
           <div id="checkboxes-group" class="form-checkbox-row">
-            <label>
-              <input type="checkbox" id="alojamiento"/>
+            <label for="alojamiento">
+              <input type="checkbox" id="alojamiento" name="alojamiento"/>
               Alojamiento
             </label>
-            <label>
-              <input type="checkbox" id="seguro" aria-controls="formulario-seguro"/>
+            <label for="seguro">
+              <input type="checkbox" id="seguro" name="seguro" aria-controls="formulario-seguro"/>
               Seguro
             </label>
             <div id="formulario-seguro" aria-hidden="true">
@@ -448,45 +477,45 @@
       </form>
     </div>
 
-    <div class="categorias-bar">
-      <div id="categorias" role="list" aria-label="Categorías de viaje">
-        <div class="categoria-btn" tabindex="0" data-categoria="aventura">
+    <div class="categorias-bar" role="list" aria-label="Categorías de viaje">
+      <div id="categorias" >
+        <div class="categoria-btn" tabindex="0" data-categoria="aventura" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 10 L12 54 L22 54 L32 36 L42 54 L52 54 Z"/></svg>
           <span>Aventura</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="cultural">
+        <div class="categoria-btn" tabindex="0" data-categoria="cultural" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="18"/><rect x="26" y="24" width="12" height="16"/></svg>
           <span>Cultural</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="playa">
+        <div class="categoria-btn" tabindex="0" data-categoria="playa" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="20"/><path d="M12 32h40" stroke="#007bff" stroke-width="4"/></svg>
           <span>Playa</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
+        <div class="categoria-btn" tabindex="0" data-categoria="gastronomico" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="20" y="44" width="24" height="8"/><circle cx="32" cy="32" r="10"/></svg>
           <span>Gastronómico</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
+        <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M20 52s8-32 24-32 12 32 12 32z"/></svg>
           <span>Ecoturismo</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="lujo">
+        <div class="categoria-btn" tabindex="0" data-categoria="lujo" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><polygon points="32 12 44 52 20 52"/><circle cx="32" cy="44" r="6"/></svg>
           <span>Lujo</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="senderismo">
+        <div class="categoria-btn" tabindex="0" data-categoria="senderismo" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="7"/><rect x="15" y="25" width="6" height="18" rx="3"/><rect x="35" y="42" width="4" height="13" rx="2"/><path d="M18 32 L28 36 L30 44" stroke="#007bff" stroke-width="2" fill="none"/><path d="M20 42 L44 58" stroke="#007bff" stroke-width="2" fill="none"/><circle cx="46" cy="58" r="3"/></svg>
           <span>Senderismo</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="canotaje">
+        <div class="categoria-btn" tabindex="0" data-categoria="canotaje" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64"><ellipse cx="32" cy="54" rx="25" ry="6" opacity="0.25"/><rect x="20" y="34" width="24" height="8" rx="4"/><rect x="30" y="18" width="4" height="18" rx="2"/><rect x="18" y="44" width="4" height="17" rx="2"/><rect x="42" y="44" width="4" height="17" rx="2"/><path d="M16 24 Q32 10 48 24" stroke="#007bff" stroke-width="2" fill="none"/></svg>
           <span>Canotaje</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="vela">
+        <div class="categoria-btn" tabindex="0" data-categoria="vela" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64"><rect x="30" y="14" width="4" height="34" rx="2"/><polygon points="32,48 58,48 32,16"/><polygon points="32,48 6,48 32,16"/><path d="M8 54 Q32 58 56 54" stroke="#007bff" stroke-width="3" fill="none"/></svg>
           <span>Vela</span>
         </div>
-        <div class="categoria-btn" tabindex="0" data-categoria="montaña">
+        <div class="categoria-btn" tabindex="0" data-categoria="montaña" role="listitem" aria-pressed="false">
           <svg viewBox="0 0 64 64"><polygon points="14,54 32,18 50,54"/><polygon points="24,40 32,26 40,40"/><rect x="30.5" y="8" width="3" height="14"/><polygon points="32,8 37,14 27,14"/><path d="M10 54 H54" stroke="#007bff" stroke-width="2"/></svg>
           <span>Montaña</span>
         </div>
@@ -590,6 +619,37 @@
         }
       });
     });
+
+    // Manejo de checkboxes para mostrar/ocultar campos relacionados
+    const alojamientoCheckbox = document.getElementById("alojamiento");
+    const fechaVueltaInput = document.getElementById("fecha-vuelta");
+    const seguroCheckbox = document.getElementById("seguro");
+    const formularioSeguro = document.getElementById("formulario-seguro");
+    const tipoSeguroSelect = document.getElementById("tipo-seguro");
+    const mensajesContenedor = document.getElementById("mensajes-usuario");
+
+    alojamientoCheckbox.addEventListener("change", function() {
+      if (this.checked) {
+        fechaVueltaInput.style.borderColor = "#007bff";
+      } else {
+        fechaVueltaInput.style.borderColor = "#ccc";
+        fechaVueltaInput.value = "";
+        fechaVueltaInput.classList.remove("input-error");
+      }
+    });
+
+    seguroCheckbox.addEventListener("change", function() {
+      if (this.checked) {
+        formularioSeguro.style.display = "block";
+        tipoSeguroSelect.disabled = false;
+      } else {
+        formularioSeguro.style.display = "none";
+        tipoSeguroSelect.value = "";
+        tipoSeguroSelect.disabled = true;
+        tipoSeguroSelect.classList.remove("input-error");
+      }
+    });
+
   </script>
 </body>
 </html>
