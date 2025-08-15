@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip — Formulario Horizontal Uniforme con Funcionalidad Completa</title>
+  <title>TuneMyTrip — Formulario Uniforme con Botón Ida/Vuelta Mejorado</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
-
     body {
       margin: 0;
       background: #fff;
@@ -15,11 +14,9 @@
       color: #000;
       min-height: 100vh;
     }
-
     .page-wrapper {
-      padding-top: 4.6rem; /* Espacio de 3 líneas hacia abajo */
+      padding-top: 4.6rem; /* 3 líneas hacia abajo */
     }
-
     .dashboard-bar {
       width: 100%;
       max-width: 1400px;
@@ -36,7 +33,6 @@
       z-index: 20;
       flex-wrap: wrap;
     }
-
     .dashboard-bar .logo {
       flex: 0 0 220px;
       display: flex;
@@ -44,39 +40,31 @@
       justify-content: center;
       height: 100px;
     }
-
     .dashboard-bar img {
-      height: 102px; /* 50% más grande */
+      height: 102px;
       user-select: none;
     }
-
     form {
       flex: 1 1 auto;
     }
-
-    /* Agrupación y uniformidad */
     .form-row {
       display: flex;
-      gap: 12px;
       align-items: center;
-      flex-wrap: nowrap;
-      min-height: 64px;
+      gap: 12px;
       flex-wrap: wrap;
+      min-height: 64px;
     }
-
-    /* Grupo para botón y origen: con altura y alineación */
+    /* Botón y origen juntos en fila */
     .origin-group {
       display: flex;
       align-items: center;
       min-width: 230px;
-      gap: 6px;
+      gap: 8px;
       flex-shrink: 0;
     }
-
-    /* Botón idéntico en altura */
     .origin-button-container {
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       background: #007bff;
       border-radius: 6px;
       display: flex;
@@ -86,22 +74,29 @@
       cursor: pointer;
       user-select: none;
       transition: background-color 0.25s ease;
+      position: relative;
       flex-shrink: 0;
     }
     .origin-button-container:hover {
       background-color: #0056b3;
     }
+    /* Flechas más grandes y orientadas */
     .origin-button-container svg {
       fill: white;
-      width: 16px;
-      height: 12px;
-      margin: 2px 0;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .origin-button-container svg.up {
+      top: 6px;
+      transform: translateX(-50%) rotate(0deg);
     }
     .origin-button-container svg.down {
-      transform: rotate(180deg);
+      bottom: 6px;
+      transform: translateX(-50%) rotate(180deg);
     }
-
-    /* Grupo input con label */
     .input-group {
       display: flex;
       flex-direction: column;
@@ -109,7 +104,6 @@
       min-width: 165px;
       margin-bottom: 12px;
     }
-
     label {
       font-size: 0.9rem;
       font-weight: 600;
@@ -118,11 +112,10 @@
       user-select: none;
       display: block;
     }
-
     input[type="text"],
     input[type="date"],
     select {
-      height: 40px;
+      height: 48px;
       padding: 0 12px;
       border-radius: 6px;
       border: 1.5px solid #ccc;
@@ -133,7 +126,6 @@
       box-sizing: border-box;
       transition: border-color 0.25s;
     }
-
     input[type="text"]:focus,
     input[type="date"]:focus,
     select:focus {
@@ -141,13 +133,11 @@
       border-color: #007bff;
       box-shadow: 0 0 6px #7ab8ffaa;
     }
-
     input.input-error,
     select.input-error {
       border-color: #dc3545 !important;
       box-shadow: none !important;
     }
-
     #fecha-vuelta-container {
       display: none;
       flex-direction: column;
@@ -155,7 +145,6 @@
       margin-left: 12px;
       margin-bottom: 12px;
     }
-
     #fecha-vuelta-container label {
       font-weight: 600;
       margin-bottom: 6px;
@@ -163,7 +152,6 @@
       color: #444;
       display: block;
     }
-
     .form-checkbox-row {
       display: flex;
       align-items: center;
@@ -172,7 +160,6 @@
       min-width: 280px;
       margin-bottom: 12px;
     }
-
     .form-checkbox-row label {
       cursor: pointer;
       user-select: none;
@@ -183,13 +170,11 @@
       align-items: center;
       gap: 6px;
     }
-
     input[type="checkbox"] {
       width: 18px;
       height: 18px;
       cursor: pointer;
     }
-
     #formulario-seguro {
       display: none;
       background: #e9ecef;
@@ -197,7 +182,6 @@
       border-radius: 6px;
       margin-left: 8px;
     }
-
     #tipo-seguro {
       width: 140px;
       padding: 6px 10px;
@@ -208,13 +192,11 @@
       font-size: 1rem;
       margin-top: 3px;
     }
-
     #tipo-seguro:disabled {
       background: #283f67;
       color: #93b7db;
       cursor: not-allowed;
     }
-
     button[type="submit"] {
       padding: 10px 30px;
       font-size: 1.1rem;
@@ -226,17 +208,16 @@
       cursor: pointer;
       flex-shrink: 0;
       transition: background-color 0.2s;
-      height: 40px;
+      height: 48px;
       margin-bottom: 12px;
       min-width: 150px;
+      align-self: flex-end;
     }
-
     button[type="submit"]:hover,
     button[type="submit"]:focus {
       background-color: #0056b3;
       outline: none;
     }
-
     .categorias-bar {
       width: 100%;
       max-width: 1400px;
@@ -247,14 +228,12 @@
       position: relative;
       flex-wrap: nowrap;
       overflow-x: auto;
-      padding-bottom: 10px;
+      padding: 20px 38px;
       scroll-behavior: smooth;
       background: #fff;
       border-radius: 0 0 18px 18px;
       box-shadow: 0 6px 24px #007bff22;
-      padding: 20px 38px;
     }
-
     #categorias {
       display: flex;
       gap: 22px;
@@ -263,8 +242,8 @@
       align-items: stretch;
       flex: 1 1 800px;
       min-width: 800px;
+      position: relative;
     }
-
     .categoria-btn {
       position: relative;
       width: 130px;
@@ -286,58 +265,54 @@
       flex-shrink: 0;
       padding: 10px 6px;
     }
-
     .categoria-btn svg {
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       fill: #007bff;
       transition: fill 0.28s;
       user-select: none;
     }
-
     .categoria-btn.selected {
       border-color: #0056b3;
       box-shadow: 0 0 36px #0056b3cc;
       transform: scale(1.12);
-      z-index: 1;
+      z-index: 10;
+      background: #d0e4ff;
     }
-
     .categoria-btn.selected svg {
       fill: #003d80;
     }
-
     .categoria-btn span {
       position: relative;
       color: #000;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       text-align: center;
       user-select: none;
       width: 100%;
     }
-
     .categoria-btn:focus-visible {
       outline: 3px solid #007bff;
       outline-offset: 3px;
-      z-index: 33;
+      z-index: 11;
     }
-
     #destinos-lista {
       background: #e9ecef;
       box-shadow: 0 7px 21px #007bff55;
       border-radius: 14px;
-      min-width: 270px;
+      position: absolute;
+      top: 150px; /* Se ajustará por JS */
+      min-width: 220px;
       max-width: 310px;
       padding: 18px 24px;
       color: #000;
       font-size: 1.08rem;
       display: none;
       user-select: none;
-      margin-top: 5px;
-      height: 220px;
+      max-height: 220px;
       overflow-y: auto;
+      z-index: 1000;
     }
-
     #destinos-lista ul {
       list-style: none;
       margin: 0;
@@ -345,7 +320,6 @@
       max-height: 168px;
       overflow-y: auto;
     }
-
     #destinos-lista li {
       background: rgba(0 0 0 / 0.07);
       margin: 9px 0;
@@ -358,7 +332,6 @@
       user-select: none;
       transition: background 0.24s, border-color 0.24s, transform 0.22s ease;
     }
-
     #destinos-lista li.selected,
     #destinos-lista li:hover,
     #destinos-lista li:focus {
@@ -369,8 +342,6 @@
       transform: scale(1.05);
       font-weight: 700;
     }
-
-    /* Responsive */
     @media (max-width: 900px) {
       .dashboard-bar,
       .categorias-bar {
@@ -396,10 +367,12 @@
         height: 90px;
       }
       #destinos-lista {
+        position: relative !important;
+        top: auto !important;
         max-width: 100vw;
-        position: relative;
-        top: auto;
+        max-height: none;
         height: auto;
+        margin-top: 12px;
       }
       .origin-button-container {
         margin-right: 12px;
@@ -426,7 +399,7 @@
 </head>
 <body>
   <div class="page-wrapper">
-    <div class="dashboard-bar">
+    <div class="dashboard-bar" role="banner">
       <div class="logo">
         <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
       </div>
@@ -529,8 +502,14 @@
     const fechaVueltaContainer = document.getElementById('fecha-vuelta-container');
     const origenInput = document.getElementById('origen');
     const destinoInput = document.getElementById('destino');
+    const destinosDiv = document.getElementById('destinos-lista');
+    const categoriaBtns = document.querySelectorAll('.categoria-btn');
+    let categoriaSeleccionada = "";
+    let destinoSeleccionado = "";
+
     origenInput.value = "MVD";
 
+    // Alternar vista de fecha vuelta con botón y accesibilidad
     toggleBtn.addEventListener('click', () => {
       const pressed = toggleBtn.getAttribute('aria-pressed') === 'true';
       if (pressed) {
@@ -549,11 +528,7 @@
       }
     });
 
-    const categoriaBtns = document.querySelectorAll('.categoria-btn');
-    const destinosDiv = document.getElementById('destinos-lista');
-    let categoriaSeleccionada = "";
-    let destinoSeleccionado = "";
-
+    // Datos destinos por categoría
     const destinosPorCategoria = {
       aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
       cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
@@ -567,6 +542,7 @@
       montaña: ["Andes", "Himalaya", "Rockies", "Pirineos", "Alpes Franceses"]
     };
 
+    // Función para limpiar selección categorías y lista destinos
     function resetCategorias() {
       categoriaBtns.forEach(btn => {
         btn.classList.remove('selected');
@@ -577,11 +553,22 @@
       destinoSeleccionado = "";
     }
 
-    function mostrarDestinos(cat) {
+    // Mostrar destinos y posicionar popup al botón de categoría
+    function mostrarDestinos(cat, btn) {
       const destinos = destinosPorCategoria[cat] || [];
       if(destinos.length) {
         destinosDiv.style.display = "block";
         destinosDiv.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join("")}</ul>`;
+
+        // Posicionar el popup debajo del botón de categoría
+        const btnRect = btn.getBoundingClientRect();
+        const parentRect = btn.parentElement.getBoundingClientRect();
+        destinosDiv.style.position = 'absolute';
+        destinosDiv.style.top = `${btn.offsetTop + btn.offsetHeight + 8}px`;
+        destinosDiv.style.left = `${btn.offsetLeft}px`;
+        destinosDiv.style.width = `${btn.offsetWidth}px`;
+
+        // Añadir eventos click y teclado a cada destino
         destinosDiv.querySelectorAll('li').forEach(li => {
           li.addEventListener('click', function() {
             destinosDiv.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
@@ -589,6 +576,7 @@
             destinoSeleccionado = this.textContent;
             destinoInput.value = destinoSeleccionado;
             destinoInput.classList.remove('input-error');
+            destinosDiv.style.display = 'none';
           });
           li.addEventListener('keydown', function(e) {
             if(e.key === "Enter" || e.key === " ") {
@@ -604,13 +592,14 @@
       }
     }
 
+    // Añadir eventos a botones de categoría
     categoriaBtns.forEach(btn => {
       btn.addEventListener('click', function() {
         resetCategorias();
         this.classList.add('selected');
         this.setAttribute('aria-pressed', 'true');
         categoriaSeleccionada = this.dataset.categoria;
-        mostrarDestinos(categoriaSeleccionada);
+        mostrarDestinos(categoriaSeleccionada, this);
       });
       btn.addEventListener('keydown', function(e) {
         if(e.key === "Enter" || e.key === " ") {
@@ -620,13 +609,12 @@
       });
     });
 
-    // Manejo de checkboxes para mostrar/ocultar campos relacionados
+    // Manejo checkboxes para mostrar campos relacionados
     const alojamientoCheckbox = document.getElementById("alojamiento");
     const fechaVueltaInput = document.getElementById("fecha-vuelta");
     const seguroCheckbox = document.getElementById("seguro");
     const formularioSeguro = document.getElementById("formulario-seguro");
     const tipoSeguroSelect = document.getElementById("tipo-seguro");
-    const mensajesContenedor = document.getElementById("mensajes-usuario");
 
     alojamientoCheckbox.addEventListener("change", function() {
       if (this.checked) {
@@ -649,7 +637,6 @@
         tipoSeguroSelect.classList.remove("input-error");
       }
     });
-
   </script>
 </body>
 </html>
