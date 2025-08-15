@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip — Dashboard Horizontal</title>
+  <title>TuneMyTrip — Dashboard Horizontal con Isotipos</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
@@ -39,7 +39,7 @@
       height: 100px;
     }
     .dashboard-bar img {
-      max-height: 68px;
+      height: 102px; /* 50% más grande que 68 */
       filter: drop-shadow(0 0 8px #00c6ff);
       user-select: none;
     }
@@ -111,6 +111,11 @@
       font-size: 1rem;
       margin-top: 3px;
     }
+    #tipo-seguro:disabled {
+      background: #283f67;
+      color: #93b7db;
+      cursor: not-allowed;
+    }
     button[type="submit"] {
       margin-left: 12px;
       padding: 9px 22px;
@@ -154,70 +159,92 @@
       margin: 35px auto 0 auto;
       display: flex;
       align-items: flex-start;
-      gap: 28px;
+      gap: 40px;
       position: relative;
     }
     #categorias {
       display: flex;
-      gap: 20px;
+      gap: 22px;
       flex-wrap: nowrap;
       overflow-x: auto;
       justify-content: flex-start;
       align-items: stretch;
       padding-bottom: 9px;
       scroll-behavior: smooth;
-      flex: 1 1 850px;
+      flex: 1 1 800px;
     }
     .categoria-btn {
       position: relative;
-      width: 120px;
-      height: 120px;
-      border: 2.5px solid #0099ff;
+      width: 130px;
+      height: 130px;
+      border: 2.8px solid #0099ff;
       border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
       user-select: none;
       background: #031b39;
-      box-shadow: 0 3px 16px #007fff38;
+      box-shadow: 0 4px 18px #007fff48;
       display: flex;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
       transition: border-color 0.3s, box-shadow 0.3s, transform 0.23s;
       outline: none;
       flex-shrink: 0;
+      gap: 10px;
+      padding: 10px 6px;
     }
-    .categoria-btn.selected { border-color: #00cfff; box-shadow: 0 0 30px #00cfffcc; transform: scale(1.10); z-index: 1;}
-    .categoria-btn.selected img { filter: brightness(1);}
-    .categoria-btn img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.80); pointer-events: none; border-radius: 16px;
-      transition: filter 0.2s; user-select: none;
+    .categoria-btn svg {
+      width: 72px;
+      height: 72px;
+      fill: #0bb7ff;
+      transition: fill 0.28s;
+      user-select: none;
+    }
+    .categoria-btn.selected {
+      border-color: #00cfff;
+      box-shadow: 0 0 36px #00cfffcc;
+      transform: scale(1.12);
+      z-index: 1;
+    }
+    .categoria-btn.selected svg {
+      fill: #36e8ff;
     }
     .categoria-btn span {
-      position: relative; color: #e2f8ff; font-weight: 700; font-size: 1.08rem;
-      padding: 10px 8px 8px 8px; z-index: 2; text-align: center;
-      text-shadow: 0 0 9px #003954bb; user-select: none; width: 100%;
-      background: linear-gradient(transparent 62%, #02769d 94%);
-      border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
+      position: relative;
+      color: #e2f8ff;
+      font-weight: 700;
+      font-size: 1.12rem;
+      text-align: center;
+      text-shadow: 0 0 16px #00395fbb;
+      user-select: none;
+      width: 100%;
+    }
+    .categoria-btn:focus-visible {
+      outline: 3px solid #00c6ff;
+      outline-offset: 3px;
+      z-index: 33;
     }
     #destinos-lista {
       background: rgba(0, 109, 185, 0.83);
       box-shadow: 0 7px 21px #00d3ff55;
-      border-radius: 14px; min-width: 250px; max-width: 310px; padding: 18px 22px;
-      color: #fff; font-size: 1rem; display: none; user-select: none; margin-top: 5px;
+      border-radius: 14px; min-width: 270px; max-width: 310px;
+      padding: 18px 24px;
+      color: #fff; font-size: 1.1rem; display: none; user-select: none; margin-top: 5px;
     }
-    #destinos-lista ul {list-style: none; margin: 0; padding: 0; max-height: 148px; overflow-y: auto;}
+    #destinos-lista ul {list-style: none; margin: 0; padding: 0; max-height: 168px; overflow-y: auto;}
     #destinos-lista li {
       background: rgba(255 255 255 / 0.12);
-      margin: 8px 0; border-radius: 7px; padding: 9px 15px;
-      cursor: pointer; font-weight: 600; border: 1.2px solid transparent; color: #e0f7ff; user-select: none;
-      transition: background .22s,border-color .22s,transform .2s;
+      margin: 9px 0; border-radius: 7px; padding: 9px 16px;
+      cursor: pointer; font-weight: 600; border: 1.2px solid transparent; color: #abeeff; user-select: none;
+      transition: background .24s,border-color .24s,transform .22s ease;
     }
     #destinos-lista li.selected, #destinos-lista li:hover, #destinos-lista li:focus {
-      background-color: rgba(255 255 255 / 0.34);
-      border-color: #00d3ff; color: #03294c; outline: none; transform: scale(1.04); font-weight: 700;
+      background-color: rgba(255 255 255 / 0.38);
+      border-color: #00d3ff; color: #00293d; outline: none; transform: scale(1.05); font-weight: 700;
     }
 
+    /* Responsive */
     @media (max-width: 1320px){
       .dashboard-bar, .categorias-bar { max-width: 99vw;}
     }
@@ -240,6 +267,7 @@
 <body>
   <div class="dashboard-bar">
     <div class="logo">
+      <!-- Isotipo TuneMyTrip más grande -->
       <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
     </div>
     <form id="search-form" autocomplete="off" novalidate style="flex:1; position:relative;">
@@ -280,35 +308,86 @@
       </div>
     </form>
   </div>
+
   <div class="categorias-bar">
     <div id="categorias" role="list" aria-label="Categorías de viaje">
+
+      <!-- Categorías existentes -->
       <div class="categoria-btn" tabindex="0" data-categoria="aventura">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría aventura" loading="lazy" />
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <path d="M32 4 L12 60 L20 60 L28 44 L36 60 L44 60 Z" />
+        </svg>
         <span>Aventura</span>
       </div>
       <div class="categoria-btn" tabindex="0" data-categoria="cultural">
-        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría cultural" loading="lazy" />
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <circle cx="32" cy="32" r="18" />
+          <rect x="26" y="24" width="12" height="16" />
+        </svg>
         <span>Cultural</span>
       </div>
       <div class="categoria-btn" tabindex="0" data-categoria="playa">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría playa" loading="lazy" />
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <circle cx="32" cy="32" r="20" fill="#00bbff" />
+          <path d="M12 32h40" stroke="#002e50" stroke-width="4" />
+        </svg>
         <span>Playa</span>
       </div>
       <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
-        <img src="https://images.unsplash.com/photo-1542144612-bc1a87e03e2f?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría gastronómico" loading="lazy" />
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <path d="M20 44h24v8H20z" />
+          <circle cx="32" cy="32" r="10" />
+        </svg>
         <span>Gastronómico</span>
       </div>
       <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
-        <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría ecoturismo" loading="lazy" />
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <path d="M20 52s8-32 24-32 12 32 12 32z" />
+        </svg>
         <span>Ecoturismo</span>
       </div>
       <div class="categoria-btn" tabindex="0" data-categoria="lujo">
-        <img src="https://images.unsplash.com/photo-1505765052623-6228cadf0482?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría lujo" loading="lazy" />
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <polygon points="32 12 44 52 20 52" />
+          <circle cx="32" cy="44" r="6" />
+        </svg>
         <span>Lujo</span>
+      </div>
+
+      <!-- Nuevas categorías con isotipos -->
+      <div class="categoria-btn" tabindex="0" data-categoria="senderismo">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <path d="M16 48l12-32 12 32z" />
+          <path d="M24 48h16v12H24z" />
+        </svg>
+        <span>Senderismo</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="canotaje">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <rect x="14" y="24" width="36" height="12" rx="3" ry="3"/>
+          <path d="M18 26l14 12" stroke="#0bb7ff" stroke-width="2"/>
+          <path d="M46 26l-14 12" stroke="#0bb7ff" stroke-width="2"/>
+        </svg>
+        <span>Canotaje</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="vela">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <polygon points="32,12 12,52 32,52 52,52" />
+          <rect x="30" y="12" width="4" height="40" />
+        </svg>
+        <span>Vela</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="montaña">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <polygon points="16,52 32,24 48,52" />
+          <polyline points="24,52 32,36 40,52" />
+        </svg>
+        <span>Montaña</span>
       </div>
     </div>
     <div id="destinos-lista" aria-live="polite" aria-label="Lista de destinos posibles"></div>
   </div>
+
   <script>
     const categoriaBtns = document.querySelectorAll('.categoria-btn');
     const destinosDiv = document.getElementById('destinos-lista');
@@ -327,7 +406,11 @@
       playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
       gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
       ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Torres del Paine", "Islas Malvinas"],
-      lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"]
+      lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"],
+      senderismo: ["Parque Nacional Torres del Paine", "Camino Inca", "Sendero de la Patagonia", "Ruta de los Parques, Chile", "Selva Lacandona"],
+      canotaje: ["Río Negro", "Río Futaleufú", "Río Grande", "Lago Todos los Santos", "Isla de Chiloé"],
+      vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"],
+      montaña: ["Andes", "Himalaya", "Rockies", "Pirineos", "Alpes Franceses"]
     };
 
     function resetCategorias() {
