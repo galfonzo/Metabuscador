@@ -10,10 +10,15 @@
 
     body {
       margin: 0;
-      background: #0f1e33;
+      background: #fff; /* Fondo blanco */
       font-family: 'Open Sans', Arial, sans-serif;
       color: #000;
       min-height: 100vh;
+    }
+
+    /* Contenedor que envuelve toda la página para moverla 3 líneas hacia abajo */
+    .page-wrapper {
+      padding-top: 4.6rem; /* Aproximadamente 3 líneas de texto de espacio */
     }
 
     .dashboard-bar {
@@ -41,7 +46,7 @@
     }
 
     .dashboard-bar img {
-      height: 102px;
+      height: 102px; /* 50% más grande */
       user-select: none;
     }
 
@@ -128,6 +133,8 @@
       display: none;
       flex-direction: column;
       min-width: 200px;
+      margin-left: 12px;
+      margin-bottom: 12px;
     }
 
     #fecha-vuelta-container label {
@@ -315,137 +322,160 @@
       font-weight: 700;
     }
 
+    /* Responsive */
     @media (max-width: 900px) {
-      .dashboard-bar, .categorias-bar {
+      .dashboard-bar,
+      .categorias-bar {
         flex-direction: column;
         gap: 26px;
         align-items: flex-start;
       }
+
       .form-row {
         flex-wrap: wrap;
       }
-      .form-row > div, .origin-wrapper {
+
+      .form-row > div,
+      .origin-wrapper {
         max-width: 100%;
         margin-right: 0;
       }
+
       #categorias {
         min-width: auto;
         flex-wrap: wrap;
         gap: 14px;
       }
+
       .categoria-btn {
         width: 90px;
         height: 90px;
       }
+
       #destinos-lista {
         max-width: 100vw;
         position: relative;
         top: auto;
         height: auto;
       }
+
       .origin-button-container {
         margin-right: 12px;
         width: 32px;
         height: 32px;
       }
     }
+
     @media (max-width: 600px) {
-      .dashboard-bar {padding: 12px 7px; flex-direction: column;}
-      .categorias-bar {flex-direction: column; align-items: flex-start;}
-      .form-row, .form-checkbox-row {flex-direction: column; align-items: stretch;}
+      .dashboard-bar {
+        padding: 12px 7px;
+        flex-direction: column;
+      }
+
+      .categorias-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .form-row,
+      .form-checkbox-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="dashboard-bar">
-    <div class="logo">
-      <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
-    </div>
-    <form id="search-form" autocomplete="off" novalidate style="flex:1;">
-      <div class="form-row">
-        <div class="origin-wrapper">
-          <div class="origin-button-container" id="toggle-trip-type" title="Ida y Vuelta" tabindex="0" role="button" aria-pressed="false" aria-label="Alternar viaje de ida y vuelta">
-            <svg class="up" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 14l5-5 5 5z"/></svg>
-            <svg class="down" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 10l5 5 5-5z"/></svg>
-          </div>
-          <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
-        </div>
-        <div id="destino-group">
-          <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
-        </div>
-        <div id="fecha-ida-group">
-          <input type="date" id="fecha-ida" name="fecha-ida" required />
-        </div>
-        <div id="fecha-vuelta-container">
-          <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" />
-        </div>
-        <div id="checkboxes-group" class="form-checkbox-row">
-          <label>
-            <input type="checkbox" id="alojamiento"/>
-            Alojamiento
-          </label>
-          <label>
-            <input type="checkbox" id="seguro" aria-controls="formulario-seguro"/>
-            Seguro
-          </label>
-          <div id="formulario-seguro" aria-hidden="true">
-            <select id="tipo-seguro" name="tipo-seguro" disabled>
-              <option value="">Tipo de seguro</option>
-              <option value="basico">Básico</option>
-              <option value="premium">Premium</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" aria-label="Buscar viajes">Buscar</button>
+  <div class="page-wrapper">
+    <div class="dashboard-bar">
+      <div class="logo">
+        <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
       </div>
-    </form>
-  </div>
+      <form id="search-form" autocomplete="off" novalidate style="flex:1;">
+        <div class="form-row">
+          <div class="origin-wrapper">
+            <div class="origin-button-container" id="toggle-trip-type" title="Ida y Vuelta" tabindex="0" role="button" aria-pressed="false" aria-label="Alternar viaje de ida y vuelta">
+              <svg class="up" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 14l5-5 5 5z"/></svg>
+              <svg class="down" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 10l5 5 5-5z"/></svg>
+            </div>
+            <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
+          </div>
+          <div id="destino-group">
+            <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
+          </div>
+          <div id="fecha-ida-group">
+            <input type="date" id="fecha-ida" name="fecha-ida" required />
+          </div>
+          <div id="fecha-vuelta-container">
+            <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" />
+          </div>
+          <div id="checkboxes-group" class="form-checkbox-row">
+            <label>
+              <input type="checkbox" id="alojamiento"/>
+              Alojamiento
+            </label>
+            <label>
+              <input type="checkbox" id="seguro" aria-controls="formulario-seguro"/>
+              Seguro
+            </label>
+            <div id="formulario-seguro" aria-hidden="true">
+              <select id="tipo-seguro" name="tipo-seguro" disabled>
+                <option value="">Tipo de seguro</option>
+                <option value="basico">Básico</option>
+                <option value="premium">Premium</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" aria-label="Buscar viajes">Buscar</button>
+        </div>
+      </form>
+    </div>
 
-  <div class="categorias-bar">
-    <div id="categorias" role="list" aria-label="Categorías de viaje">
-      <!-- Categoría - Aventura -->
-      <div class="categoria-btn" tabindex="0" data-categoria="aventura">
-        <svg viewBox="0 0 64 64"><path d="M32 10 L12 54 L22 54 L32 36 L42 54 L52 54 Z"/></svg>
-        <span>Aventura</span>
+    <div class="categorias-bar">
+      <div id="categorias" role="list" aria-label="Categorías de viaje">
+        <div class="categoria-btn" tabindex="0" data-categoria="aventura">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 10 L12 54 L22 54 L32 36 L42 54 L52 54 Z"/></svg>
+          <span>Aventura</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="cultural">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="18"/><rect x="26" y="24" width="12" height="16"/></svg>
+          <span>Cultural</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="playa">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="20"/><path d="M12 32h40" stroke="#007bff" stroke-width="4"/></svg>
+          <span>Playa</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="20" y="44" width="24" height="8"/><circle cx="32" cy="32" r="10"/></svg>
+          <span>Gastronómico</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M20 52s8-32 24-32 12 32 12 32z"/></svg>
+          <span>Ecoturismo</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="lujo">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><polygon points="32 12 44 52 20 52"/><circle cx="32" cy="44" r="6"/></svg>
+          <span>Lujo</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="senderismo">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="7"/><rect x="15" y="25" width="6" height="18" rx="3"/><rect x="35" y="42" width="4" height="13" rx="2"/><path d="M18 32 L28 36 L30 44" stroke="#007bff" stroke-width="2" fill="none"/><path d="M20 42 L44 58" stroke="#007bff" stroke-width="2" fill="none"/><circle cx="46" cy="58" r="3"/></svg>
+          <span>Senderismo</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="canotaje">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><ellipse cx="32" cy="54" rx="25" ry="6" opacity="0.25"/><rect x="20" y="34" width="24" height="8" rx="4"/><rect x="30" y="18" width="4" height="18" rx="2"/><rect x="18" y="44" width="4" height="17" rx="2"/><rect x="42" y="44" width="4" height="17" rx="2"/><path d="M16 24 Q32 10 48 24" stroke="#007bff" stroke-width="2" fill="none"/></svg>
+          <span>Canotaje</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="vela">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="30" y="14" width="4" height="34" rx="2"/><polygon points="32,48 58,48 32,16"/><polygon points="32,48 6,48 32,16"/><path d="M8 54 Q32 58 56 54" stroke="#007bff" stroke-width="3" fill="none"/></svg>
+          <span>Vela</span>
+        </div>
+        <div class="categoria-btn" tabindex="0" data-categoria="montaña">
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><polygon points="14,54 32,18 50,54"/><polygon points="24,40 32,26 40,40"/><rect x="30.5" y="8" width="3" height="14"/><polygon points="32,8 37,14 27,14"/><path d="M10 54 H54" stroke="#007bff" stroke-width="2"/></svg>
+          <span>Montaña</span>
+        </div>
       </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="cultural">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="18"/><rect x="26" y="24" width="12" height="16"/></svg>
-        <span>Cultural</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="playa">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/><path d="M12 32h40" stroke="#007bff" stroke-width="4"/></svg>
-        <span>Playa</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
-        <svg viewBox="0 0 64 64"><rect x="20" y="44" width="24" height="8"/><circle cx="32" cy="32" r="10"/></svg>
-        <span>Gastronómico</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
-        <svg viewBox="0 0 64 64"><path d="M20 52s8-32 24-32 12 32 12 32z"/></svg>
-        <span>Ecoturismo</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="lujo">
-        <svg viewBox="0 0 64 64"><polygon points="32 12 44 52 20 52"/><circle cx="32" cy="44" r="6"/></svg>
-        <span>Lujo</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="senderismo">
-        <svg viewBox="0 0 64 64"><circle cx="18" cy="18" r="7"/><rect x="15" y="25" width="6" height="18" rx="3"/><rect x="35" y="42" width="4" height="13" rx="2"/><path d="M18 32 L28 36 L30 44" stroke="#007bff" stroke-width="2" fill="none"/><path d="M20 42 L44 58" stroke="#007bff" stroke-width="2" fill="none"/><circle cx="46" cy="58" r="3"/></svg>
-        <span>Senderismo</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="canotaje">
-        <svg viewBox="0 0 64 64"><ellipse cx="32" cy="54" rx="25" ry="6" opacity="0.25"/><rect x="20" y="34" width="24" height="8" rx="4"/><rect x="30" y="18" width="4" height="18" rx="2"/><rect x="18" y="44" width="4" height="17" rx="2"/><rect x="42" y="44" width="4" height="17" rx="2"/><path d="M16 24 Q32 10 48 24" stroke="#007bff" stroke-width="2" fill="none"/></svg>
-        <span>Canotaje</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="vela">
-        <svg viewBox="0 0 64 64"><rect x="30" y="14" width="4" height="34" rx="2"/><polygon points="32,48 58,48 32,16"/><polygon points="32,48 6,48 32,16"/><path d="M8 54 Q32 58 56 54" stroke="#007bff" stroke-width="3" fill="none"/></svg>
-        <span>Vela</span>
-      </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="montaña">
-        <svg viewBox="0 0 64 64"><polygon points="14,54 32,18 50,54"/><polygon points="24,40 32,26 40,40"/><rect x="30.5" y="8" width="3" height="14"/><polygon points="32,8 37,14 27,14"/><path d="M10 54 H54" stroke="#007bff" stroke-width="2"/></svg>
-        <span>Montaña</span>
-      </div>
+      <div id="destinos-lista" aria-live="polite" aria-label="Lista de destinos posibles"></div>
     </div>
-    <div id="destinos-lista" aria-live="polite" aria-label="Lista de destinos posibles"></div>
   </div>
 
   <script>
@@ -454,6 +484,7 @@
     const origenInput = document.getElementById('origen');
     const destinoInput = document.getElementById('destino');
     origenInput.value = "MVD";
+
     toggleBtn.addEventListener('click', () => {
       const pressed = toggleBtn.getAttribute('aria-pressed') === 'true';
       if (pressed) {
@@ -464,6 +495,7 @@
         toggleBtn.setAttribute('aria-pressed', 'true');
       }
     });
+
     toggleBtn.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -471,7 +503,6 @@
       }
     });
 
-    // Categorías, destinos y funcionalidad
     const categoriaBtns = document.querySelectorAll('.categoria-btn');
     const destinosDiv = document.getElementById('destinos-lista');
     let categoriaSeleccionada = "";
@@ -526,6 +557,7 @@
         destinoSeleccionado = "";
       }
     }
+
     categoriaBtns.forEach(btn => {
       btn.addEventListener('click', function() {
         resetCategorias();
