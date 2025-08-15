@@ -41,7 +41,7 @@
     }
 
     .dashboard-bar img {
-      height: 102px; /* 50% más grande */
+      height: 102px;
       user-select: none;
     }
 
@@ -121,7 +121,7 @@
     }
 
     label {
-      display: none; /* ocultamos labels para compactar barra */
+      display: none;
     }
 
     #fecha-vuelta-container {
@@ -186,7 +186,6 @@
       outline: none;
     }
 
-    /* Categorías - fondo blanco removido para contraste */
     .categorias-bar {
       width: 100%;
       max-width: 1400px;
@@ -234,8 +233,8 @@
     }
 
     .categoria-btn svg {
-      width: 72px;
-      height: 72px;
+      width: 42px;
+      height: 42px;
       fill: #007bff;
       transition: fill 0.28s;
       user-select: none;
@@ -256,7 +255,7 @@
       position: relative;
       color: #000;
       font-weight: 700;
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       text-align: center;
       user-select: none;
       width: 100%;
@@ -271,16 +270,15 @@
     #destinos-lista {
       background: #e9ecef;
       box-shadow: 0 7px 21px #007bff55;
-      border-radius: 14px; 
-      min-width: 270px; max-width: 310px;
+      border-radius: 14px;
+      min-width: 270px;
+      max-width: 310px;
       padding: 18px 24px;
       color: #000;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       display: none;
       user-select: none;
       margin-top: 5px;
-      position: sticky;
-      top: 120px;
       height: 220px;
       overflow-y: auto;
     }
@@ -297,7 +295,7 @@
       background: rgba(0 0 0 / 0.07);
       margin: 9px 0;
       border-radius: 7px;
-      padding: 9px 16px;
+      padding: 9px 11px;
       cursor: pointer;
       font-weight: 600;
       border: 1.2px solid transparent;
@@ -317,76 +315,44 @@
       font-weight: 700;
     }
 
-    /* Responsive */
-    @media (max-width: 1320px) {
-      .dashboard-bar, .categorias-bar {
-        max-width: 99vw;
-      }
-    }
-
     @media (max-width: 900px) {
       .dashboard-bar, .categorias-bar {
         flex-direction: column;
         gap: 26px;
         align-items: flex-start;
       }
-
       .form-row {
         flex-wrap: wrap;
       }
-
-      .form-row > div,
-      .origin-wrapper {
+      .form-row > div, .origin-wrapper {
         max-width: 100%;
         margin-right: 0;
       }
-
       #categorias {
         min-width: auto;
         flex-wrap: wrap;
         gap: 14px;
       }
-
       .categoria-btn {
         width: 90px;
         height: 90px;
       }
-
       #destinos-lista {
         max-width: 100vw;
         position: relative;
         top: auto;
         height: auto;
       }
-
       .origin-button-container {
         margin-right: 12px;
         width: 32px;
         height: 32px;
       }
     }
-
     @media (max-width: 600px) {
-      .dashboard-bar {
-        padding: 12px 7px;
-        flex-direction: column;
-      }
-
-      .categorias-bar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .form-row,
-      .form-checkbox-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      #mensajes-usuario {
-        position: static;
-        left: auto;
-      }
+      .dashboard-bar {padding: 12px 7px; flex-direction: column;}
+      .categorias-bar {flex-direction: column; align-items: flex-start;}
+      .form-row, .form-checkbox-row {flex-direction: column; align-items: stretch;}
     }
   </style>
 </head>
@@ -395,8 +361,7 @@
     <div class="logo">
       <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
     </div>
-    <form id="search-form" autocomplete="off" novalidate style="flex:1; position:relative;">
-      <div id="mensajes-usuario" role="alert" aria-live="assertive"></div>
+    <form id="search-form" autocomplete="off" novalidate style="flex:1;">
       <div class="form-row">
         <div class="origin-wrapper">
           <div class="origin-button-container" id="toggle-trip-type" title="Ida y Vuelta" tabindex="0" role="button" aria-pressed="false" aria-label="Alternar viaje de ida y vuelta">
@@ -406,15 +371,12 @@
           <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
         </div>
         <div id="destino-group">
-          <label for="destino">Destino</label>
           <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
         </div>
         <div id="fecha-ida-group">
-          <label for="fecha-ida">Fecha ida</label>
           <input type="date" id="fecha-ida" name="fecha-ida" required />
         </div>
         <div id="fecha-vuelta-container">
-          <label for="fecha-vuelta">Fecha vuelta</label>
           <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" />
         </div>
         <div id="checkboxes-group" class="form-checkbox-row">
@@ -427,9 +389,8 @@
             Seguro
           </label>
           <div id="formulario-seguro" aria-hidden="true">
-            <label for="tipo-seguro">Tipo:</label>
             <select id="tipo-seguro" name="tipo-seguro" disabled>
-              <option value="">Selecciona</option>
+              <option value="">Tipo de seguro</option>
               <option value="basico">Básico</option>
               <option value="premium">Premium</option>
             </select>
@@ -442,7 +403,47 @@
 
   <div class="categorias-bar">
     <div id="categorias" role="list" aria-label="Categorías de viaje">
-      <!-- Íconos e ítems de categorías se integran aquí según anteriores respuestas -->
+      <!-- Categoría - Aventura -->
+      <div class="categoria-btn" tabindex="0" data-categoria="aventura">
+        <svg viewBox="0 0 64 64"><path d="M32 10 L12 54 L22 54 L32 36 L42 54 L52 54 Z"/></svg>
+        <span>Aventura</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="cultural">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="18"/><rect x="26" y="24" width="12" height="16"/></svg>
+        <span>Cultural</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="playa">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/><path d="M12 32h40" stroke="#007bff" stroke-width="4"/></svg>
+        <span>Playa</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
+        <svg viewBox="0 0 64 64"><rect x="20" y="44" width="24" height="8"/><circle cx="32" cy="32" r="10"/></svg>
+        <span>Gastronómico</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
+        <svg viewBox="0 0 64 64"><path d="M20 52s8-32 24-32 12 32 12 32z"/></svg>
+        <span>Ecoturismo</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="lujo">
+        <svg viewBox="0 0 64 64"><polygon points="32 12 44 52 20 52"/><circle cx="32" cy="44" r="6"/></svg>
+        <span>Lujo</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="senderismo">
+        <svg viewBox="0 0 64 64"><circle cx="18" cy="18" r="7"/><rect x="15" y="25" width="6" height="18" rx="3"/><rect x="35" y="42" width="4" height="13" rx="2"/><path d="M18 32 L28 36 L30 44" stroke="#007bff" stroke-width="2" fill="none"/><path d="M20 42 L44 58" stroke="#007bff" stroke-width="2" fill="none"/><circle cx="46" cy="58" r="3"/></svg>
+        <span>Senderismo</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="canotaje">
+        <svg viewBox="0 0 64 64"><ellipse cx="32" cy="54" rx="25" ry="6" opacity="0.25"/><rect x="20" y="34" width="24" height="8" rx="4"/><rect x="30" y="18" width="4" height="18" rx="2"/><rect x="18" y="44" width="4" height="17" rx="2"/><rect x="42" y="44" width="4" height="17" rx="2"/><path d="M16 24 Q32 10 48 24" stroke="#007bff" stroke-width="2" fill="none"/></svg>
+        <span>Canotaje</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="vela">
+        <svg viewBox="0 0 64 64"><rect x="30" y="14" width="4" height="34" rx="2"/><polygon points="32,48 58,48 32,16"/><polygon points="32,48 6,48 32,16"/><path d="M8 54 Q32 58 56 54" stroke="#007bff" stroke-width="3" fill="none"/></svg>
+        <span>Vela</span>
+      </div>
+      <div class="categoria-btn" tabindex="0" data-categoria="montaña">
+        <svg viewBox="0 0 64 64"><polygon points="14,54 32,18 50,54"/><polygon points="24,40 32,26 40,40"/><rect x="30.5" y="8" width="3" height="14"/><polygon points="32,8 37,14 27,14"/><path d="M10 54 H54" stroke="#007bff" stroke-width="2"/></svg>
+        <span>Montaña</span>
+      </div>
     </div>
     <div id="destinos-lista" aria-live="polite" aria-label="Lista de destinos posibles"></div>
   </div>
@@ -452,9 +453,7 @@
     const fechaVueltaContainer = document.getElementById('fecha-vuelta-container');
     const origenInput = document.getElementById('origen');
     const destinoInput = document.getElementById('destino');
-    // Inicializamos origen con MVD editable
     origenInput.value = "MVD";
-
     toggleBtn.addEventListener('click', () => {
       const pressed = toggleBtn.getAttribute('aria-pressed') === 'true';
       if (pressed) {
@@ -465,7 +464,6 @@
         toggleBtn.setAttribute('aria-pressed', 'true');
       }
     });
-
     toggleBtn.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -473,7 +471,76 @@
       }
     });
 
-    // Aquí incluir el código completo de categorías, destinos, validaciones y envío de formulario según versiones anteriores para funcionalidad completa
+    // Categorías, destinos y funcionalidad
+    const categoriaBtns = document.querySelectorAll('.categoria-btn');
+    const destinosDiv = document.getElementById('destinos-lista');
+    let categoriaSeleccionada = "";
+    let destinoSeleccionado = "";
+
+    const destinosPorCategoria = {
+      aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
+      cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
+      playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
+      gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
+      ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Torres del Paine", "Islas Malvinas"],
+      lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"],
+      senderismo: ["Torres del Paine", "Camino Inca", "Sendero Patagonia", "Ruta Parques Chile", "Selva Lacandona"],
+      canotaje: ["Río Negro", "Río Futaleufú", "Río Grande", "Lago Todos Santos", "Isla Chiloé"],
+      vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"],
+      montaña: ["Andes", "Himalaya", "Rockies", "Pirineos", "Alpes Franceses"]
+    };
+
+    function resetCategorias() {
+      categoriaBtns.forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      destinosDiv.style.display = 'none';
+      destinosDiv.innerHTML = "";
+      destinoSeleccionado = "";
+    }
+
+    function mostrarDestinos(cat) {
+      const destinos = destinosPorCategoria[cat] || [];
+      if(destinos.length) {
+        destinosDiv.style.display = "block";
+        destinosDiv.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join("")}</ul>`;
+        destinosDiv.querySelectorAll('li').forEach(li => {
+          li.addEventListener('click', function() {
+            destinosDiv.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
+            this.classList.add('selected');
+            destinoSeleccionado = this.textContent;
+            destinoInput.value = destinoSeleccionado;
+            destinoInput.classList.remove('input-error');
+          });
+          li.addEventListener('keydown', function(e) {
+            if(e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              this.click();
+            }
+          });
+        });
+      } else {
+        destinosDiv.style.display = "none";
+        destinosDiv.innerHTML = "";
+        destinoSeleccionado = "";
+      }
+    }
+    categoriaBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        resetCategorias();
+        this.classList.add('selected');
+        this.setAttribute('aria-pressed', 'true');
+        categoriaSeleccionada = this.dataset.categoria;
+        mostrarDestinos(categoriaSeleccionada);
+      });
+      btn.addEventListener('keydown', function(e) {
+        if(e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
   </script>
 </body>
 </html>
