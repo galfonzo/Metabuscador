@@ -3,256 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip - Buscador Mejorado y Reorganizado</title>
+  <title>TuneMyTrip — Dashboard Horizontal</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
       margin: 0;
-      min-height: 100vh;
-      background-color: #0f1e33;
+      background: #0f1e33;
       font-family: 'Open Sans', Arial, sans-serif;
       color: #fff;
-      display: flex;
-      justify-content: center;
-      padding: 30px 10px 40px 10px;
+      min-height: 100vh;
     }
 
-    .container {
-      display: flex;
-      align-items: flex-start;
-      background: rgba(0,0,0,0.75);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px #00c6ff44;
-      max-width: 900px;
+    .dashboard-bar {
       width: 100%;
-      padding: 20px 32px;
-      gap: 24px;
-      box-sizing: border-box;
-      flex-wrap: wrap;
-    }
-
-    .logo-container {
-      flex: 0 0 auto;
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      height: 120px;
+      background: rgba(0,0,0,.85);
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 6px 24px #00c6ff35;
+      padding: 32px 38px;
+      gap: 30px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
-
-    .logo-container img {
-      max-height: 100px;
-      max-width: 220px;
-      filter: drop-shadow(0 0 8px rgba(0,198,255,0.8));
-      user-select: none;
-    }
-
-    form {
-      flex: 1 1 600px;
+    .dashboard-bar .logo {
+      flex: 0 0 220px;
       display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100px;
     }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #abcffb;
-      font-size: 1rem;
+    .dashboard-bar img {
+      max-height: 68px;
+      filter: drop-shadow(0 0 8px #00c6ff);
       user-select: none;
     }
-
-    /* Primera fila: Origen, Destino, Fecha Ida */
-    .row-inputs {
+    .form-row {
       display: flex;
       gap: 18px;
-      flex-wrap: nowrap;
-      margin-bottom: 8px;
-      align-items: flex-end;
-      justify-content: flex-start;
-    }
-    .row-inputs > div {
+      align-items: center;
       flex: 1 1 auto;
-      min-width: 160px;
-      position: relative;
+      justify-content: flex-start;
+      min-width: 0;
     }
-
-    /* Segunda fila: alojamiento y seguro en línea */
-    .row-aloj-seguro {
+    .form-row > div {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 16px;
-      flex-wrap: nowrap;
-    }
-    .alojamiento-block {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1 1 260px;
-      min-width: 200px;
-    }
-    .alojamiento-block label {
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .alojamiento-block input[type="date"] {
-      margin-left: 8px;
-      flex-grow: 1;
-      max-width: 180px;
-      display: inline-block !important;
-    }
-
-    .seguro-block {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-      flex: 1 1 280px;
-      min-width: 280px;
-      position: relative;
-    }
-
-    .checkbox-label {
-      cursor: pointer;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Campo tipo seguro */
-    #formulario-seguro {
-      margin: 0;
-      padding: 0;
-      border: none;
-      box-shadow: none;
-      background: transparent;
-      display: flex !important;
       flex-direction: column;
-      max-width: 160px;
-      position: relative;
+      flex: 1 1 135px;
+      min-width: 120px;
+      max-width: 250px;
+      margin-right: 4px;
+    }
+    label {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #8fd8fe;
+      margin-bottom: 5px;
+      user-select: none;
+      display: block;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 7px;
+      border: 1.5px solid #368dde;
+      background: #122948;
+      color: white;
+      font-size: 1rem;
+      transition: border 0.2s;
+      font-family: 'Open Sans', Arial, sans-serif;
+    }
+    .input-error { border-color: #ff5a5a !important; background: #3a1a1a !important; }
+    input:focus { border-color: #3bc9ff; outline: none; }
+    .form-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-left: 10px;
+    }
+    .form-checkbox-row label { margin-bottom: 0; }
+    input[type="checkbox"] { accent-color: #00c6ff; margin-right: 6px; cursor: pointer;}
+    #fecha-vuelta {
+      margin-left: 7px;
+      min-width: 120px;
+      display: none;
+    }
+    #formulario-seguro {
+      display: none;
+      margin-left: 10px;
+      background: #144081;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid #00c6ff;
     }
     #tipo-seguro {
-      margin-top: 4px;
-      width: 100%;
-      padding: 7px 11px;
+      width: 140px;
+      padding: 6px 10px;
       border-radius: 5px;
       border: 1px solid #3976be;
       background: #17395f;
       color: white;
       font-size: 1rem;
-      font-family: 'Open Sans', Arial, sans-serif;
-      transition: border-color 0.3s;
+      margin-top: 3px;
     }
-    #tipo-seguro:disabled {
-      background: #283f67;
-      color: #93b7db;
-      cursor: not-allowed;
-    }
-
-    /* Botón ayuda (tooltip) */
-    .help-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: #007bbfcc;
-      color: white;
+    button[type="submit"] {
+      margin-left: 12px;
+      padding: 9px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #007bff 74%, #0fd6fd 100%);
       border: none;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-weight: bold;
-      font-size: 1rem;
+      border-radius: 28px;
       cursor: pointer;
+      box-shadow: 0 4px 18px #00abeea55;
+      transition: background 0.18s, box-shadow 0.22s;
       user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      padding: 0;
-      transition: background-color 0.2s;
     }
-    .help-btn:hover, .help-btn:focus {
-      background-color: #00c6ff;
+    button[type="submit"]:hover,button[type="submit"]:focus{
+      background: linear-gradient(90deg, #009efd 70%, #26ffe6 100%);
       outline: none;
     }
-
-    /* Tooltip */
-    .tooltip {
-      position: absolute;
-      bottom: 100%;
-      right: 6px;
-      background: #0284c7cc;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      width: max-content;
-      max-width: 260px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      user-select: none;
-      z-index: 999;
-      white-space: normal;
-    }
-    .tooltip::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      right: 10px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: #0284c7cc transparent transparent transparent;
-    }
-    .tooltip.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    input[type="text"], input[type="date"] {
-      width: 100%;
-      padding: 10px 13px;
-      border-radius: 8px;
-      border: 1.5px solid #368dde;
-      background: #122948;
-      color: white;
+    #mensajes-usuario {
+      padding: 12px 15px;
+      border-radius: 7px;
+      font-weight: 700;
       font-size: 1rem;
-      margin-bottom: 3px;
-      transition: border 0.2s;
-      font-family: 'Open Sans', Arial, sans-serif;
-    }
-    input[type=text]:focus, input[type=date]:focus {
-      border-color: #3bc9ff;
-      outline: none;
-    }
-    input[type="checkbox"] {
-      accent-color: #00c6ff;
-      cursor: pointer;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    .input-error {
-      border-color: #ff5a5a !important;
-      background-color: #3a1a1a !important;
-      animation: shake 0.28s ease-in-out;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25%, 75% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-    }
-
-    #fecha-vuelta {
-      margin-left: 10px;
-      width: 100%;
-      margin-top: 4px;
+      min-height: 32px;
       display: none;
+      position: absolute;
+      top: 95px;
+      left: 47%;
+      background-color: #2828ffdd;
+      z-index: 99;
+      box-shadow: 0 3px 12px #0008;
+      letter-spacing: 1px;
     }
+    #mensajes-usuario.error { background-color: #ff525233; color: #ff3232; border: 1.5px solid #ff3233cc; display: block;}
+    #mensajes-usuario.success { background-color: #2dee7733; color: #0bd80b; border: 1.5px solid #0bd80bcc; display: block;}
 
+    /* Categorías y destinos */
+    .categorias-bar {
+      width: 100%;
+      max-width: 1400px;
+      margin: 35px auto 0 auto;
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+      position: relative;
+    }
     #categorias {
       display: flex;
       gap: 20px;
@@ -260,11 +164,10 @@
       overflow-x: auto;
       justify-content: flex-start;
       align-items: stretch;
-      margin: 19px 0 14px 0;
-      padding-bottom: 6px;
+      padding-bottom: 9px;
       scroll-behavior: smooth;
+      flex: 1 1 850px;
     }
-
     .categoria-btn {
       position: relative;
       width: 120px;
@@ -279,531 +182,351 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      transition: border-color 0.3s, box-shadow 0.3s, transform 0.25s ease;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.23s;
       outline: none;
       flex-shrink: 0;
     }
-
+    .categoria-btn.selected { border-color: #00cfff; box-shadow: 0 0 30px #00cfffcc; transform: scale(1.10); z-index: 1;}
+    .categoria-btn.selected img { filter: brightness(1);}
     .categoria-btn img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.80);
-      pointer-events: none;
-      border-radius: 16px;
-      transition: filter 0.25s ease;
-      user-select: none;
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.80); pointer-events: none; border-radius: 16px;
+      transition: filter 0.2s; user-select: none;
     }
-
-    .categoria-btn.selected,
-    .categoria-btn:hover,
-    .categoria-btn:focus {
-      border-color: #00cfff;
-      box-shadow: 0 0 30px #00cfffcc;
-      transform: scale(1.06);
-      z-index: 10;
-    }
-
-    .categoria-btn.selected img,
-    .categoria-btn:hover img,
-    .categoria-btn:focus img {
-      filter: brightness(1);
-    }
-
     .categoria-btn span {
-      position: relative;
-      color: #e2f8ff;
-      font-weight: 700;
-      font-size: 1.08rem;
-      padding: 10px 8px 8px 8px;
-      z-index: 2;
-      text-align: center;
-      text-shadow: 0 0 9px #003954bb;
-      user-select: none;
-      width: 100%;
+      position: relative; color: #e2f8ff; font-weight: 700; font-size: 1.08rem;
+      padding: 10px 8px 8px 8px; z-index: 2; text-align: center;
+      text-shadow: 0 0 9px #003954bb; user-select: none; width: 100%;
       background: linear-gradient(transparent 62%, #02769d 94%);
-      border-bottom-left-radius: 16px;
-      border-bottom-right-radius: 16px;
+      border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
     }
-    .categoria-btn:focus-visible {
-      outline: 3px solid #00c6ff;
-      outline-offset: 3px;
-      z-index: 12;
-    }
-
     #destinos-lista {
       background: rgba(0, 109, 185, 0.83);
       box-shadow: 0 7px 21px #00d3ff55;
-      border-radius: 14px;
-      width: 96%;
-      max-width: 420px;
-      padding: 13px 17px;
-      color: #fff;
-      font-size: 1rem;
-      display: none;
-      margin: 0 auto 10px auto;
-      user-select: none;
+      border-radius: 14px; min-width: 250px; max-width: 310px; padding: 18px 22px;
+      color: #fff; font-size: 1rem; display: none; user-select: none; margin-top: 5px;
     }
-
-    #destinos-lista ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      max-height: 155px;
-      overflow-y: auto;
-    }
-
+    #destinos-lista ul {list-style: none; margin: 0; padding: 0; max-height: 148px; overflow-y: auto;}
     #destinos-lista li {
-      background: rgba(255 255 255 / 0.15);
-      margin: 7px 0;
-      border-radius: 7px;
-      padding: 8px 15px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.22s, border-color 0.22s, transform 0.2s ease;
-      border: 1.2px solid transparent;
-      color: #e0f7ff;
-      user-select: none;
-      transform-origin: center center;
+      background: rgba(255 255 255 / 0.12);
+      margin: 8px 0; border-radius: 7px; padding: 9px 15px;
+      cursor: pointer; font-weight: 600; border: 1.2px solid transparent; color: #e0f7ff; user-select: none;
+      transition: background .22s,border-color .22s,transform .2s;
+    }
+    #destinos-lista li.selected, #destinos-lista li:hover, #destinos-lista li:focus {
+      background-color: rgba(255 255 255 / 0.34);
+      border-color: #00d3ff; color: #03294c; outline: none; transform: scale(1.04); font-weight: 700;
     }
 
-    #destinos-lista li.selected,
-    #destinos-lista li:hover,
-    #destinos-lista li:focus {
-      background-color: rgba(255 255 255 / 0.38);
-      border-color: #00d3ff;
-      color: #03294c;
-      outline: none;
-      transform: scale(1.02);
-      font-weight: 700;
+    @media (max-width: 1320px){
+      .dashboard-bar, .categorias-bar { max-width: 99vw;}
     }
-
-    #mensajes-usuario {
-      margin-bottom: 18px;
-      padding: 12px 15px;
-      border-radius: 7px;
-      font-weight: 700;
-      font-size: 1.08rem;
-      min-height: 32px;
-      display: none;
-      letter-spacing: 1px;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      user-select: none;
+    @media (max-width: 900px){
+      .dashboard-bar, .categorias-bar { flex-direction: column; gap: 26px; align-items: flex-start;}
+      .form-row {flex-wrap: wrap;}
+      .form-row > div {max-width: 100%;}
+      #categorias {gap: 14px;}
+      .categoria-btn {width:90px; height:90px;}
+      #destinos-lista {max-width: 100vw;}
     }
-
-    #mensajes-usuario.error {
-      background-color: #ff525233;
-      color: #ff3232;
-      border: 1.5px solid #ff3233cc;
-      display: block;
-      opacity: 1;
-    }
-
-    #mensajes-usuario.success {
-      background-color: #2dee7733;
-      color: #0bd80b;
-      border: 1.5px solid #0bd80bcc;
-      display: block;
-      opacity: 1;
-    }
-
-    button[type="submit"] {
-      margin-top: 19px;
-      width: 100%;
-      padding: 15px 0;
-      font-size: 1.23rem;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(90deg, #007bff 74%, #0fd6fd 100%);
-      border: none;
-      border-radius: 32px;
-      cursor: pointer;
-      box-shadow: 0 6px 22px #00abeea90;
-      transition: background-color 0.27s, box-shadow 0.22s, transform 0.16s ease;
-      user-select: none;
-    }
-    button[type="submit"]:hover,
-    button[type="submit"]:focus {
-      background: linear-gradient(90deg, #009efd 70%, #26ffe6 100%);
-      outline: none;
-      transform: scale(1.03);
-    }
-
-    @media (max-width: 950px) {
-      .container {
-        flex-direction: column;
-        padding: 30px 20px 30px 20px;
-      }
-      form {
-        flex: 1 1 auto;
-        width: 100%;
-      }
-      .logo-container {
-        margin-bottom: 20px;
-        height: auto;
-        justify-content: center;
-      }
-      #categorias {
-        gap: 14px;
-      }
-      .categoria-btn {
-        width: 95px;
-        height: 95px;
-      }
-      .row-inputs {
-        flex-wrap: wrap;
-      }
-      .row-inputs > div {
-        flex: 1 1 100%;
-        margin-bottom: 12px;
-      }
-      .row-aloj-seguro {
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .alojamiento-block, .seguro-block {
-        flex: 1 1 100%;
-        min-width: 0;
-      }
-      .alojamiento-block input[type="date"] {
-        max-width: 100%;
-      }
-      #formulario-seguro {
-        max-width: 100%;
-      }
+    @media (max-width: 600px){
+      .dashboard-bar {padding: 12px 7px; flex-direction: column;}
+      .categorias-bar {flex-direction: column; align-items:flex-start;}
+      .form-row, .form-checkbox-row {flex-direction: column; align-items:stretch;}
+      #mensajes-usuario {position:static; left:auto;}
     }
   </style>
 </head>
 <body>
-<div class="container" role="banner" aria-label="Encabezado con logo y formulario">
-  <div class="logo-container">
-    <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
-  </div>
-
-  <form id="search-form" aria-label="Formulario de búsqueda de viaje" autocomplete="off" novalidate>
-    <div id="mensajes-usuario" role="alert" aria-live="assertive"></div>
-
-    <!-- Primera fila: Origen, Destino, Fecha Ida -->
-    <div class="row-inputs">
-      <div>
-        <label for="origen">Origen</label>
-        <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
-      </div>
-      <div>
-        <label for="destino">Destino</label>
-        <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
-      </div>
-      <div>
-        <label for="fecha-ida">Fecha ida</label>
-        <input type="date" id="fecha-ida" name="fecha-ida" required />
-      </div>
+  <div class="dashboard-bar">
+    <div class="logo">
+      <img src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" loading="lazy" />
     </div>
-
-    <!-- Segunda fila: alojamiento y seguro -->
-    <div class="row-aloj-seguro">
-      <div class="alojamiento-block">
-        <label for="alojamiento" class="checkbox-label">
-          <input type="checkbox" id="alojamiento" aria-controls="fecha-vuelta" aria-expanded="false" />
-          ¿Necesitas alojamiento?
-        </label>
-        <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" style="display:none;" />
-      </div>
-
-      <div class="seguro-block">
-        <label for="seguro" class="checkbox-label">
-          <input type="checkbox" id="seguro" aria-controls="formulario-seguro" aria-expanded="false" />
-          ¿Quieres agregar seguro de viaje?
-        </label>
-        <div id="formulario-seguro" aria-hidden="true">
-          <label for="tipo-seguro" class="tipo-seguro-label" style="position: relative;">
-            Tipo de seguro:
-            <button class="help-btn" aria-describedby="tooltip-tipo-seguro" tabindex="-1" aria-label="Ayuda sobre tipo de seguro">?</button>
+    <form id="search-form" autocomplete="off" novalidate style="flex:1; position:relative;">
+      <div id="mensajes-usuario" role="alert" aria-live="assertive"></div>
+      <div class="form-row">
+        <div>
+          <label for="origen">Origen</label>
+          <input type="text" id="origen" name="origen" placeholder="Ciudad de salida" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="destino">Destino</label>
+          <input type="text" id="destino" name="destino" placeholder="Ciudad destino" required autocomplete="off" />
+        </div>
+        <div>
+          <label for="fecha-ida">Fecha ida</label>
+          <input type="date" id="fecha-ida" name="fecha-ida" required />
+        </div>
+        <div class="form-checkbox-row">
+          <label>
+            <input type="checkbox" id="alojamiento" aria-controls="fecha-vuelta"/>
+            Alojamiento
           </label>
-          <select id="tipo-seguro" name="tipo-seguro" disabled aria-required="true">
-            <option value="">Selecciona</option>
-            <option value="basico">Básico</option>
-            <option value="premium">Premium</option>
-          </select>
-          <div role="tooltip" id="tooltip-tipo-seguro" class="tooltip hidden">
-            El tipo <strong>Básico</strong> cubre lo esencial, <strong>Premium</strong> incluye cobertura extra como cancelaciones y asistencia.
+          <input type="date" id="fecha-vuelta" name="fecha-vuelta" aria-label="Fecha de vuelta" style="display:none;" />
+          <label>
+            <input type="checkbox" id="seguro" aria-controls="formulario-seguro"/>
+            Seguro
+          </label>
+          <div id="formulario-seguro" aria-hidden="true">
+            <label for="tipo-seguro">Tipo:</label>
+            <select id="tipo-seguro" name="tipo-seguro" disabled>
+              <option value="">Selecciona</option>
+              <option value="basico">Básico</option>
+              <option value="premium">Premium</option>
+            </select>
           </div>
         </div>
+        <button type="submit" aria-label="Buscar viajes">Buscar</button>
       </div>
-    </div>
-
-    <!-- Categorías con imágenes -->
-    <label style="color:#f6ff; font-weight: 600; margin-top: 14px;">Selecciona tipo de viaje</label>
+    </form>
+  </div>
+  <div class="categorias-bar">
     <div id="categorias" role="list" aria-label="Categorías de viaje">
-      <div class="categoria-btn" tabindex="0" data-categoria="aventura" role="listitem" aria-pressed="false" aria-label="Categoría aventura">
+      <div class="categoria-btn" tabindex="0" data-categoria="aventura">
         <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría aventura" loading="lazy" />
         <span>Aventura</span>
       </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="cultural" role="listitem" aria-pressed="false" aria-label="Categoría cultural">
+      <div class="categoria-btn" tabindex="0" data-categoria="cultural">
         <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría cultural" loading="lazy" />
         <span>Cultural</span>
       </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="playa" role="listitem" aria-pressed="false" aria-label="Categoría playa">
+      <div class="categoria-btn" tabindex="0" data-categoria="playa">
         <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría playa" loading="lazy" />
         <span>Playa</span>
       </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico" role="listitem" aria-pressed="false" aria-label="Categoría gastronómico">
+      <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
         <img src="https://images.unsplash.com/photo-1542144612-bc1a87e03e2f?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría gastronómico" loading="lazy" />
         <span>Gastronómico</span>
       </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo" role="listitem" aria-pressed="false" aria-label="Categoría ecoturismo">
+      <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
         <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría ecoturismo" loading="lazy" />
         <span>Ecoturismo</span>
       </div>
-      <div class="categoria-btn" tabindex="0" data-categoria="lujo" role="listitem" aria-pressed="false" aria-label="Categoría lujo">
+      <div class="categoria-btn" tabindex="0" data-categoria="lujo">
         <img src="https://images.unsplash.com/photo-1505765052623-6228cadf0482?auto=format&fit=crop&w=400&q=60&fm=webp" alt="Imagen categoría lujo" loading="lazy" />
         <span>Lujo</span>
       </div>
     </div>
-
-    <!-- Lista dinámica destinos -->
     <div id="destinos-lista" aria-live="polite" aria-label="Lista de destinos posibles"></div>
+  </div>
+  <script>
+    const categoriaBtns = document.querySelectorAll('.categoria-btn');
+    const destinosDiv = document.getElementById('destinos-lista');
+    let categoriaSeleccionada = "";
+    let destinoSeleccionado = "";
+    const audioClick = new Audio('https://actions.google.com/sounds/v1/ui/click.ogg');
+    const origenInput = document.getElementById('origen');
+    const destinoInput = document.getElementById('destino');
 
-    <button type="submit" aria-label="Buscar viajes">Buscar</button>
-  </form>
-</div>
+    // Valor por defecto editable
+    origenInput.value = "MVD";
 
-<script>
-  const categoriaBtns = document.querySelectorAll('.categoria-btn');
-  const destinosDiv = document.getElementById('destinos-lista');
-  let categoriaSeleccionada = "";
-  let destinoSeleccionado = "";
+    const destinosPorCategoria = {
+      aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
+      cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
+      playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
+      gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
+      ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Torres del Paine", "Islas Malvinas"],
+      lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"]
+    };
 
-  // Tooltip handling
-  document.querySelectorAll('.help-btn').forEach(btn => {
-    const tooltipId = btn.getAttribute('aria-describedby');
-    const tooltipEl = document.getElementById(tooltipId);
-
-    btn.addEventListener('mouseenter', () => tooltipEl.classList.add('visible'));
-    btn.addEventListener('mouseleave', () => tooltipEl.classList.remove('visible'));
-    btn.addEventListener('focus', () => tooltipEl.classList.add('visible'));
-    btn.addEventListener('blur', () => tooltipEl.classList.remove('visible'));
-  });
-
-  // Sonido sutil click
-  const audioClick = new Audio('https://actions.google.com/sounds/v1/ui/click.ogg');
-
-  // Destinos por categoría
-  const destinosPorCategoria = {
-    aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
-    cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
-    playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
-    gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
-    ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Torres del Paine", "Islas Malvinas"],
-    lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"]
-  };
-
-  function resetCategorias() {
-    categoriaBtns.forEach(btn => {
-      btn.classList.remove('selected');
-      btn.setAttribute('aria-pressed', 'false');
-    });
-    destinosDiv.style.display = 'none';
-    destinosDiv.innerHTML = "";
-    destinoSeleccionado = "";
-  }
-
-  function mostrarDestinos(cat) {
-    const destinos = destinosPorCategoria[cat] || [];
-    if(destinos.length) {
-      destinosDiv.style.display = "block";
-      destinosDiv.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join("")}</ul>`;
-      destinosDiv.querySelectorAll('li').forEach(li => {
-        li.addEventListener('click', function() {
-          destinosDiv.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
-          this.classList.add('selected');
-          destinoSeleccionado = this.textContent;
-        });
-        li.addEventListener('keydown', function(e) {
-          if(e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            this.click();
-          }
-        });
+    function resetCategorias() {
+      categoriaBtns.forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-pressed', 'false');
       });
-    } else {
-      destinosDiv.style.display = "none";
+      destinosDiv.style.display = 'none';
       destinosDiv.innerHTML = "";
       destinoSeleccionado = "";
     }
-  }
 
-  categoriaBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      audioClick.play().catch(() => {});
-      resetCategorias();
-      this.classList.add('selected');
-      this.setAttribute('aria-pressed', 'true');
-      categoriaSeleccionada = this.dataset.categoria;
-      mostrarDestinos(categoriaSeleccionada);
-      document.getElementById('mensajes-usuario').style.display = 'none';
+    function mostrarDestinos(cat) {
+      const destinos = destinosPorCategoria[cat] || [];
+      if(destinos.length) {
+        destinosDiv.style.display = "block";
+        destinosDiv.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join("")}</ul>`;
+        destinosDiv.querySelectorAll('li').forEach(li => {
+          li.addEventListener('click', function() {
+            destinosDiv.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
+            this.classList.add('selected');
+            destinoSeleccionado = this.textContent;
+            destinoInput.value = destinoSeleccionado;
+            destinoInput.classList.remove('input-error');
+          });
+          li.addEventListener('keydown', function(e) {
+            if(e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              this.click();
+            }
+          });
+        });
+      } else {
+        destinosDiv.style.display = "none";
+        destinosDiv.innerHTML = "";
+        destinoSeleccionado = "";
+      }
+    }
+
+    categoriaBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        audioClick.play().catch(() => {});
+        resetCategorias();
+        this.classList.add('selected');
+        this.setAttribute('aria-pressed', 'true');
+        categoriaSeleccionada = this.dataset.categoria;
+        mostrarDestinos(categoriaSeleccionada);
+      });
+      btn.addEventListener('keydown', function(e) {
+        if(e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          this.click();
+        }
+      });
     });
-    btn.addEventListener('keydown', function(e) {
-      if(e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        this.click();
+
+    const alojamientoCheckbox = document.getElementById("alojamiento");
+    const fechaVueltaInput = document.getElementById("fecha-vuelta");
+    const seguroCheckbox = document.getElementById("seguro");
+    const formularioSeguro = document.getElementById("formulario-seguro");
+    const tipoSeguroSelect = document.getElementById("tipo-seguro");
+    const mensajesContenedor = document.getElementById("mensajes-usuario");
+    const form = document.getElementById("search-form");
+    const fechaIdaInput = document.getElementById("fecha-ida");
+
+    function mostrarMensaje(mensaje, tipo) {
+      mensajesContenedor.textContent = mensaje;
+      mensajesContenedor.className = tipo;
+      mensajesContenedor.style.display = mensaje ? 'block' : 'none';
+    }
+
+    alojamientoCheckbox.addEventListener("change", function() {
+      const show = this.checked;
+      fechaVueltaInput.style.display = show ? "inline-block" : "none";
+      this.setAttribute('aria-expanded', show);
+      if (!show) {
+        fechaVueltaInput.value = "";
+        fechaVueltaInput.classList.remove("input-error");
+        mostrarMensaje("", "");
       }
     });
-  });
 
-  // Formularios y validaciones
-  const alojamientoCheckbox = document.getElementById("alojamiento");
-  const fechaVueltaInput = document.getElementById("fecha-vuelta");
-  const seguroCheckbox = document.getElementById("seguro");
-  const formularioSeguro = document.getElementById("formulario-seguro");
-  const tipoSeguroSelect = document.getElementById("tipo-seguro");
-  const mensajesContenedor = document.getElementById("mensajes-usuario");
-  const form = document.getElementById("search-form");
-  const origenInput = document.getElementById("origen");
-  const destinoInput = document.getElementById("destino");
-  const fechaIdaInput = document.getElementById("fecha-ida");
+    seguroCheckbox.addEventListener("change", function() {
+      const show = this.checked;
+      formularioSeguro.style.display = show ? "block" : "none";
+      tipoSeguroSelect.disabled = !show;
+      this.setAttribute('aria-expanded', show);
+      if (!show) {
+        tipoSeguroSelect.value = "";
+        tipoSeguroSelect.classList.remove("input-error");
+        mostrarMensaje("", "");
+      }
+    });
 
-  function mostrarMensaje(mensaje, tipo) {
-    mensajesContenedor.textContent = mensaje;
-    mensajesContenedor.className = tipo;
-    mensajesContenedor.style.display = mensaje ? 'block' : 'none';
-  }
-
-  alojamientoCheckbox.addEventListener("change", function() {
-    const show = this.checked;
-    fechaVueltaInput.style.display = show ? "inline-block" : "none";
-    this.setAttribute('aria-expanded', show);
-    if (!show) {
-      fechaVueltaInput.value = "";
-      fechaVueltaInput.classList.remove("input-error");
-      mostrarMensaje("", "");
-    }
-  });
-
-  seguroCheckbox.addEventListener("change", function() {
-    const show = this.checked;
-    formularioSeguro.style.display = show ? "block" : "none";
-    tipoSeguroSelect.disabled = !show;
-    this.setAttribute('aria-expanded', show);
-    if (!show) {
-      tipoSeguroSelect.value = "";
-      tipoSeguroSelect.classList.remove("input-error");
-      mostrarMensaje("", "");
-    }
-  });
-
-  fechaVueltaInput.addEventListener("input", function() {
-    if (alojamientoCheckbox.checked && !this.value) {
-      this.classList.add("input-error");
-      mostrarMensaje("Debes seleccionar fecha de vuelta si necesitas alojamiento.", "error");
-    } else {
-      this.classList.remove("input-error");
-      mostrarMensaje("", "");
-    }
-  });
-
-  tipoSeguroSelect.addEventListener("change", function() {
-    if(seguroCheckbox.checked && !this.value){
-      this.classList.add("input-error");
-      mostrarMensaje("Selecciona el tipo de seguro.", "error");
-    } else {
-      this.classList.remove("input-error");
-      mostrarMensaje("", "");
-    }
-  });
-
-  [origenInput, destinoInput, fechaIdaInput].forEach(inp => {
-    inp.addEventListener("input", function() {
-      if (this.value.trim() === "") {
+    fechaVueltaInput.addEventListener("input", function() {
+      if (alojamientoCheckbox.checked && !this.value) {
         this.classList.add("input-error");
-        mostrarMensaje("Completa los campos de origen, destino y fecha de ida.", "error");
+        mostrarMensaje("Debes seleccionar fecha de vuelta si necesitas alojamiento.", "error");
       } else {
         this.classList.remove("input-error");
         mostrarMensaje("", "");
       }
     });
-  });
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    mostrarMensaje("", "");
-    fechaVueltaInput.classList.remove("input-error");
-    tipoSeguroSelect.classList.remove("input-error");
-    [origenInput, destinoInput, fechaIdaInput].forEach(inp => inp.classList.remove("input-error"));
+    tipoSeguroSelect.addEventListener("change", function() {
+      if(seguroCheckbox.checked && !this.value){
+        this.classList.add("input-error");
+        mostrarMensaje("Selecciona el tipo de seguro.", "error");
+      } else {
+        this.classList.remove("input-error");
+        mostrarMensaje("", "");
+      }
+    });
 
-    if (!origenInput.value.trim()) {
-      origenInput.classList.add("input-error");
-      mostrarMensaje("Indica ciudad de salida.", "error");
-      origenInput.focus();
-      return;
-    }
-    if (!destinoInput.value.trim()) {
-      destinoInput.classList.add("input-error");
-      mostrarMensaje("Indica ciudad de llegada.", "error");
-      destinoInput.focus();
-      return;
-    }
-    if (!fechaIdaInput.value) {
-      fechaIdaInput.classList.add("input-error");
-      mostrarMensaje("Indica la fecha de ida.", "error");
-      fechaIdaInput.focus();
-      return;
-    }
-    if (alojamientoCheckbox.checked && !fechaVueltaInput.value) {
-      fechaVueltaInput.classList.add("input-error");
-      mostrarMensaje("Indica la fecha de vuelta si quieres alojamiento.", "error");
-      fechaVueltaInput.focus();
-      return;
-    }
-    if (!categoriaSeleccionada) {
-      mostrarMensaje("Selecciona una categoría de viaje.", "error");
-      return;
-    }
-    if (seguroCheckbox.checked && !tipoSeguroSelect.value) {
-      tipoSeguroSelect.classList.add("input-error");
-      mostrarMensaje("Selecciona tipo de seguro.", "error");
-      tipoSeguroSelect.focus();
-      return;
-    }
-
-    mostrarMensaje("Enviando búsqueda, por favor espera...", "success");
-
-    const userData = {
-      origen: origenInput.value.trim(),
-      destino: destinoInput.value.trim(),
-      fechaIda: fechaIdaInput.value,
-      fechaVuelta: fechaVueltaInput.value || "",
-      alojamiento: alojamientoCheckbox.checked,
-      seguro: seguroCheckbox.checked,
-      tipoSeguro: tipoSeguroSelect.value,
-      categoria: categoriaSeleccionada,
-      destinoSeleccionado: destinoSeleccionado
-    };
-    localStorage.setItem('userData', JSON.stringify(userData));
-
-    // Simulación de resultados
-    const resultadosSimulados = {
-      hotelResults: [
-        { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
-        { name: "Resort Playa", stars: 5, address: "Av. del Mar 45", price: 220 }
-      ],
-      flightResults: [
-        {
-          airline: { name: "FlyNow" },
-          flight: { number: "FN123" },
-          departure: { airport: origenInput.value, scheduled: fechaIdaInput.value + "T09:00:00Z" },
-          arrival: { airport: destinoInput.value, scheduled: (fechaVueltaInput.value || fechaIdaInput.value) + "T12:15:00Z" },
-          flight_status: "On Time"
+    [origenInput, destinoInput, fechaIdaInput].forEach(inp => {
+      inp.addEventListener("input", function() {
+        if (this.value.trim() === "") {
+          this.classList.add("input-error");
+          mostrarMensaje("Completa los campos de origen, destino y fecha de ida.", "error");
+        } else {
+          this.classList.remove("input-error");
+          mostrarMensaje("", "");
         }
-      ]
-    };
-    localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
-    localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
+      });
+    });
 
-    setTimeout(() => window.location.href = "resultados.html", 1300);
-  });
-</script>
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      mostrarMensaje("", "");
+      fechaVueltaInput.classList.remove("input-error");
+      tipoSeguroSelect.classList.remove("input-error");
+      [origenInput, destinoInput, fechaIdaInput].forEach(inp => inp.classList.remove("input-error"));
+
+      if (!origenInput.value.trim()) {
+        origenInput.classList.add("input-error");
+        mostrarMensaje("Indica ciudad de salida.", "error");
+        origenInput.focus();
+        return;
+      }
+      if (!destinoInput.value.trim()) {
+        destinoInput.classList.add("input-error");
+        mostrarMensaje("Indica ciudad de llegada.", "error");
+        destinoInput.focus();
+        return;
+      }
+      if (!fechaIdaInput.value) {
+        fechaIdaInput.classList.add("input-error");
+        mostrarMensaje("Indica la fecha de ida.", "error");
+        fechaIdaInput.focus();
+        return;
+      }
+      if (alojamientoCheckbox.checked && !fechaVueltaInput.value) {
+        fechaVueltaInput.classList.add("input-error");
+        mostrarMensaje("Indica la fecha de vuelta si quieres alojamiento.", "error");
+        fechaVueltaInput.focus();
+        return;
+      }
+      if (!categoriaSeleccionada) {
+        mostrarMensaje("Selecciona una categoría de viaje.", "error");
+        return;
+      }
+      if (seguroCheckbox.checked && !tipoSeguroSelect.value) {
+        tipoSeguroSelect.classList.add("input-error");
+        mostrarMensaje("Selecciona tipo de seguro.", "error");
+        tipoSeguroSelect.focus();
+        return;
+      }
+      mostrarMensaje("Enviando búsqueda, por favor espera...", "success");
+      const userData = {
+        origen: origenInput.value.trim(),
+        destino: destinoInput.value.trim(),
+        fechaIda: fechaIdaInput.value,
+        fechaVuelta: fechaVueltaInput.value || "",
+        alojamiento: alojamientoCheckbox.checked,
+        seguro: seguroCheckbox.checked,
+        tipoSeguro: tipoSeguroSelect.value,
+        categoria: categoriaSeleccionada,
+        destinoSeleccionado: destinoSeleccionado
+      };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      const resultadosSimulados = {
+        hotelResults: [
+          { name: "Hotel Central", stars: 4, address: "Calle Falsa 123", price: 120 },
+          { name: "Resort Playa", stars: 5, address: "Av. del Mar 45", price: 220 }
+        ],
+        flightResults: [
+          {
+            airline: { name: "FlyNow" },
+            flight: { number: "FN123" },
+            departure: { airport: origenInput.value, scheduled: fechaIdaInput.value + "T09:00:00Z" },
+            arrival: { airport: destinoInput.value, scheduled: (fechaVueltaInput.value || fechaIdaInput.value) + "T12:15:00Z" },
+            flight_status: "On Time"
+          }
+        ]
+      };
+      localStorage.setItem('hotelResults', JSON.stringify(resultadosSimulados.hotelResults));
+      localStorage.setItem('flightResults', JSON.stringify(resultadosSimulados.flightResults));
+      setTimeout(() => window.location.href = "resultados.html", 1300);
+    });
+  </script>
 </body>
 </html>
