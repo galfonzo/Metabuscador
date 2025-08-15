@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip — Formulario Uniforme, Barra Horizontal y Fondo Blanco</title>
+  <title>TuneMyTrip — Formulario Uniforme y Barra Horizontal</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #fff; /* Fondo blanco */
+      background: #fff;
       font-family: 'Open Sans', Arial, sans-serif;
       color: #000;
       min-height: 100vh;
     }
 
     .page-wrapper {
-      padding-top: 4.6rem; /* 3 líneas hacia abajo aproximadamente */
+      padding-top: 4.6rem; /* 3 líneas de espacio */
     }
 
     .dashboard-bar {
@@ -45,7 +45,7 @@
     }
 
     .dashboard-bar img {
-      height: 102px; /* 50% más grande */
+      height: 102px;
       user-select: none;
     }
 
@@ -56,19 +56,20 @@
     .form-row {
       display: flex;
       gap: 10px;
-      align-items: flex-end;
+      align-items: center;
       justify-content: flex-start;
-      flex-wrap: nowrap;
-      min-height: 64px; /* para que labels y campos estén alineados */
       flex-wrap: wrap;
+      min-height: 64px;
     }
 
-    .origin-wrapper {
+    /* Agrupar origen y su botón para alinearlos juntos */
+    .origin-group {
       display: flex;
       align-items: center;
-      flex: 0 0 230px;
       min-width: 230px;
+      gap: 6px;
       margin-bottom: 12px;
+      flex-shrink: 0;
     }
 
     .origin-button-container {
@@ -82,8 +83,6 @@
       align-items: center;
       cursor: pointer;
       user-select: none;
-      flex-shrink: 0;
-      margin-right: 6px;
       transition: background-color 0.25s ease;
     }
     .origin-button-container:hover {
@@ -106,7 +105,6 @@
       min-width: 165px;
       margin-bottom: 12px;
     }
-
     label {
       font-size: 0.9rem;
       font-weight: 600;
@@ -114,7 +112,6 @@
       margin-bottom: 6px;
       user-select: none;
     }
-
     input[type="text"],
     input[type="date"],
     select {
@@ -149,7 +146,6 @@
       margin-left: 12px;
       margin-bottom: 12px;
     }
-
     #fecha-vuelta-container label {
       font-weight: 600;
       margin-bottom: 6px;
@@ -161,11 +157,10 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       min-width: 280px;
       margin-bottom: 12px;
     }
-
     .form-checkbox-row label {
       cursor: pointer;
       user-select: none;
@@ -176,13 +171,11 @@
       align-items: center;
       gap: 6px;
     }
-
     input[type="checkbox"] {
       width: 18px;
       height: 18px;
       cursor: pointer;
     }
-
     #formulario-seguro {
       display: none;
       background: #e9ecef;
@@ -190,7 +183,6 @@
       border-radius: 6px;
       margin-left: 8px;
     }
-
     #tipo-seguro {
       width: 140px;
       padding: 6px 10px;
@@ -201,7 +193,6 @@
       font-size: 1rem;
       margin-top: 3px;
     }
-
     #tipo-seguro:disabled {
       background: #283f67;
       color: #93b7db;
@@ -223,7 +214,6 @@
       margin-bottom: 12px;
       min-width: 150px;
     }
-
     button[type="submit"]:hover,
     button[type="submit"]:focus {
       background-color: #0056b3;
@@ -247,7 +237,6 @@
       box-shadow: 0 6px 24px #007bff22;
       padding: 20px 38px;
     }
-
     #categorias {
       display: flex;
       gap: 22px;
@@ -257,7 +246,6 @@
       flex: 1 1 800px;
       min-width: 800px;
     }
-
     .categoria-btn {
       position: relative;
       width: 130px;
@@ -279,7 +267,6 @@
       flex-shrink: 0;
       padding: 10px 6px;
     }
-
     .categoria-btn svg {
       width: 42px;
       height: 42px;
@@ -287,18 +274,15 @@
       transition: fill 0.28s;
       user-select: none;
     }
-
     .categoria-btn.selected {
       border-color: #0056b3;
       box-shadow: 0 0 36px #0056b3cc;
       transform: scale(1.12);
       z-index: 1;
     }
-
     .categoria-btn.selected svg {
       fill: #003d80;
     }
-
     .categoria-btn span {
       position: relative;
       color: #000;
@@ -308,13 +292,11 @@
       user-select: none;
       width: 100%;
     }
-
     .categoria-btn:focus-visible {
       outline: 3px solid #007bff;
       outline-offset: 3px;
       z-index: 33;
     }
-
     #destinos-lista {
       background: #e9ecef;
       box-shadow: 0 7px 21px #007bff55;
@@ -330,7 +312,6 @@
       height: 220px;
       overflow-y: auto;
     }
-
     #destinos-lista ul {
       list-style: none;
       margin: 0;
@@ -338,7 +319,6 @@
       max-height: 168px;
       overflow-y: auto;
     }
-
     #destinos-lista li {
       background: rgba(0 0 0 / 0.07);
       margin: 9px 0;
@@ -351,7 +331,6 @@
       user-select: none;
       transition: background 0.24s, border-color 0.24s, transform 0.22s ease;
     }
-
     #destinos-lista li.selected,
     #destinos-lista li:hover,
     #destinos-lista li:focus {
@@ -362,8 +341,7 @@
       transform: scale(1.05);
       font-weight: 700;
     }
-
-    /* Responsive */
+    /* Responsive adjustments */
     @media (max-width: 900px) {
       .dashboard-bar,
       .categorias-bar {
@@ -371,53 +349,44 @@
         gap: 26px;
         align-items: flex-start;
       }
-
       .form-row {
         flex-wrap: wrap;
       }
-
       .form-row > div,
       .origin-wrapper {
         max-width: 100%;
         margin-right: 0;
       }
-
       #categorias {
         min-width: auto;
         flex-wrap: wrap;
         gap: 14px;
       }
-
       .categoria-btn {
         width: 90px;
         height: 90px;
       }
-
       #destinos-lista {
         max-width: 100vw;
         position: relative;
         top: auto;
         height: auto;
       }
-
       .origin-button-container {
         margin-right: 12px;
         width: 32px;
         height: 32px;
       }
     }
-
     @media (max-width: 600px) {
       .dashboard-bar {
         padding: 15px 14px;
         flex-direction: column;
       }
-
       .categorias-bar {
         flex-direction: column;
         align-items: flex-start;
       }
-
       .form-row,
       .form-checkbox-row {
         flex-direction: column;
@@ -434,7 +403,7 @@
       </div>
       <form id="search-form" autocomplete="off" novalidate style="flex:1;">
         <div class="form-row">
-          <div class="origin-wrapper">
+          <div class="origin-group">
             <div class="origin-button-container" id="toggle-trip-type" title="Ida y Vuelta" tabindex="0" role="button" aria-pressed="false" aria-label="Alternar viaje de ida y vuelta">
               <svg class="up" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 14l5-5 5 5z"/></svg>
               <svg class="down" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 10l5 5 5-5z"/></svg>
@@ -466,6 +435,7 @@
               Seguro
             </label>
             <div id="formulario-seguro" aria-hidden="true">
+              <label for="tipo-seguro" style="display:none;">Tipo de seguro</label>
               <select id="tipo-seguro" name="tipo-seguro" disabled>
                 <option value="" selected>Tipo de seguro</option>
                 <option value="basico">Básico</option>
@@ -481,31 +451,31 @@
     <div class="categorias-bar">
       <div id="categorias" role="list" aria-label="Categorías de viaje">
         <div class="categoria-btn" tabindex="0" data-categoria="aventura">
-          <svg viewBox="0 0 64 64"><path d="M32 10 L12 54 L22 54 L32 36 L42 54 L52 54 Z"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 10 L12 54 L22 54 L32 36 L42 54 L52 54 Z"/></svg>
           <span>Aventura</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="cultural">
-          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="18"/><rect x="26" y="24" width="12" height="16"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="18"/><rect x="26" y="24" width="12" height="16"/></svg>
           <span>Cultural</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="playa">
-          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/><path d="M12 32h40" stroke="#007bff" stroke-width="4"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="20"/><path d="M12 32h40" stroke="#007bff" stroke-width="4"/></svg>
           <span>Playa</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="gastronomico">
-          <svg viewBox="0 0 64 64"><rect x="20" y="44" width="24" height="8"/><circle cx="32" cy="32" r="10"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="20" y="44" width="24" height="8"/><circle cx="32" cy="32" r="10"/></svg>
           <span>Gastronómico</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="ecoturismo">
-          <svg viewBox="0 0 64 64"><path d="M20 52s8-32 24-32 12 32 12 32z"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M20 52s8-32 24-32 12 32 12 32z"/></svg>
           <span>Ecoturismo</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="lujo">
-          <svg viewBox="0 0 64 64"><polygon points="32 12 44 52 20 52"/><circle cx="32" cy="44" r="6"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><polygon points="32 12 44 52 20 52"/><circle cx="32" cy="44" r="6"/></svg>
           <span>Lujo</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="senderismo">
-          <svg viewBox="0 0 64 64"><circle cx="18" cy="18" r="7"/><rect x="15" y="25" width="6" height="18" rx="3"/><rect x="35" y="42" width="4" height="13" rx="2"/><path d="M18 32 L28 36 L30 44" stroke="#007bff" stroke-width="2" fill="none"/><path d="M20 42 L44 58" stroke="#007bff" stroke-width="2" fill="none"/><circle cx="46" cy="58" r="3"/></svg>
+          <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="7"/><rect x="15" y="25" width="6" height="18" rx="3"/><rect x="35" y="42" width="4" height="13" rx="2"/><path d="M18 32 L28 36 L30 44" stroke="#007bff" stroke-width="2" fill="none"/><path d="M20 42 L44 58" stroke="#007bff" stroke-width="2" fill="none"/><circle cx="46" cy="58" r="3"/></svg>
           <span>Senderismo</span>
         </div>
         <div class="categoria-btn" tabindex="0" data-categoria="canotaje">
