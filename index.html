@@ -12,7 +12,7 @@
       <img id="logo" src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" />
     </div>
     <form id="travel-form" autocomplete="off" novalidate>
-      <div class="inputs-row" style="position: relative;">
+      <div class="inputs-row">
         <div class="row">
           <label for="origin">Origen</label>
           <input type="text" id="origin" name="origin" placeholder="Ciudad de salida" required />
@@ -20,7 +20,7 @@
         </div>
         <div class="row" style="position: relative;">
           <label for="destination">Destino</label>
-          <input type="text" id="destination" name="destination" placeholder="Ciudad destino" required autocomplete="off" />
+          <input type="text" id="destination" name="destination" placeholder="Ciudad destino" autocomplete="off" required />
           <div class="error-message" aria-live="polite"></div>
           <div id="destinos-lista" role="listbox" aria-label="Lista de destinos posibles"></div>
         </div>
@@ -74,12 +74,7 @@
       }
     });
 
-    // Selección visual de categorías y despliegue destinos
-    const categoryButtons = document.querySelectorAll('.btn-feature');
-    const destinosLista = document.getElementById('destinos-lista');
-    const destinationInput = document.getElementById('destination');
-
-    // Datos destino por categoría
+    // Datos destinos por categoría
     const destinosPorCategoria = {
       aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
       cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
@@ -92,34 +87,35 @@
       vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"]
     };
 
-    function resetCategorias() {
-      categoryButtons.forEach(btn => {
-        btn.classList.remove('selected');
-      });
+    const destinosLista = document.getElementById('destinos-lista');
+    const destinationInput = document.getElementById('destination');
+    const categoryButtons = document.querySelectorAll('.btn-feature');
+
+    function resetDestinations() {
       destinosLista.style.display = 'none';
       destinosLista.innerHTML = '';
+      categoryButtons.forEach(btn => btn.classList.remove('selected'));
     }
 
-    function mostrarDestinos(cat) {
-      const destinos = destinosPorCategoria[cat] || [];
+    function mostrarDestinos(categoria) {
+      let destinos = destinosPorCategoria[categoria] || [];
       if (destinos.length === 0) {
-        destinosLista.style.display = 'none';
-        destinosLista.innerHTML = '';
+        resetDestinations();
         return;
       }
       destinosLista.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join('')}</ul>`;
       destinosLista.style.display = 'block';
 
-      // Añadir eventos a cada destino
-      destinosLista.querySelectorAll('li').forEach(li => {
-        li.addEventListener('click', () => {
-          destinationInput.value = li.textContent;
-          resetCategorias();
+      const items = destinosLista.querySelectorAll('li');
+      items.forEach(item => {
+        item.addEventListener('click', () => {
+          destinationInput.value = item.textContent;
+          resetDestinations();
         });
-        li.addEventListener('keydown', e => {
+        item.addEventListener('keydown', e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            li.click();
+            item.click();
           }
         });
       });
@@ -128,24 +124,22 @@
     categoryButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         if (btn.classList.contains('selected')) {
-          // Deseleccionar si ya está seleccionado
-          resetCategorias();
+          resetDestinations();
           return;
         }
-        resetCategorias();
+        resetDestinations();
         btn.classList.add('selected');
         mostrarDestinos(btn.dataset.category);
       });
     });
 
-    // Cerrar la lista de destinos si se hace clic fuera
     document.addEventListener('click', e => {
-      if (!destinosLista.contains(e.target) && !e.target.classList.contains('btn-feature')) {
-        resetCategorias();
+      if (!destinosLista.contains(e.target) && ![...categoryButtons].some(btn => btn === e.target)) {
+        resetDestinations();
       }
     });
 
-    // Validación simple form
+    // Validación simple del formulario
     const form = document.getElementById('travel-form');
     form.addEventListener('submit', e => {
       e.preventDefault();
