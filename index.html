@@ -12,16 +12,17 @@
       <img id="logo" src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" />
     </div>
     <form id="travel-form" autocomplete="off" novalidate>
-      <div class="inputs-row">
+      <div class="inputs-row" style="position: relative;">
         <div class="row">
           <label for="origin">Origen</label>
           <input type="text" id="origin" name="origin" placeholder="Ciudad de salida" required />
           <div class="error-message" aria-live="polite"></div>
         </div>
-        <div class="row">
+        <div class="row" style="position: relative;">
           <label for="destination">Destino</label>
-          <input type="text" id="destination" name="destination" placeholder="Ciudad destino" required />
+          <input type="text" id="destination" name="destination" placeholder="Ciudad destino" required autocomplete="off" />
           <div class="error-message" aria-live="polite"></div>
+          <div id="destinos-lista" role="listbox" aria-label="Lista de destinos posibles"></div>
         </div>
         <div class="row">
           <label for="departure-date">Fecha de ida</label>
@@ -62,7 +63,7 @@
     </form>
   </main>
   <script>
-    // Mostrar u ocultar fecha de regreso según el checkbox "Viaje redondo"
+    // Mostrar u ocultar fecha de regreso según checkbox "Viaje redondo"
     const roundTripCheckbox = document.getElementById('round-trip');
     const returnDateContainer = document.getElementById('returnDateContainer');
     roundTripCheckbox.addEventListener('change', () => {
@@ -73,15 +74,75 @@
       }
     });
 
-    // Selección visual de categorías
+    // Selección visual de categorías y despliegue destinos
     const categoryButtons = document.querySelectorAll('.btn-feature');
+    const destinosLista = document.getElementById('destinos-lista');
+    const destinationInput = document.getElementById('destination');
+
+    // Datos destino por categoría
+    const destinosPorCategoria = {
+      aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
+      cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
+      playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
+      gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
+      ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Torres del Paine", "Islas Malvinas"],
+      lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"],
+      senderismo: ["Torres del Paine", "Camino Inca", "Sendero Patagonia", "Ruta Parques Chile", "Selva Lacandona"],
+      canotaje: ["Río Negro", "Río Futaleufú", "Río Grande", "Lago Todos Santos", "Isla Chiloé"],
+      vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"]
+    };
+
+    function resetCategorias() {
+      categoryButtons.forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      destinosLista.style.display = 'none';
+      destinosLista.innerHTML = '';
+    }
+
+    function mostrarDestinos(cat) {
+      const destinos = destinosPorCategoria[cat] || [];
+      if (destinos.length === 0) {
+        destinosLista.style.display = 'none';
+        destinosLista.innerHTML = '';
+        return;
+      }
+      destinosLista.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join('')}</ul>`;
+      destinosLista.style.display = 'block';
+
+      // Añadir eventos a cada destino
+      destinosLista.querySelectorAll('li').forEach(li => {
+        li.addEventListener('click', () => {
+          destinationInput.value = li.textContent;
+          resetCategorias();
+        });
+        li.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            li.click();
+          }
+        });
+      });
+    }
+
     categoryButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Deseleccionar todos
-        categoryButtons.forEach(b => b.classList.remove('selected'));
-        // Seleccionar el clickeado
+        if (btn.classList.contains('selected')) {
+          // Deseleccionar si ya está seleccionado
+          resetCategorias();
+          return;
+        }
+        resetCategorias();
         btn.classList.add('selected');
+        mostrarDestinos(btn.dataset.category);
       });
+    });
+
+    // Cerrar la lista de destinos si se hace clic fuera
+    document.addEventListener('click', e => {
+      if (!destinosLista.contains(e.target) && !e.target.classList.contains('btn-feature')) {
+        resetCategorias();
+      }
     });
 
     // Validación simple form
@@ -100,7 +161,6 @@
         }
       });
       if (!valid) return;
-      // Aquí lógica para procesar formulario (ejemplo localStorage, llamada API, etc.)
       alert('Formulario válido y listo para enviar!');
     });
   </script>
