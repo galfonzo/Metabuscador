@@ -1,49 +1,31 @@
-/*... estilos previos permanecen ...*/
-
 #destinos-lista {
-  background: #e9ecef;
-  box-shadow: 0 7px 21px #007bffaa;
-  border-radius: 14px;
   position: absolute;
-  min-width: 250px;
-  max-width: 320px;
-  padding: 18px 24px 18px 24px;
-  color: #000;
-  font-size: 1.05rem;
-  display: none;
-  user-select: none;
-  max-height: 250px;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #e9ecef;
+  border-radius: 8px;
+  max-height: 180px;
   overflow-y: auto;
-  z-index: 9999;
-  transition: opacity 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: none;
+  padding: 8px 0;
   box-sizing: border-box;
+  font-size: 0.95rem;
 }
 #destinos-lista ul {
-  list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 210px;
-  overflow-y: auto;
+  list-style: none;
 }
 #destinos-lista li {
-  background: rgba(0 0 0 / 0.07);
-  margin: 8px 0;
-  border-radius: 7px;
-  padding: 9px 11px;
+  padding: 8px 16px;
   cursor: pointer;
-  font-weight: 600;
-  border: 1.2px solid transparent;
-  color: #000;
-  user-select: none;
-  transition: background 0.24s, border-color 0.24s, transform 0.22s ease;
+  transition: background-color 0.2s ease;
 }
-#destinos-lista li.selected,
-#destinos-lista li:hover,
-#destinos-lista li:focus {
-  background-color: rgba(0 0 0 / 0.15);
-  border-color: #007bff;
-  color: #00293d;
+#destinos-lista li:hover, #destinos-lista li:focus,
+#destinos-lista li.selected {
+  background-color: #b0d7f792;
   outline: none;
-  transform: scale(1.05);
-  font-weight: 700;
 }
