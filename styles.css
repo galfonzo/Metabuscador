@@ -168,57 +168,6 @@ input[type="number"]:focus {
   min-height: 1.1em;
   margin-top: 3px;
 }
-/* Modal común */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgb(0 0 0 / 0.48);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99;
-}
-.modal[style*="display:none"] {
-  display: none !important;
-}
-.modal-content {
-  background: white;
-  border-radius: 12px;
-  padding: 24px 28px;
-  max-width: 400px;
-  width: 90vw;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-  position: relative;
-}
-.modal-content h2 {
-  margin-top: 0;
-  margin-bottom: 16px;
-  color: #11a49a;
-  font-weight: 700;
-  font-size: 1.25rem;
-  text-align: center;
-}
-.modal-content button[aria-label="Cerrar modal"] {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  background: transparent;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #11a49a;
-  cursor: pointer;
-}
-.modal-content button[aria-label="Cerrar modal"]:hover,
-.modal-content button[aria-label="Cerrar modal"]:focus {
-  color: #007766;
-  outline: none;
-}
 /* Listado destinos desplegable */
 #destinos-lista {
   position: absolute;
