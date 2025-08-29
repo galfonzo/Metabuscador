@@ -30,10 +30,12 @@
           <div class="error-message" aria-live="polite"></div>
         </div>
       </div>
-      <div id="returnDateContainer" class="row">
+
+      <div id="returnDateContainer" class="row" style="display: none;">
         <label for="return-date">Fecha de regreso</label>
         <input type="date" id="return-date" name="return-date" />
       </div>
+
       <div class="checkbox-group">
         <label>
           <input type="checkbox" id="round-trip" name="round-trip" />
@@ -48,6 +50,18 @@
           Seguro de viaje
         </label>
       </div>
+
+      <div id="accommodation-extra" style="display:none; margin-bottom: 20px;">
+        <label for="hotel-name">Nombre del hotel (opcional)</label>
+        <input type="text" id="hotel-name" name="hotel-name" placeholder="Tu alojamiento" />
+      </div>
+
+      <select id="tipo-seguro" name="tipo-seguro" disabled style="display:none; margin-bottom: 20px;">
+        <option value="">Tipo de seguro</option>
+        <option value="basico">Básico</option>
+        <option value="premium">Premium</option>
+      </select>
+
       <div class="button-group" role="group" aria-label="Categorías de viaje">
         <button type="button" class="btn-feature" data-category="aventura">Aventura</button>
         <button type="button" class="btn-feature" data-category="cultural">Cultural</button>
@@ -59,22 +73,39 @@
         <button type="button" class="btn-feature" data-category="canotaje">Canotaje</button>
         <button type="button" class="btn-feature" data-category="vela">Vela</button>
       </div>
+
       <button type="submit" class="btn-submit">Buscar</button>
     </form>
   </main>
   <script>
-    // Mostrar u ocultar fecha de regreso según checkbox "Viaje redondo"
+    // Mostrar/ocultar fecha de regreso según checkbox "Viaje redondo"
     const roundTripCheckbox = document.getElementById('round-trip');
     const returnDateContainer = document.getElementById('returnDateContainer');
     roundTripCheckbox.addEventListener('change', () => {
-      if (roundTripCheckbox.checked) {
-        returnDateContainer.style.display = 'block';
+      returnDateContainer.style.display = roundTripCheckbox.checked ? 'block' : 'none';
+    });
+
+    // Mostrar/ocultar campos relacionados a alojamiento y seguro
+    const accommodationCheckbox = document.getElementById('accommodation');
+    const accommodationExtra = document.getElementById('accommodation-extra');
+    accommodationCheckbox.addEventListener('change', () => {
+      accommodationExtra.style.display = accommodationCheckbox.checked ? 'block' : 'none';
+    });
+
+    const seguroCheckbox = document.getElementById('insurance');
+    const tipoSeguroSelect = document.getElementById('tipo-seguro');
+    seguroCheckbox.addEventListener('change', () => {
+      if (seguroCheckbox.checked) {
+        tipoSeguroSelect.style.display = 'block';
+        tipoSeguroSelect.disabled = false;
       } else {
-        returnDateContainer.style.display = 'none';
+        tipoSeguroSelect.style.display = 'none';
+        tipoSeguroSelect.disabled = true;
+        tipoSeguroSelect.value = '';
       }
     });
 
-    // Datos destinos por categoría
+    // Listado de destinos por categoría y selección
     const destinosPorCategoria = {
       aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
       cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
