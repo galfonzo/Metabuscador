@@ -1,174 +1,258 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TuneMyTrip - Buscador de Viajes</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-  <style>
-    .btn-feature i {
-      margin-right: 8px;
-    }
-  </style>
-</head>
-<body>
-  <div id="page-container">
-    <nav id="sidebar">
-      <img id="logo" src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" />
-    </nav>
-    <main id="main-content">
-      <form id="travel-form" autocomplete="off" novalidate>
-        <div class="inputs-row">
-          <div class="row">
-            <label for="origin">Origen</label>
-            <input
-              type="text"
-              id="origin"
-              name="origin"
-              placeholder="Ciudad de salida"
-              required
-            />
-            <div class="error-message" aria-live="polite"></div>
-          </div>
-          <div class="row" style="position: relative;">
-            <label for="destination">Destino</label>
-            <input
-              type="text"
-              id="destination"
-              name="destination"
-              placeholder="Ciudad destino"
-              autocomplete="off"
-              required
-            />
-            <div class="error-message" aria-live="polite"></div>
-            <div id="destinos-lista" role="listbox" aria-label="Lista de destinos posibles"></div>
-          </div>
-          <div class="row date-row">
-            <label for="departure-date">Fecha de ida</label>
-            <input type="date" id="departure-date" name="departure-date" required />
-            <div class="error-message" aria-live="polite"></div>
-          </div>
-        </div>
-        <div id="returnDateContainer" class="row date-row" style="display: none">
-          <label for="return-date">Fecha de regreso</label>
-          <input type="date" id="return-date" name="return-date" />
-          <div class="error-message" aria-live="polite"></div>
-        </div>
-        <div class="checkbox-group">
-          <label>
-            <input type="checkbox" id="round-trip" name="round-trip" aria-checked="false" />
-            Viaje redondo
-          </label>
-          <label>
-            <input type="checkbox" id="accommodation" name="accommodation" />
-            Alojamiento
-          </label>
-          <label>
-            <input type="checkbox" id="insurance" name="insurance" />
-            Seguro de viaje
-          </label>
-        </div>
-        <div id="accommodation-extra" style="display: none; margin-bottom: 20px">
-          <label for="hotel-name">Nombre del hotel (opcional)</label>
-          <input
-            type="text"
-            id="hotel-name"
-            name="hotel-name"
-            placeholder="Tu alojamiento"
-          />
-        </div>
-        <select
-          id="tipo-seguro"
-          name="tipo-seguro"
-          disabled
-          style="display: none; margin-bottom: 20px"
-        >
-          <option value="">Tipo de seguro</option>
-          <option value="basico">Básico</option>
-          <option value="premium">Premium</option>
-        </select>
-        <div class="button-group" role="group" aria-label="Categorías de viaje">
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="aventura"
-            aria-pressed="false"
-          >
-            <i class="fas fa-mountain"></i> Aventura
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="cultural"
-            aria-pressed="false"
-          >
-            <i class="fas fa-landmark"></i> Cultural
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="playa"
-            aria-pressed="false"
-          >
-            <i class="fas fa-umbrella-beach"></i> Playa
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="gastronomico"
-            aria-pressed="false"
-          >
-            <i class="fas fa-utensils"></i> Gastronómico
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="ecoturismo"
-            aria-pressed="false"
-          >
-            <i class="fas fa-seedling"></i> Ecoturismo
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="lujo"
-            aria-pressed="false"
-          >
-            <i class="fas fa-gem"></i> Lujo
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="senderismo"
-            aria-pressed="false"
-          >
-            <i class="fas fa-hiking"></i> Senderismo
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="canotaje"
-            aria-pressed="false"
-          >
-            <i class="fas fa-water"></i> Canotaje
-          </button>
-          <button
-            type="button"
-            class="btn-feature"
-            data-category="vela"
-            aria-pressed="false"
-          >
-            <i class="fas fa-ship"></i> Vela
-          </button>
-        </div>
-        <button type="submit" class="btn-submit">Buscar</button>
-      </form>
-    </main>
-  </div>
-  <script src="app.js"></script>
-</body>
-</html>
+#page-container {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f2f4f8;
+}
+
+#sidebar {
+  width: 160px;
+  background: white;
+  border-right: 1px solid #ddd;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 10px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#logo {
+  max-width: 150px;
+  height: auto;
+}
+
+#main-content {
+  margin-left: 160px;
+  flex: 1;
+  padding: 20px 40px 40px 40px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  color: #333;
+  background: transparent;
+}
+
+main {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.inputs-row {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  flex: 1 1 45%;
+}
+
+.row.date-row {
+  flex: 1 1 auto;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+select {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="date"] {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+  max-width: 180px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+}
+
+.error-message {
+  color: #d9534f;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 30%;
+  gap: 10px;
+  margin-left: 10px;
+  min-width: 200px;
+}
+
+.checkbox-group label {
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#accommodation-extra,
+#tipo-seguro {
+  width: 35%;
+  min-width: 200px;
+  margin-top: 20px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.btn-feature {
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 18px;
+  min-width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-feature i {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+.btn-submit {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: #218838;
+}
+
+#destinos-lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+}
+
+#destinos-lista ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#destinos-lista li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#destinos-lista li:hover,
+#destinos-lista li:focus {
+  background-color: #007bff;
+  color: white;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  #page-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #sidebar {
+    width: 100%;
+    position: relative;
+    border-right: none;
+    box-shadow: none;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  #main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  form {
+    flex-direction: column;
+  }
+
+  .inputs-row,
+  .checkbox-group,
+  #accommodation-extra,
+  #tipo-seguro {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .row {
+    flex: 1 1 100%;
+  }
+
+  .button-group {
+    justify-content: space-around;
+  }
+}
