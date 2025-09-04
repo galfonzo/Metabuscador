@@ -1,289 +1,154 @@
-/* Reset básico y estilos globales */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #11a49a; /* color de fondo del isotipo TuneMyTrip */
-  color: #222;
-  font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+// Mostrar/ocultar fecha de regreso según checkbox "Viaje redondo" con manejo aria-checked
+const roundTripCheckbox = document.getElementById('round-trip');
+const returnDateContainer = document.getElementById('returnDateContainer');
+roundTripCheckbox.addEventListener('change', () => {
+  const isChecked = roundTripCheckbox.checked;
+  returnDateContainer.style.display = isChecked ? 'block' : 'none';
+  roundTripCheckbox.setAttribute('aria-checked', isChecked);
+  if (!isChecked) {
+    document.getElementById('return-date').value = '';
+    document.querySelector('#returnDateContainer .error-message').textContent = '';
+  }
+});
+
+// Mostrar/ocultar campos relacionados a alojamiento y limpiar valor oculto
+const accommodationCheckbox = document.getElementById('accommodation');
+const accommodationExtra = document.getElementById('accommodation-extra');
+accommodationCheckbox.addEventListener('change', () => {
+  accommodationExtra.style.display = accommodationCheckbox.checked ? 'block' : 'none';
+  if (!accommodationCheckbox.checked) {
+    document.getElementById('hotel-name').value = '';
+  }
+});
+
+// Mostrar/ocultar selector tipo seguro y limpiar valor oculto
+const seguroCheckbox = document.getElementById('insurance');
+const tipoSeguroSelect = document.getElementById('tipo-seguro');
+seguroCheckbox.addEventListener('change', () => {
+  if (seguroCheckbox.checked) {
+    tipoSeguroSelect.style.display = 'block';
+    tipoSeguroSelect.disabled = false;
+  } else {
+    tipoSeguroSelect.style.display = 'none';
+    tipoSeguroSelect.disabled = true;
+    tipoSeguroSelect.value = '';
+  }
+});
+
+// Listado de destinos por categoría y selección con roles aria-option
+const destinosPorCategoria = {
+  aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
+  cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
+  playa: ["Maldivas", "Cancún", "Ibiza", "Phuket", "Riviera Maya"],
+  gastronomico: ["Lima", "Bangkok", "Barcelona", "Bolonia", "Tokio"],
+  ecoturismo: ["Costa Rica", "Galápagos", "Amazonas", "Torres del Paine", "Islas Malvinas"],
+  lujo: ["Dubai", "Mónaco", "Maldivas Grand Resort", "Bora Bora", "Saint-Tropez"],
+  senderismo: ["Torres del Paine", "Camino Inca", "Sendero Patagonia", "Ruta Parques Chile", "Selva Lacandona"],
+  canotaje: ["Río Negro", "Río Futaleufú", "Río Grande", "Lago Todos Santos", "Isla Chiloé"],
+  vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"]
+};
+const destinosLista = document.getElementById('destinos-lista');
+const destinationInput = document.getElementById('destination');
+const categoryButtons = document.querySelectorAll('.btn-feature');
+
+function resetDestinations() {
+  destinosLista.style.display = 'none';
+  destinosLista.innerHTML = '';
+  categoryButtons.forEach(btn => {
+    btn.classList.remove('selected');
+    btn.setAttribute('aria-pressed', 'false');
+  });
 }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 15px;
+function mostrarDestinos(categoria) {
+  let destinos = destinosPorCategoria[categoria] || [];
+  if (destinos.length === 0) {
+    resetDestinations();
+    return;
+  }
+  destinosLista.innerHTML = `<ul>${destinos.map(d => `<li role="option" tabindex="0">${d}</li>`).join('')}</ul>`;
+  destinosLista.style.display = 'block';
+  const items = destinosLista.querySelectorAll('li');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      destinationInput.value = item.textContent;
+      resetDestinations();
+    });
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.click();
+      }
+    });
+  });
 }
 
-main {
-  width: 100%;
-  max-width: 1100px;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.15);
-  padding: 32px 24px 48px;
-  box-sizing: border-box;
-}
+categoryButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('selected')) {
+      resetDestinations();
+      return;
+    }
+    resetDestinations();
+    btn.classList.add('selected');
+    btn.setAttribute('aria-pressed', 'true');
+    mostrarDestinos(btn.dataset.category);
+  });
+});
 
-/* Logo */
-#logo-container {
-  text-align: center;
-  margin-bottom: 36px;
-}
-#logo {
-  width: auto;
-  height: 125px; /* 250% tamaño original ~ 50px * 2.5 */
-  user-select: none;
-  pointer-events: none;
-}
+document.addEventListener('click', e => {
+  if (!destinosLista.contains(e.target) && ![...categoryButtons].some(btn => btn === e.target)) {
+    resetDestinations();
+  }
+});
 
-/* Inputs en línea */
-.inputs-row {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: nowrap;
-  margin-bottom: 24px;
-}
+// Validación mejorada del formulario, incluida fecha de regreso condicional
+const form = document.getElementById('travel-form');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  let valid = true;
+  // Validar inputs requeridos de fila
+  form.querySelectorAll('.row').forEach(row => {
+    const input = row.querySelector('input');
+    const errorDiv = row.querySelector('.error-message');
+    if (input && input.hasAttribute('required') && !input.value.trim()) {
+      errorDiv.textContent = 'Este campo es obligatorio.';
+      valid = false;
+    } else {
+      errorDiv.textContent = '';
+    }
+  });
+  // Validar fecha de regreso solo si viaje redondo está marcado
+  if (roundTripCheckbox.checked) {
+    const returnDateInput = document.getElementById('return-date');
+    const returnErrorDiv = document.querySelector('#returnDateContainer .error-message');
+    if (!returnDateInput.value) {
+      returnErrorDiv.textContent = 'La fecha de regreso es obligatoria para viaje redondo.';
+      valid = false;
+    } else {
+      returnErrorDiv.textContent = '';
+    }
+  }
+  if (!valid) return;
 
-.inputs-row .row {
-  flex: 1 1 33%;
-  display: flex;
-  flex-direction: column;
-}
+  // Simulamos envío a servidor (por ejemplo fetch)
+  try {
+    // Simulación de retardo de red
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-size: 0.85rem;
-}
-
-input[type="text"],
-input[type="date"],
-input[type="number"] {
-  padding: 10px 14px;
-  border: 1.8px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="date"]:focus,
-input[type="number"]:focus {
-  border-color: #11a49a;
-  outline: none;
-  box-shadow: 0 0 7px #11a49a;
-}
-
-/* Fecha regreso */
-#returnDateContainer {
-  margin-bottom: 24px;
-}
-
-/* Checkbox grupo */
-.checkbox-group {
-  display: flex;
-  justify-content: center;
-  gap: 36px;
-  font-weight: 600;
-  font-size: 0.88rem;
-  margin-bottom: 30px;
-  user-select: none;
-}
-
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.checkbox-group input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-}
-
-/* Botones temáticos */
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 36px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.btn-feature {
-  flex: 0 0 auto;
-  background: white;
-  border-radius: 18px;
-  padding: 14px 20px;
-  min-width: 140px;
-  max-width: 140px;
-  color: #11a49a;
-  font-weight: 700;
-  font-size: 1rem;
-  text-align: center;
-  cursor: pointer;
-  border: 2.5px solid transparent;
-  box-shadow: 0 6px 14px rgb(0 0 0 / 0.1);
-  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-  user-select: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-feature i {
-  font-size: 1.6rem;
-  margin-bottom: 8px;
-}
-
-.btn-feature:hover,
-.btn-feature:focus {
-  outline: none;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.15);
-  border-color: #07776a;
-  transform: translateY(-5px);
-}
-
-/* Botón submit */
-.btn-submit {
-  background: linear-gradient(90deg, #11a49a 60%, #00c6ff 100%);
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 14px 0;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 470px;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 6px 12px rgb(0 196 255 / 0.4);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.btn-submit:disabled {
-  background: #99c9c7;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.btn-submit:hover:not(:disabled),
-.btn-submit:focus:not(:disabled) {
-  background: linear-gradient(90deg, #008375 60%, #0099cc 100%);
-  box-shadow: 0 8px 18px rgb(0 147 204 / 0.6);
-  outline: none;
-}
-
-/* Error */
-.error-message {
-  font-size: 0.7rem;
-  color: #e74c3c;
-  min-height: 1.1em;
-  margin-top: 3px;
-}
-
-/* Modal común */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgb(0 0 0 / 0.48);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99;
-}
-
-.modal[style*="display:none"] {
-  display: none !important;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 12px;
-  padding: 24px 28px;
-  max-width: 400px;
-  width: 90vw;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.modal-content h2 {
-  margin-top: 0;
-  margin-bottom: 16px;
-  color: #11a49a;
-  font-weight: 700;
-  font-size: 1.25rem;
-  text-align: center;
-}
-
-.modal-content button[aria-label="Cerrar modal"] {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  background: transparent;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #11a49a;
-  cursor: pointer;
-}
-
-.modal-content button[aria-label="Cerrar modal"]:hover,
-.modal-content button[aria-label="Cerrar modal"]:focus {
-  color: #007766;
-  outline: none;
-}
-
-/* Listado aeropuertos */
-#airport-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-height: 320px;
-  overflow-y: auto;
-}
-
-#airport-list li button {
-  width: 100%;
-  padding: 10px 14px;
-  text-align: left;
-  background: #e6f7f6;
-  border: none;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #0b5653;
-  transition: background 0.3s ease;
-}
-
-#airport-list li button:hover,
-#airport-list li button:focus {
-  background: #11a49a;
-  color: white;
-  outline: none;
-}
-
-/* Resultado de cotización seguro */
-#insurance-quote-result {
-  font-size: 1rem;
-  color: #007766;
-  text-align: center;
-}
+    alert('¡Formulario enviado correctamente! Simulación exitosa.');
+    form.reset();
+    resetDestinations();
+    returnDateContainer.style.display = 'none';
+    accommodationExtra.style.display = 'none';
+    tipoSeguroSelect.style.display = 'none';
+    tipoSeguroSelect.disabled = true;
+    categoryButtons.forEach(btn => {
+      btn.classList.remove('selected');
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    roundTripCheckbox.setAttribute('aria-checked', 'false');
+  } catch (error) {
+    alert('Error al enviar el formulario. Por favor, intenta más tarde.');
+  }
+});
