@@ -30,15 +30,14 @@
           <div class="error-message" aria-live="polite"></div>
         </div>
       </div>
-
       <div id="returnDateContainer" class="row" style="display: none;">
         <label for="return-date">Fecha de regreso</label>
         <input type="date" id="return-date" name="return-date" />
+        <div class="error-message" aria-live="polite"></div>
       </div>
-
       <div class="checkbox-group">
         <label>
-          <input type="checkbox" id="round-trip" name="round-trip" />
+          <input type="checkbox" id="round-trip" name="round-trip" aria-checked="false" />
           Viaje redondo
         </label>
         <label>
@@ -50,48 +49,52 @@
           Seguro de viaje
         </label>
       </div>
-
       <div id="accommodation-extra" style="display:none; margin-bottom: 20px;">
         <label for="hotel-name">Nombre del hotel (opcional)</label>
         <input type="text" id="hotel-name" name="hotel-name" placeholder="Tu alojamiento" />
       </div>
-
       <select id="tipo-seguro" name="tipo-seguro" disabled style="display:none; margin-bottom: 20px;">
         <option value="">Tipo de seguro</option>
         <option value="basico">Básico</option>
         <option value="premium">Premium</option>
       </select>
-
       <div class="button-group" role="group" aria-label="Categorías de viaje">
-        <button type="button" class="btn-feature" data-category="aventura">Aventura</button>
-        <button type="button" class="btn-feature" data-category="cultural">Cultural</button>
-        <button type="button" class="btn-feature" data-category="playa">Playa</button>
-        <button type="button" class="btn-feature" data-category="gastronomico">Gastronómico</button>
-        <button type="button" class="btn-feature" data-category="ecoturismo">Ecoturismo</button>
-        <button type="button" class="btn-feature" data-category="lujo">Lujo</button>
-        <button type="button" class="btn-feature" data-category="senderismo">Senderismo</button>
-        <button type="button" class="btn-feature" data-category="canotaje">Canotaje</button>
-        <button type="button" class="btn-feature" data-category="vela">Vela</button>
+        <button type="button" class="btn-feature" data-category="aventura" aria-pressed="false">Aventura</button>
+        <button type="button" class="btn-feature" data-category="cultural" aria-pressed="false">Cultural</button>
+        <button type="button" class="btn-feature" data-category="playa" aria-pressed="false">Playa</button>
+        <button type="button" class="btn-feature" data-category="gastronomico" aria-pressed="false">Gastronómico</button>
+        <button type="button" class="btn-feature" data-category="ecoturismo" aria-pressed="false">Ecoturismo</button>
+        <button type="button" class="btn-feature" data-category="lujo" aria-pressed="false">Lujo</button>
+        <button type="button" class="btn-feature" data-category="senderismo" aria-pressed="false">Senderismo</button>
+        <button type="button" class="btn-feature" data-category="canotaje" aria-pressed="false">Canotaje</button>
+        <button type="button" class="btn-feature" data-category="vela" aria-pressed="false">Vela</button>
       </div>
-
       <button type="submit" class="btn-submit">Buscar</button>
     </form>
   </main>
   <script>
-    // Mostrar/ocultar fecha de regreso según checkbox "Viaje redondo"
+    // Mostrar/ocultar fecha de regreso según checkbox "Viaje redondo" con manejo aria-checked
     const roundTripCheckbox = document.getElementById('round-trip');
     const returnDateContainer = document.getElementById('returnDateContainer');
     roundTripCheckbox.addEventListener('change', () => {
-      returnDateContainer.style.display = roundTripCheckbox.checked ? 'block' : 'none';
+      const isChecked = roundTripCheckbox.checked;
+      returnDateContainer.style.display = isChecked ? 'block' : 'none';
+      roundTripCheckbox.setAttribute('aria-checked', isChecked);
+      if (!isChecked) {
+        document.getElementById('return-date').value = '';
+        document.querySelector('#returnDateContainer .error-message').textContent = '';
+      }
     });
-
-    // Mostrar/ocultar campos relacionados a alojamiento y seguro
+    // Mostrar/ocultar campos relacionados a alojamiento y limpiar valor oculto
     const accommodationCheckbox = document.getElementById('accommodation');
     const accommodationExtra = document.getElementById('accommodation-extra');
     accommodationCheckbox.addEventListener('change', () => {
       accommodationExtra.style.display = accommodationCheckbox.checked ? 'block' : 'none';
+      if (!accommodationCheckbox.checked) {
+        document.getElementById('hotel-name').value = '';
+      }
     });
-
+    // Mostrar/ocultar selector tipo seguro y limpiar valor oculto
     const seguroCheckbox = document.getElementById('insurance');
     const tipoSeguroSelect = document.getElementById('tipo-seguro');
     seguroCheckbox.addEventListener('change', () => {
@@ -104,8 +107,7 @@
         tipoSeguroSelect.value = '';
       }
     });
-
-    // Listado de destinos por categoría y selección
+    // Listado de destinos por categoría y selección con roles aria-option
     const destinosPorCategoria = {
       aventura: ["Patagonia", "Islandia", "Machu Picchu", "Alpes Suizos", "Costa Rica Selva"],
       cultural: ["Roma", "Atenas", "Kioto", "Estambul", "París"],
@@ -117,26 +119,25 @@
       canotaje: ["Río Negro", "Río Futaleufú", "Río Grande", "Lago Todos Santos", "Isla Chiloé"],
       vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"]
     };
-
     const destinosLista = document.getElementById('destinos-lista');
     const destinationInput = document.getElementById('destination');
     const categoryButtons = document.querySelectorAll('.btn-feature');
-
     function resetDestinations() {
       destinosLista.style.display = 'none';
       destinosLista.innerHTML = '';
-      categoryButtons.forEach(btn => btn.classList.remove('selected'));
+      categoryButtons.forEach(btn => {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
     }
-
     function mostrarDestinos(categoria) {
       let destinos = destinosPorCategoria[categoria] || [];
       if (destinos.length === 0) {
         resetDestinations();
         return;
       }
-      destinosLista.innerHTML = `<ul>${destinos.map(d => `<li tabindex="0">${d}</li>`).join('')}</ul>`;
+      destinosLista.innerHTML = `<ul>${destinos.map(d => `<li role="option" tabindex="0">${d}</li>`).join('')}</ul>`;
       destinosLista.style.display = 'block';
-
       const items = destinosLista.querySelectorAll('li');
       items.forEach(item => {
         item.addEventListener('click', () => {
@@ -151,7 +152,6 @@
         });
       });
     }
-
     categoryButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         if (btn.classList.contains('selected')) {
@@ -160,21 +160,21 @@
         }
         resetDestinations();
         btn.classList.add('selected');
+        btn.setAttribute('aria-pressed', 'true');
         mostrarDestinos(btn.dataset.category);
       });
     });
-
     document.addEventListener('click', e => {
       if (!destinosLista.contains(e.target) && ![...categoryButtons].some(btn => btn === e.target)) {
         resetDestinations();
       }
     });
-
-    // Validación simple del formulario
+    // Validación mejorada del formulario, incluida fecha de regreso condicional
     const form = document.getElementById('travel-form');
     form.addEventListener('submit', e => {
       e.preventDefault();
       let valid = true;
+      // Validar inputs requeridos de fila
       form.querySelectorAll('.row').forEach(row => {
         const input = row.querySelector('input');
         const errorDiv = row.querySelector('.error-message');
@@ -185,7 +185,19 @@
           errorDiv.textContent = '';
         }
       });
+      // Validar fecha de regreso solo si viaje redondo está marcado
+      if (roundTripCheckbox.checked) {
+        const returnDateInput = document.getElementById('return-date');
+        const returnErrorDiv = document.querySelector('#returnDateContainer .error-message');
+        if (!returnDateInput.value) {
+          returnErrorDiv.textContent = 'La fecha de regreso es obligatoria para viaje redondo.';
+          valid = false;
+        } else {
+          returnErrorDiv.textContent = '';
+        }
+      }
       if (!valid) return;
+
       alert('Formulario válido y listo para enviar!');
     });
   </script>
