@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TuneMyTrip - Buscador de Viajes</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    .btn-feature i {
+      margin-right: 8px;
+    }
+  </style>
 </head>
 <body>
   <main>
@@ -16,12 +24,25 @@
       <div class="inputs-row">
         <div class="row">
           <label for="origin">Origen</label>
-          <input type="text" id="origin" name="origin" placeholder="Ciudad de salida" required />
+          <input
+            type="text"
+            id="origin"
+            name="origin"
+            placeholder="Ciudad de salida"
+            required
+          />
           <div class="error-message" aria-live="polite"></div>
         </div>
         <div class="row" style="position: relative;">
           <label for="destination">Destino</label>
-          <input type="text" id="destination" name="destination" placeholder="Ciudad destino" autocomplete="off" required />
+          <input
+            type="text"
+            id="destination"
+            name="destination"
+            placeholder="Ciudad destino"
+            autocomplete="off"
+            required
+          />
           <div class="error-message" aria-live="polite"></div>
           <div id="destinos-lista" role="listbox" aria-label="Lista de destinos posibles"></div>
         </div>
@@ -31,7 +52,7 @@
           <div class="error-message" aria-live="polite"></div>
         </div>
       </div>
-      <div id="returnDateContainer" class="row" style="display: none;">
+      <div id="returnDateContainer" class="row" style="display: none">
         <label for="return-date">Fecha de regreso</label>
         <input type="date" id="return-date" name="return-date" />
         <div class="error-message" aria-live="polite"></div>
@@ -50,41 +71,96 @@
           Seguro de viaje
         </label>
       </div>
-      <div id="accommodation-extra" style="display:none; margin-bottom: 20px;">
+      <div id="accommodation-extra" style="display: none; margin-bottom: 20px">
         <label for="hotel-name">Nombre del hotel (opcional)</label>
-        <input type="text" id="hotel-name" name="hotel-name" placeholder="Tu alojamiento" />
+        <input
+          type="text"
+          id="hotel-name"
+          name="hotel-name"
+          placeholder="Tu alojamiento"
+        />
       </div>
-      <select id="tipo-seguro" name="tipo-seguro" disabled style="display:none; margin-bottom: 20px;">
+      <select
+        id="tipo-seguro"
+        name="tipo-seguro"
+        disabled
+        style="display: none; margin-bottom: 20px"
+      >
         <option value="">Tipo de seguro</option>
         <option value="basico">Básico</option>
         <option value="premium">Premium</option>
       </select>
       <div class="button-group" role="group" aria-label="Categorías de viaje">
-        <button type="button" class="btn-feature" data-category="aventura" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="aventura"
+          aria-pressed="false"
+        >
           <i class="fas fa-mountain"></i> Aventura
         </button>
-        <button type="button" class="btn-feature" data-category="cultural" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="cultural"
+          aria-pressed="false"
+        >
           <i class="fas fa-landmark"></i> Cultural
         </button>
-        <button type="button" class="btn-feature" data-category="playa" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="playa"
+          aria-pressed="false"
+        >
           <i class="fas fa-umbrella-beach"></i> Playa
         </button>
-        <button type="button" class="btn-feature" data-category="gastronomico" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="gastronomico"
+          aria-pressed="false"
+        >
           <i class="fas fa-utensils"></i> Gastronómico
         </button>
-        <button type="button" class="btn-feature" data-category="ecoturismo" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="ecoturismo"
+          aria-pressed="false"
+        >
           <i class="fas fa-seedling"></i> Ecoturismo
         </button>
-        <button type="button" class="btn-feature" data-category="lujo" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="lujo"
+          aria-pressed="false"
+        >
           <i class="fas fa-gem"></i> Lujo
         </button>
-        <button type="button" class="btn-feature" data-category="senderismo" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="senderismo"
+          aria-pressed="false"
+        >
           <i class="fas fa-hiking"></i> Senderismo
         </button>
-        <button type="button" class="btn-feature" data-category="canotaje" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="canotaje"
+          aria-pressed="false"
+        >
           <i class="fas fa-water"></i> Canotaje
         </button>
-        <button type="button" class="btn-feature" data-category="vela" aria-pressed="false">
+        <button
+          type="button"
+          class="btn-feature"
+          data-category="vela"
+          aria-pressed="false"
+        >
           <i class="fas fa-ship"></i> Vela
         </button>
       </div>
