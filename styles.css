@@ -7,11 +7,11 @@ body {
 }
 
 main {
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   padding: 30px;
 }
 
@@ -24,15 +24,23 @@ main {
   max-width: 180px;
 }
 
-.inputs-row {
+form {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: space-between;
 }
 
+.inputs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 60%;
+  min-width: 280px;
+}
+
 .row {
-  flex: 1 1 180px;
+  flex: 1 1 45%;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -59,7 +67,7 @@ input[type="date"]:focus,
 select:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
 .error-message {
@@ -71,9 +79,10 @@ select:focus {
 
 .checkbox-group {
   display: flex;
-  gap: 20px;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
+  width: 35%;
+  min-width: 200px;
 }
 
 .checkbox-group label {
@@ -84,11 +93,20 @@ select:focus {
   cursor: pointer;
 }
 
+#accommodation-extra,
+#tipo-seguro {
+  width: 35%;
+  min-width: 200px;
+  margin-top: 20px;
+}
+
 .button-group {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: center;
 }
 
 .btn-feature {
@@ -99,6 +117,17 @@ select:focus {
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  min-width: 130px;
+  justify-content: center;
+}
+
+.btn-feature i {
+  margin-right: 8px;
+  font-size: 18px;
+  color: #007bff;
+  transition: color 0.3s;
 }
 
 .btn-feature.selected,
@@ -107,8 +136,17 @@ select:focus {
   color: white;
 }
 
+.btn-feature.selected i,
+.btn-feature[aria-pressed="true"] i {
+  color: white;
+}
+
 .btn-feature:hover {
   background-color: #007bff;
+  color: white;
+}
+
+.btn-feature:hover i {
   color: white;
 }
 
@@ -123,6 +161,7 @@ select:focus {
   width: 100%;
   font-size: 16px;
   transition: background-color 0.3s;
+  margin-top: 20px;
 }
 
 .btn-submit:hover {
@@ -159,4 +198,26 @@ select:focus {
   background-color: #007bff;
   color: white;
   outline: none;
+}
+
+@media (max-width: 768px) {
+  form {
+    flex-direction: column;
+  }
+
+  .inputs-row,
+  .checkbox-group,
+  #accommodation-extra,
+  #tipo-seguro {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .row {
+    flex: 1 1 100%;
+  }
+
+  .button-group {
+    justify-content: space-around;
+  }
 }
