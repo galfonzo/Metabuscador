@@ -1,52 +1,52 @@
-/* Layout container */
+/* Contenedor general para tener contenido y sidebar alineados arriba */
 #page-container {
   display: flex;
+  align-items: flex-start; /* Alinea inicio del contenido y sidebar en vertical */
   min-height: 100vh;
+  background-color: #f2f4f8;
 }
 
-/* Sidebar on left fixed */
+/* Sidebar fijo a la izquierda */
 #sidebar {
   width: 180px;
   background-color: #fff;
   border-right: 1px solid #ddd;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Alinea arriba */
   justify-content: center;
   padding: 20px 10px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
 }
 
-/* Logo styling */
+/* Logo con margen superior para que quede alineado con formulario */
 #logo {
   max-width: 160px;
   height: auto;
 }
 
-/* Main content area */
+/* Area principal junto al sidebar */
 #main-content {
   margin-left: 180px;
   flex: 1;
-  background-color: #f2f4f8;
   padding: 40px 60px;
   box-sizing: border-box;
 }
 
-/* Styles adapted from before */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   color: #333;
-  background-color: transparent; /* moved to main-content */
+  background: transparent;
 }
 
 main {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   padding: 30px;
   max-width: 900px;
   margin: 0 auto;
@@ -97,7 +97,7 @@ input[type="date"]:focus,
 select:focus {
   border-color: #007bff;
   outline: none;
-  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
 .error-message {
@@ -231,8 +231,10 @@ select:focus {
 }
 
 @media (max-width: 768px) {
+  /* Para móviles, colocamos logo arriba y contenido abajo */
   #page-container {
     flex-direction: column;
+    align-items: center;
   }
 
   #sidebar {
@@ -246,7 +248,7 @@ select:focus {
   }
 
   #main-content {
-    margin: 0;
+    margin-left: 0;
     padding: 20px;
   }
 
