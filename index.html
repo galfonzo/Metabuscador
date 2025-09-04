@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TuneMyTrip - Buscador de Viajes</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
   <main>
@@ -59,15 +60,33 @@
         <option value="premium">Premium</option>
       </select>
       <div class="button-group" role="group" aria-label="Categorías de viaje">
-        <button type="button" class="btn-feature" data-category="aventura" aria-pressed="false">Aventura</button>
-        <button type="button" class="btn-feature" data-category="cultural" aria-pressed="false">Cultural</button>
-        <button type="button" class="btn-feature" data-category="playa" aria-pressed="false">Playa</button>
-        <button type="button" class="btn-feature" data-category="gastronomico" aria-pressed="false">Gastronómico</button>
-        <button type="button" class="btn-feature" data-category="ecoturismo" aria-pressed="false">Ecoturismo</button>
-        <button type="button" class="btn-feature" data-category="lujo" aria-pressed="false">Lujo</button>
-        <button type="button" class="btn-feature" data-category="senderismo" aria-pressed="false">Senderismo</button>
-        <button type="button" class="btn-feature" data-category="canotaje" aria-pressed="false">Canotaje</button>
-        <button type="button" class="btn-feature" data-category="vela" aria-pressed="false">Vela</button>
+        <button type="button" class="btn-feature" data-category="aventura" aria-pressed="false">
+          <i class="fas fa-mountain"></i> Aventura
+        </button>
+        <button type="button" class="btn-feature" data-category="cultural" aria-pressed="false">
+          <i class="fas fa-landmark"></i> Cultural
+        </button>
+        <button type="button" class="btn-feature" data-category="playa" aria-pressed="false">
+          <i class="fas fa-umbrella-beach"></i> Playa
+        </button>
+        <button type="button" class="btn-feature" data-category="gastronomico" aria-pressed="false">
+          <i class="fas fa-utensils"></i> Gastronómico
+        </button>
+        <button type="button" class="btn-feature" data-category="ecoturismo" aria-pressed="false">
+          <i class="fas fa-seedling"></i> Ecoturismo
+        </button>
+        <button type="button" class="btn-feature" data-category="lujo" aria-pressed="false">
+          <i class="fas fa-gem"></i> Lujo
+        </button>
+        <button type="button" class="btn-feature" data-category="senderismo" aria-pressed="false">
+          <i class="fas fa-hiking"></i> Senderismo
+        </button>
+        <button type="button" class="btn-feature" data-category="canotaje" aria-pressed="false">
+          <i class="fas fa-water"></i> Canotaje
+        </button>
+        <button type="button" class="btn-feature" data-category="vela" aria-pressed="false">
+          <i class="fas fa-ship"></i> Vela
+        </button>
       </div>
       <button type="submit" class="btn-submit">Buscar</button>
     </form>
