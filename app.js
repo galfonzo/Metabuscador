@@ -1,4 +1,4 @@
-// Mostrar/ocultar fecha de regreso según checkbox "Viaje redondo" con manejo aria-checked
+// Mostrar/ocultar fecha de regreso según checkbox "Viaje redondo" con manejo aria-checked y limpieza valor
 const roundTripCheckbox = document.getElementById('round-trip');
 const returnDateContainer = document.getElementById('returnDateContainer');
 roundTripCheckbox.addEventListener('change', () => {
@@ -47,6 +47,7 @@ const destinosPorCategoria = {
   canotaje: ["Río Negro", "Río Futaleufú", "Río Grande", "Lago Todos Santos", "Isla Chiloé"],
   vela: ["Mar Caribe", "Mediterráneo", "Islas Griegas", "Bahamas", "Costa Amalfitana"]
 };
+
 const destinosLista = document.getElementById('destinos-lista');
 const destinationInput = document.getElementById('destination');
 const categoryButtons = document.querySelectorAll('.btn-feature');
@@ -97,7 +98,10 @@ categoryButtons.forEach(btn => {
 });
 
 document.addEventListener('click', e => {
-  if (!destinosLista.contains(e.target) && ![...categoryButtons].some(btn => btn === e.target)) {
+  if (
+    !destinosLista.contains(e.target) &&
+    ![...categoryButtons].some(btn => btn === e.target)
+  ) {
     resetDestinations();
   }
 });
@@ -123,7 +127,8 @@ form.addEventListener('submit', async e => {
     const returnDateInput = document.getElementById('return-date');
     const returnErrorDiv = document.querySelector('#returnDateContainer .error-message');
     if (!returnDateInput.value) {
-      returnErrorDiv.textContent = 'La fecha de regreso es obligatoria para viaje redondo.';
+      returnErrorDiv.textContent =
+        'La fecha de regreso es obligatoria para viaje redondo.';
       valid = false;
     } else {
       returnErrorDiv.textContent = '';
