@@ -1,27 +1,55 @@
+/* Layout container */
+#page-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar on left fixed */
+#sidebar {
+  width: 180px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Logo styling */
+#logo {
+  max-width: 160px;
+  height: auto;
+}
+
+/* Main content area */
+#main-content {
+  margin-left: 180px;
+  flex: 1;
+  background-color: #f2f4f8;
+  padding: 40px 60px;
+  box-sizing: border-box;
+}
+
+/* Styles adapted from before */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f4f8;
   margin: 0;
-  padding: 20px;
   color: #333;
+  background-color: transparent; /* moved to main-content */
 }
 
 main {
-  max-width: 900px;
-  margin: 0 auto;
-  background-color: #fff;
+  background: white;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
   padding: 30px;
-}
-
-#logo-container {
-  text-align: left;
-  margin-bottom: 20px;
-}
-
-#logo {
-  max-width: 180px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 form {
@@ -59,9 +87,9 @@ select {
   border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 14px;
-  transition: border-color 0.3s;
   width: 100%;
   box-sizing: border-box;
+  transition: border-color 0.3s;
 }
 
 input[type="text"]:focus,
@@ -203,6 +231,25 @@ select:focus {
 }
 
 @media (max-width: 768px) {
+  #page-container {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    width: 100%;
+    position: relative;
+    border-right: none;
+    box-shadow: none;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  #main-content {
+    margin: 0;
+    padding: 20px;
+  }
+
   form {
     flex-direction: column;
   }
