@@ -17,7 +17,7 @@
 </head>
 <body>
   <main>
-    <div id="logo-container">
+    <div id="logo-container" style="text-align: left;">
       <img id="logo" src="img/logo-metabuscador.png" alt="Logo TuneMyTrip" />
     </div>
     <form id="travel-form" autocomplete="off" novalidate>
@@ -46,13 +46,13 @@
           <div class="error-message" aria-live="polite"></div>
           <div id="destinos-lista" role="listbox" aria-label="Lista de destinos posibles"></div>
         </div>
-        <div class="row">
+        <div class="row date-row">
           <label for="departure-date">Fecha de ida</label>
           <input type="date" id="departure-date" name="departure-date" required />
           <div class="error-message" aria-live="polite"></div>
         </div>
       </div>
-      <div id="returnDateContainer" class="row" style="display: none">
+      <div id="returnDateContainer" class="row date-row" style="display: none">
         <label for="return-date">Fecha de regreso</label>
         <input type="date" id="return-date" name="return-date" />
         <div class="error-message" aria-live="polite"></div>
